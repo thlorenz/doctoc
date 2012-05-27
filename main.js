@@ -37,19 +37,20 @@ function notNull(x) { return  x !== null; }
 
 function addLink(header) {
     return _(header).extend({ 
-        link:  '#' + header.title.trim().toLowerCase().replace(/ /g,'-')
+        link:  '#' + header.name.trim().toLowerCase().replace(/ /g,'-')
     });
 }
 
 function getHashedHeaders (_lines) {
     // Find headers of the form '### xxxx xxx xx'
     return _lines
-        .map(function (x) {
+        .map(function (x, index) {
             var match = /^(\#{1,8})[ ]*(.+)$/.exec(x);
             
             return match ?  { 
                     rank  :  match[1].length,
-                    title :  match[2]
+                    name :  match[2],
+                    line  :  index
                 } : null;
         })
         .filter(notNull)
@@ -64,15 +65,16 @@ function getUnderlinedHeaders (_lines) {
     return _lines
         .map(function (line, index, lines) {
             if (index === 0) return null;
-            var rank = null;
+            var rank;
                 
             if (/^==+/.exec(line))      rank = 1;
-            else if (/^--+/.exec(line)) rank =2;
+            else if (/^--+/.exec(line)) rank = 2;
             else                        return null;
 
             return {
-                rank:   rank,
-                title:  lines[index - 1]
+                rank  :  rank,
+                name  :  lines[index - 1],
+                line  :  index - 1
             };
         })
         .filter(notNull)
@@ -86,9 +88,21 @@ function transform (f, content, cb) {
         allHeaders = getHashedHeaders(_lines).concat(getUnderlinedHeaders(_lines)),
         linkedHeaders = _(allHeaders).map(addLink);
 
-    console.log(f.name);    
-    console.log(linkedHeaders); 
+    if (linkedHeaders.length === 0) { cb(); return; }
+
+    var toc = linkedHeaders.map(function (x) {
+            var indent = _(_.range(x.rank - 1)).reduce(function (acc, x) { return acc + '\t'; }, '');
+            return indent + '- <a href="' + x.link + '">' + x.name + '</a>';
+        });
+    // Skip all lines up to first header since that is the old table of content
+    var remainingLines = _lines.rest(linkedHeaders[0].line).value();
+
+    var toWrite = toc.concat(remainingLines).join('\n');
+    console.log(f.name);
+    console.log('------------------------------------');
+    console.log(toWrite);
     cb();
+
 }
 
 file.findMarkdownFiles(target, function (files) {
