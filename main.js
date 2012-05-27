@@ -5,7 +5,7 @@ var path  =  require('path'),
     file  =  require('./lib/file');
 
 // TODO: from commandline
-var dir = 'tmp_samples';
+var dir = 'samples';
 
 function isAbsolute(path) {
     if ('/' == path[0]) return true;
@@ -33,6 +33,8 @@ function getMarkdownHtml(anchor) {
     return  null;
 }
 
+function notNull(x) { return  x !== null; }
+
 function addLink(header) {
     return _(header).extend({ 
         link:  '#' + header.title.trim().toLowerCase().replace(/ /g,'-')
@@ -44,16 +46,13 @@ function getHashedHeaders (_lines) {
     return _lines
         .map(function (x) {
             var match = /^(\#{1,8})[ ]*(.+)$/.exec(x);
-            if (match) {
-                return { 
+            
+            return match ?  { 
                     rank  :  match[1].length,
                     title :  match[2]
-                };
-            } else {
-                return null;
-            }
+                } : null;
         })
-        .filter(function (x) { return  x !== null; })
+        .filter(notNull)
         .value();
 }
 
@@ -61,20 +60,33 @@ function getUnderlinedHeaders (_lines) {
     // Find headers of the form
     // h1       h2
     // ==       --
+    
+    return _lines
+        .map(function (line, index, lines) {
+            if (index === 0) return null;
+            var rank = null;
+                
+            if (/^==+/.exec(line))      rank = 1;
+            else if (/^--+/.exec(line)) rank =2;
+            else                        return null;
 
-   return []; 
+            return {
+                rank:   rank,
+                title:  lines[index - 1]
+            };
+        })
+        .filter(notNull)
+        .value();
 }
-
 
 function transform (f, content, cb) {
     var lines = content.split('\n'),
         _lines = _(lines).chain(),
 
-        allHeaders = getHashedHeaders(_lines)
-            .concat(getUnderlinedHeaders(_lines)),
-
+        allHeaders = getHashedHeaders(_lines).concat(getUnderlinedHeaders(_lines)),
         linkedHeaders = _(allHeaders).map(addLink);
-        
+
+    console.log(f.name);    
     console.log(linkedHeaders); 
     cb();
 }
