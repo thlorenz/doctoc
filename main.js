@@ -33,19 +33,21 @@ function getMarkdownHtml(anchor) {
     return  null;
 }
 
-function transform (f, content, cb) {
-    var lines = content.split('\n');
+function addLink(header) {
+    return _(header).extend({ 
+        link:  '#' + header.title.trim().toLowerCase().replace(/ /g,'-')
+    });
+}
 
-    // Find all headers of the form '### xxxx xxx xx'
-    var hashedHeaders = _(lines)
-        .chain()
+function getHashedHeaders (_lines) {
+    // Find headers of the form '### xxxx xxx xx'
+    return _lines
         .map(function (x) {
-            var match = /^(\#{1,8}) *(.+)$/.exec(x);
+            var match = /^(\#{1,8})[ ]*(.+)$/.exec(x);
             if (match) {
                 return { 
                     rank  :  match[1].length,
-                    title :  match[2],
-                    link  :  '#' + match[2].trim().toLowerCase().replace(/ /g,'-')
+                    title :  match[2]
                 };
             } else {
                 return null;
@@ -53,9 +55,27 @@ function transform (f, content, cb) {
         })
         .filter(function (x) { return  x !== null; })
         .value();
-    
-    console.log(hashedHeaders);
+}
 
+function getUnderlinedHeaders (_lines) {
+    // Find headers of the form
+    // h1       h2
+    // ==       --
+
+   return []; 
+}
+
+
+function transform (f, content, cb) {
+    var lines = content.split('\n'),
+        _lines = _(lines).chain(),
+
+        allHeaders = getHashedHeaders(_lines)
+            .concat(getUnderlinedHeaders(_lines)),
+
+        linkedHeaders = _(allHeaders).map(addLink);
+        
+    console.log(linkedHeaders); 
     cb();
 }
 
