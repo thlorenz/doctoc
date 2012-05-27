@@ -29,17 +29,23 @@ function transformAndSave(files, fcb) {
         fcb);
 }
 
+function getMarkdownHtml(anchor) {
+    return  null;
+}
+
 function transform (f, content, cb) {
-    console.log('transforming', f.name);
     var lines = content.split('\n');
-    var hashedLines = _(lines)
+
+    // Find all headers of the form '### xxxx xxx xx'
+    var hashedHeaders = _(lines)
         .chain()
         .map(function (x) {
             var match = /^(\#{1,8}) *(.+)$/.exec(x);
             if (match) {
                 return { 
                     rank  :  match[1].length,
-                    title :  match[2]
+                    title :  match[2],
+                    link  :  '#' + match[2].trim().toLowerCase().replace(/ /g,'-')
                 };
             } else {
                 return null;
@@ -48,7 +54,7 @@ function transform (f, content, cb) {
         .filter(function (x) { return  x !== null; })
         .value();
     
-    console.log(hashedLines);
+    console.log(hashedHeaders);
 
     cb();
 }
