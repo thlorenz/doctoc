@@ -23,7 +23,10 @@ function transformAndSave(files, fcb) {
         function (f, cb) {
             fs.readFile(f.path, 'utf8', function (err, content) {
                 if (err) { console.log(err); cb();  return; }
-                transform(f, content, cb);
+                transform(f, content, function () { 
+                    console.log('%s called', f.path);
+                    cb();
+                });
             });
         },
         fcb);
@@ -90,22 +93,30 @@ function transform (f, content, cb) {
 
     if (linkedHeaders.length === 0) { cb(); return; }
 
-    var toc = linkedHeaders.map(function (x) {
+    var toc = 
+        linkedHeaders.map(function (x) {
             var indent = _(_.range(x.rank - 1)).reduce(function (acc, x) { return acc + '\t'; }, '');
-            return indent + '- <a href="' + x.link + '">' + x.name + '</a>';
-        });
+            return indent + '-[' + x.name + '](' + x.link + ')';
+        }).join('\n');         
+
     // Skip all lines up to first header since that is the old table of content
-    var remainingLines = _lines.rest(linkedHeaders[0].line).value();
+    var remainingContent = _lines.rest(linkedHeaders[0].line).value().join('\n');
 
-    var toWrite = toc.concat(remainingLines).join('\n');
-    console.log(f.name);
-    console.log('------------------------------------');
-    console.log(toWrite);
+    var data = 
+        '**Table of Contents**  *generated with [DocToc](http://doc-toc.herokuapp.com/)*' +
+        '\n\n'                                                                            +
+        toc                                                                               +
+        '\n\n'                                                                            +
+        remainingContent;
+       
+    console.log('writing', f.path);
+
+    fs.writeFileSync(f.path + '.toc', data, 'utf8');
     cb();
-
 }
 
 file.findMarkdownFiles(target, function (files) {
-    transformAndSave(files, function () { console.log('Everything is OK'); }); 
+    var done = false;
+    transformAndSave(files, function () { console.log('Everything is OK'); done = true; }); 
 });
 
