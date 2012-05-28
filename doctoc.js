@@ -4,25 +4,25 @@ var path =  require('path'),
     fs   =  require('fs'),
     _    =  require('underscore'),
     file =  require('./lib/file'),
-    argv =  require('optimist')
-        .usage('Usage: $0 -p (some path e.g., ".")')
-        .demand(['p'])
-        .alias('p', 'path')
-        .describe('p', 'repository path')
-        .argv;
+    argv =  process.argv;
 
-var target = cleanPath(argv.p);
 
-console.log ('Target: ', target);
+if (argv.length !== 3) {
+    console.log('Usage: %s path (where path is some path e.g., ".")', argv[0] + ' ' + argv[1]);
+    process.exit(0);
+}
+
+var target = cleanPath(argv[2]);
+
+console.log ('\nDocToccing "%s" and its sub directories.', target);
+
 var files = file.findMarkdownFiles(target);
-// transformAndSave(files);
+
+transformAndSave(files);
 
 console.log('\nEverything is OK.');
 
-function isAbsolute(path) {
-    if ('/' == path[0]) return true;
-    if (':' == path[1] && '\\' == path[2]) return true;
-}
+// ------ Supporting functions ----------
 
 function cleanPath(path) {
 
@@ -91,12 +91,18 @@ function transform (f, content) {
 
     var toc = 
         linkedHeaders.map(function (x) {
-            var indent = _(_.range(x.rank - 1)).reduce(function (acc, x) { return acc + '\t'; }, '');
+            var indent = _(_.range(x.rank - 1))
+                .reduce(function (acc, x) { return acc + '\t'; }, '');
+
             return indent + '- [' + x.name + '](' + x.link + ')';
-        }).join('\n');         
+        })
+        .join('\n');         
 
     // Skip all lines up to first header since that is the old table of content
-    var remainingContent = _lines.rest(linkedHeaders[0].line).value().join('\n');
+    var remainingContent = _lines
+        .rest(linkedHeaders[0].line)
+        .value()
+        .join('\n');
 
     var data = 
         '**Table of Contents**  *generated with [DocToc](http://doc-toc.herokuapp.com/)*' +
@@ -126,4 +132,3 @@ function transformAndSave(files) {
             fs.writeFileSync(x.path, x.data, 'utf8'); 
         });
 }
-
