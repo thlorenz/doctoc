@@ -1,10 +1,17 @@
-var path  =  require('path'),
-    fs    =  require('fs'),
-    _     =  require('underscore'),
-    file  =  require('./lib/file');
+#!/usr/bin/env node
 
-// TODO: from commandline
-var dir = 'samples';
+var path =  require('path'),
+    fs   =  require('fs'),
+    _    =  require('underscore'),
+    file =  require('./lib/file'),
+    argv =  require('optimist')
+        .usage('Usage: $0 -p (some path e.g., ".")')
+        .demand(['p'])
+        .alias('p', 'path')
+        .describe('p', 'repository path')
+        .argv;
+
+var dir = argv.p;
 
 function isAbsolute(path) {
     if ('/' == path[0]) return true;
@@ -107,7 +114,6 @@ function transformAndSave(files) {
             fs.writeFileSync(x.path, x.data, 'utf8'); 
         });
 }
-
 
 var files = file.findMarkdownFiles(target);
 transformAndSave(files);

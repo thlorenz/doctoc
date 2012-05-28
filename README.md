@@ -1,3 +1,7 @@
+**Table of Contents**  *generated with [DocToc](http://doc-toc.herokuapp.com/)*
+
+-[doc-toc](#doc-toc)
+
 doc-toc
 =======
 
