@@ -85,12 +85,11 @@ function transform (f, content) {
         _lines = _(lines).chain(),
 
         allHeaders = getHashedHeaders(_lines).concat(getUnderlinedHeaders(_lines)),
-        lowestRank = _(allHeaders).chain().pluck('rank').min(),
+        lowestRank = _(allHeaders).chain().pluck('rank').min().value(),
         linkedHeaders = _(allHeaders).map(addLink);
 
     if (linkedHeaders.length === 0) return { transformed: false };
 
-   
     var toc = 
         '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*'  +
         '\n\n'                                                                            +
