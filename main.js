@@ -80,7 +80,7 @@ function transform (f, content) {
     var toc = 
         linkedHeaders.map(function (x) {
             var indent = _(_.range(x.rank - 1)).reduce(function (acc, x) { return acc + '\t'; }, '');
-            return indent + '-[' + x.name + '](' + x.link + ')';
+            return indent + '- [' + x.name + '](' + x.link + ')';
         }).join('\n');         
 
     // Skip all lines up to first header since that is the old table of content
