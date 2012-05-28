@@ -85,13 +85,15 @@ function transform (f, content) {
         _lines = _(lines).chain(),
 
         allHeaders = getHashedHeaders(_lines).concat(getUnderlinedHeaders(_lines)),
+        lowestRank = _(allHeaders).chain().pluck('rank').min(),
         linkedHeaders = _(allHeaders).map(addLink);
 
     if (linkedHeaders.length === 0) return { transformed: false };
 
+   
     var toc = 
         linkedHeaders.map(function (x) {
-            var indent = _(_.range(x.rank - 1))
+            var indent = _(_.range(x.rank - lowestRank))
                 .reduce(function (acc, x) { return acc + '\t'; }, '');
 
             return indent + '- [' + x.name + '](' + x.link + ')';
