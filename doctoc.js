@@ -92,13 +92,28 @@ function transform (f, content) {
 
    
     var toc = 
+        '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*'  +
+        '\n\n'                                                                            +
         linkedHeaders.map(function (x) {
             var indent = _(_.range(x.rank - lowestRank))
                 .reduce(function (acc, x) { return acc + '\t'; }, '');
 
             return indent + '- [' + x.name + '](' + x.link + ')';
         })
-        .join('\n');         
+        .join('\n')                                                                       +
+        '\n';
+
+    var currentToc = _lines
+        .first(linkedHeaders[0].line)
+        .value()
+        .join('\n');
+        
+    if (currentToc === toc) {
+        console.log('"%s" is up to date', f.path);
+        return { transformed: false };
+    }
+
+    console.log('"%s" will be updated', f.path);
 
     // Skip all lines up to first header since that is the old table of content
     var remainingContent = _lines
@@ -106,12 +121,7 @@ function transform (f, content) {
         .value()
         .join('\n');
 
-    var data = 
-        '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*'  +
-        '\n\n'                                                                            +
-        toc                                                                               +
-        '\n\n'                                                                            +
-        remainingContent;
+    var data = toc + '\n' + remainingContent;
 
     return {
         transformed :  true,

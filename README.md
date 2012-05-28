@@ -1,4 +1,4 @@
-**Table of Contents**  *generated with [DocToc](http://doc-toc.herokuapp.com/)*
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [doc-toc](#doc-toc)
 
