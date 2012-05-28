@@ -11,14 +11,26 @@ var path =  require('path'),
         .describe('p', 'repository path')
         .argv;
 
-var dir = argv.p;
+var target = cleanPath(argv.p);
+
+console.log ('Target: ', target);
+var files = file.findMarkdownFiles(target);
+// transformAndSave(files);
+
+console.log('\nEverything is OK.');
 
 function isAbsolute(path) {
     if ('/' == path[0]) return true;
     if (':' == path[1] && '\\' == path[2]) return true;
 }
 
-var target = isAbsolute(dir) ? dir : path.join(__dirname, dir);
+function cleanPath(path) {
+
+    var homeExpanded = (path.indexOf('~') === 0) ? process.env.HOME + path.substr(1) : path;
+
+    // Escape all spaces
+    return homeExpanded.replace(/\s/g, '\\ ');
+}
 
 function notNull(x) { return  x !== null; }
 
@@ -115,7 +127,3 @@ function transformAndSave(files) {
         });
 }
 
-var files = file.findMarkdownFiles(target);
-transformAndSave(files);
-
-console.log('\nEverything is OK.');
