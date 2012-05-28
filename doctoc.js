@@ -131,8 +131,8 @@ function transform (f, content) {
 }
 
 function transformAndSave(files) {
-    console.log('\nAdding table of content to %s files.', files.length);
-
+    console.log('\n==================\n');
+    
     _(files)
         .chain()
         .map(function (x) {
