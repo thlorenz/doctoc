@@ -1,6 +1,5 @@
 var path  =  require('path'),
     fs    =  require('fs'),
-    async =  require('async'),
     _     =  require('underscore'),
     file  =  require('./lib/file');
 
@@ -12,29 +11,7 @@ function isAbsolute(path) {
     if (':' == path[1] && '\\' == path[2]) return true;
 }
 
-
 var target = isAbsolute(dir) ? dir : path.join(__dirname, dir);
-
-function transformAndSave(files, fcb) {
-    console.log('Adding table of content to %s files.', files.length);
-
-    async.forEach(
-        files, 
-        function (f, cb) {
-            fs.readFile(f.path, 'utf8', function (err, content) {
-                if (err) { console.log(err); cb();  return; }
-                transform(f, content, function () { 
-                    console.log('%s called', f.path);
-                    cb();
-                });
-            });
-        },
-        fcb);
-}
-
-function getMarkdownHtml(anchor) {
-    return  null;
-}
 
 function notNull(x) { return  x !== null; }
 
@@ -84,14 +61,14 @@ function getUnderlinedHeaders (_lines) {
         .value();
 }
 
-function transform (f, content, cb) {
+function transform (f, content) {
     var lines = content.split('\n'),
         _lines = _(lines).chain(),
 
         allHeaders = getHashedHeaders(_lines).concat(getUnderlinedHeaders(_lines)),
         linkedHeaders = _(allHeaders).map(addLink);
 
-    if (linkedHeaders.length === 0) { cb(); return; }
+    if (linkedHeaders.length === 0) return { transformed: false };
 
     var toc = 
         linkedHeaders.map(function (x) {
@@ -108,15 +85,31 @@ function transform (f, content, cb) {
         toc                                                                               +
         '\n\n'                                                                            +
         remainingContent;
-       
-    console.log('writing', f.path);
 
-    fs.writeFileSync(f.path + '.toc', data, 'utf8');
-    cb();
+    return {
+        transformed :  true,
+        data        :  data,
+        path        :  f.path
+    };
 }
 
-file.findMarkdownFiles(target, function (files) {
-    var done = false;
-    transformAndSave(files, function () { console.log('Everything is OK'); done = true; }); 
-});
+function transformAndSave(files) {
+    console.log('\nAdding table of content to %s files.', files.length);
 
+    _(files)
+        .chain()
+        .map(function (x) {
+            var content = fs.readFileSync(x.path, 'utf8');
+            return transform(x, content);
+        })
+        .filter(function (x) { return x.transformed; })
+        .each(function (x) { 
+            fs.writeFileSync(x.path, x.data, 'utf8'); 
+        });
+}
+
+
+var files = file.findMarkdownFiles(target);
+transformAndSave(files);
+
+console.log('\nEverything is OK.');
