@@ -36,7 +36,9 @@ function notNull(x) { return  x !== null; }
 
 function addLink(header) {
     return _(header).extend({ 
-        link:  '#' + header.name.trim().toLowerCase().replace(/ /g,'-')
+        link:  '#' + header.name.trim().toLowerCase()
+            .replace(/ /g,'-')
+            .replace(/[`.,()*]/g,'')
     });
 }
 
