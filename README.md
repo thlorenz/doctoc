@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/thlorenz/doctoc.png)](http://travis-ci.org/thlorenz/doctoc)
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [DocToc](#doctoc)
