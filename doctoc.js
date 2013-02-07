@@ -4,25 +4,8 @@ var path =  require('path'),
     fs   =  require('fs'),
     _    =  require('underscore'),
     file =  require('./lib/file'),
-    argv =  process.argv;
-
-
-if (argv.length !== 3) {
-    console.log('Usage: %s path (where path is some path e.g., ".")', argv[0] + ' ' + argv[1]);
-    process.exit(0);
-}
-
-var target = cleanPath(argv[2]);
-
-console.log ('\nDocToccing "%s" and its sub directories.', target);
-
-var files = file.findMarkdownFiles(target);
-
-transformAndSave(files);
-
-console.log('\nEverything is OK.');
-
-// ------ Supporting functions ----------
+    argv =  process.argv,
+    file;    
 
 function cleanPath(path) {
 
@@ -145,3 +128,24 @@ function transformAndSave(files) {
             fs.writeFileSync(x.path, x.data, 'utf8'); 
         });
 }
+
+if (argv.length !== 3) {
+    console.log('Usage: doctoc <path> (where path is some path to a directory (i.e. .) or a file (i.e. README.md) )');
+    process.exit(0);
+}
+
+var target = cleanPath(argv[2]),
+    stat = fs.statSync(target);
+
+if (stat.isDirectory()) {
+  console.log ('\nDocToccing "%s" and its sub directories.', target);
+  files = file.findMarkdownFiles(target);
+} else {
+  console.log ('\nDocToccing single file "%s".', target);
+  files = [{ path: target }];
+}
+
+transformAndSave(files);
+
+console.log('\nEverything is OK.');
+
