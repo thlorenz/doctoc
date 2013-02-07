@@ -22,4 +22,10 @@ This will update all markdown files in the current directory and all its
 subdirectories with a table of content that will point at the anchors generated
 by the github markdown parser.
 
+If you want to convert only a specific file, do:
 
+    doctoc /path/to/file
+
+Example:
+
+    doctoc README.md
