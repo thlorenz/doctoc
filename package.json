@@ -8,7 +8,7 @@
     "url": "git://github.com/thlorenz/doctoc.git"
   },
   "scripts": {
-    "test": "node-trap test/*.js"
+    "test": "node-trap test/{**/*.js,*.js}"
   },
   "main": "doctoc.js",
   "bin": "doctoc.js",
