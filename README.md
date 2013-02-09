@@ -3,6 +3,9 @@
 - [DocToc](#doctoc)
 	- [Installation](#installation)
 	- [Usage](#usage)
+		- [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
+		- [Adding toc to a single file](#adding-toc-to-a-single-file)
+			- [Example:](#example:)
 
 # DocToc
 
@@ -14,6 +17,8 @@ Generates table of contents for markdown files inside local git repository. Link
 
 ## Usage
 
+### Adding toc to all files in a directory and sub directories
+
 Go into the directory that contains you local git project and type:
     
     doctoc .
@@ -22,10 +27,12 @@ This will update all markdown files in the current directory and all its
 subdirectories with a table of content that will point at the anchors generated
 by the github markdown parser.
 
+### Adding toc to a single file
+
 If you want to convert only a specific file, do:
 
     doctoc /path/to/file
 
-Example:
+#### Example:
 
     doctoc README.md

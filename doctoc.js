@@ -23,7 +23,7 @@ function transformAndSave(files) {
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
         , result = transform(content);
-      result.path = path;
+      result.path = x.path;
       return result;
     });
   var changed = transformed.filter(function (x) { return x.transformed; })
