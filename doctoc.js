@@ -2,12 +2,11 @@
 
 'use strict';
 
-var path    =  require('path')
-  , fs    =  require('fs')
-  , _     =  require('underscore')
-  , file    =  require('./lib/file')
+var path      =  require('path')
+  , fs        =  require('fs')
+  , file      =  require('./lib/file')
   , transform =  require('./lib/transform')
-  , argv    =  process.argv
+  , argv      =  process.argv
   , files;
 
 function cleanPath(path) {
@@ -20,16 +19,24 @@ function cleanPath(path) {
 function transformAndSave(files) {
   console.log('\n==================\n');
   
-  _(files)
-    .chain()
+  var transformed = files
     .map(function (x) {
-      var content = fs.readFileSync(x.path, 'utf8');
-      return transform(x, content);
-    })
-    .filter(function (x) { return x.transformed; })
-    .each(function (x) { 
-      fs.writeFileSync(x.path, x.data, 'utf8'); 
+      var content = fs.readFileSync(x.path, 'utf8')
+        , result = transform(content);
+      result.path = path;
+      return result;
     });
+  var changed = transformed.filter(function (x) { return x.transformed; })
+    , unchanged = transformed.filter(function (x) { return !x.transformed; });
+
+  unchanged.forEach(function (x) {
+    console.log('"%s" is up to date', x.path);
+  });
+
+  changed.forEach(function (x) { 
+    console.log('"%s" will be updated', x.path);
+    fs.writeFileSync(x.path, x.data, 'utf8'); 
+  });
 }
 
 if (argv.length !== 3) {
