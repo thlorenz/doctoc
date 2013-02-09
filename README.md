@@ -8,7 +8,7 @@ Generates table of contents for markdown files inside local git repository. Link
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Adding toc to a single file](#adding-toc-to-a-single-file)
-    - [Example:](#example:)
+    - [Example](#example)
 
 
 ## Installation
