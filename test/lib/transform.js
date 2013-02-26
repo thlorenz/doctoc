@@ -55,3 +55,21 @@ check(
     ,   '\t- [API](#api)\n\n'
     ].join('')
 )
+
+check(
+    ['## Title should be included'
+     , ''
+     , '```js'
+     , 'function foo () {'
+     , '  // ## This title should be ignored'
+     , '}'
+     , '## This title should also be ignored'
+     , '```'
+     , ''
+     , '## Title should also be included'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+      , '- [Title should be included](#title-should-be-included)\n'
+      , '- [Title should also be included](#title-should-also-be-included)\n\n'
+    ].join('')
+)
