@@ -7,6 +7,7 @@ var path      =  require('path')
   , file      =  require('./lib/file')
   , transform =  require('./lib/transform')
   , argv      =  process.argv
+  , mode      =  'github.com'
   , files;
 
 function cleanPath(path) {
@@ -16,13 +17,13 @@ function cleanPath(path) {
   return homeExpanded.replace(/\s/g, '\\ ');
 }
 
-function transformAndSave(files) {
+function transformAndSave(files, mode) {
   console.log('\n==================\n');
   
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content);
+        , result = transform(content, mode);
       result.path = x.path;
       return result;
     });
@@ -39,23 +40,30 @@ function transformAndSave(files) {
   });
 }
 
-if (argv.length !== 3) {
+if (argv.length < 3) {
   console.log('Usage: doctoc <path> (where path is some path to a directory (i.e. .) or a file (i.e. README.md) )');
   process.exit(0);
+}
+
+var bitbucketIdx = argv.indexOf('--bitbucket');
+
+if (~bitbucketIdx) {
+  mode = 'bitbucket.org';
+  argv.splice(bitbucketIdx, 1);
 }
 
 var target = cleanPath(argv[2]),
   stat = fs.statSync(target);
 
 if (stat.isDirectory()) {
-  console.log ('\nDocToccing "%s" and its sub directories.', target);
+  console.log ('\nDocToccing "%s" and its sub directories for %s.', target, mode);
   files = file.findMarkdownFiles(target);
 } else {
-  console.log ('\nDocToccing single file "%s".', target);
+  console.log ('\nDocToccing single file "%s" for %s.', target, mode);
   files = [{ path: target }];
 }
 
-transformAndSave(files);
+transformAndSave(files, mode);
 
 console.log('\nEverything is OK.');
 
