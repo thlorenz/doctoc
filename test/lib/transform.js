@@ -73,6 +73,17 @@ check(
     ].join('')
 )
 
+check(
+    [ '# Repeating A Title'
+    , ''
+    , '# Repeating A Title'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+    , '- [Repeating A Title](#repeating-a-title)\n'
+    , '- [Repeating A Title](#repeating-a-title-1)\n\n'
+    ].join('')
+)
+
 // bigbucket.org
 check(
     [ '# My Module'
