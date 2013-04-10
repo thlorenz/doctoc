@@ -84,6 +84,30 @@ check(
     ].join('')
 )
 
+check(
+    [ '# Different Kinds'
+    , ''
+    , 'In the Right Order'
+    , '=================='
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+    , '- [Different Kinds](#different-kinds)\n'
+    , '- [In the Right Order](#in-the-right-order)\n\n'
+    ].join('')
+)
+
+check(
+    [ 'Different Kinds 2'
+    , '==============='
+    , ''
+    , '# In the Right Order 2'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+    , '- [Different Kinds 2](#different-kinds-2)\n'
+    , '- [In the Right Order 2](#in-the-right-order-2)\n\n'
+    ].join('')
+)
+
 // bigbucket.org
 check(
     [ '# My Module'
