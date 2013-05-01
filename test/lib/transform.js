@@ -4,6 +4,10 @@
 var test = require('trap').test
   , transform = require('../../lib/transform')
 
+function inspect(obj, depth) {
+  console.log(require('util').inspect(obj, false, depth || 5, true));
+}
+
 function check(md, anchors, mode) {
   test('transforming ' + md , function (t) {
     var res = transform(md, mode)
@@ -24,6 +28,25 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [My Module](#my-module)\n'
+    ,   '\t- [API](#api)\n'
+    ,     '\t\t- [Method One](#method-one)\n'
+    ,     '\t\t- [Method Two](#method-two)\n'
+    ,         '\t\t\t- [Main Usage](#main-usage)\n\n'
+    ].join('')
+)
+
+check(
+    [ '# My Module using \\r\\n line endings'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\r\n')
+  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+    , '- [My Module using \\r\\n line endings](#my-module-using-\\r\\n-line-endings)\n'
     ,   '\t- [API](#api)\n'
     ,     '\t\t- [Method One](#method-one)\n'
     ,     '\t\t- [Method Two](#method-two)\n'
