@@ -2,7 +2,7 @@
 /*jshint asi: true */
 
 var test = require('trap').test
-  , transform = require('../../lib/transform')
+  , transform = require('../../lib/transform');
 
 function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
@@ -10,10 +10,10 @@ function inspect(obj, depth) {
 
 function check(md, anchors, mode) {
   test('transforming ' + md , function (t) {
-    var res = transform(md, mode)
-    t.ok(res.transformed, 'transforms it')     
-    t.equal(res.data, anchors + md, 'generates correct anchors')
-  })
+    var res = transform(md, mode);
+    t.ok(res.transformed, 'transforms it');
+    t.equal(res.data, anchors + md, 'generates correct anchors');
+  });
 }
 
 check(
@@ -151,3 +151,45 @@ check(
     ].join('')
   , 'bitbucket.org'
 )
+
+// plain mode: insert anchors to headers
+test('transforming by plain mode', function (t) {
+    var md = [
+        '# My Module'
+        , 'Some text here'
+        , '## API'
+        , '### Method One'
+        , 'works like this'
+        , '### Method Two'
+        , '#### Main Usage'
+        , 'some main usage here'
+    ].join('\n');
+
+    var markedMd = [
+        '# <a id="my-module"></a>My Module'
+        , 'Some text here'
+        , '## <a id="api"></a>API'
+        , '### <a id="method-one"></a>Method One'
+        , 'works like this'
+        , '### <a id="method-two"></a>Method Two'
+        , '#### <a id="main-usage"></a>Main Usage'
+        , 'some main usage here'
+    ].join('\n');
+
+    var anchors = [
+        '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+        , '- [My Module](#my-module)\n'
+        ,   '\t- [API](#api)\n'
+        ,     '\t\t- [Method One](#method-one)\n'
+        ,     '\t\t- [Method Two](#method-two)\n'
+        ,         '\t\t\t- [Main Usage](#main-usage)\n\n'
+    ].join('');
+
+    var res = transform(md, 'plain');
+    t.ok(res.transformed, 'transforms it');
+    t.equal(res.data, anchors + markedMd, 'generates correct anchors');
+    // tranform again
+    var repeat = transform(markedMd, 'plain');
+    t.ok(repeat.transformed, 'transforms transformed markdown');
+    t.equal(repeat.data, anchors + markedMd, 'generates correct anchors');
+})
