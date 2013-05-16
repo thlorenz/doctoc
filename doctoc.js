@@ -52,6 +52,13 @@ if (~bitbucketIdx) {
   argv.splice(bitbucketIdx, 1);
 }
 
+var plainIdx = argv.indexOf('--plain');
+
+if (~plainIdx) {
+  mode = 'plain';
+  argv.splice(plainIdx, 1);
+}
+
 var target = cleanPath(argv[2]),
   stat = fs.statSync(target);
 
