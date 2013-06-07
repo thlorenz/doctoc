@@ -52,6 +52,12 @@ if (~bitbucketIdx) {
   argv.splice(bitbucketIdx, 1);
 }
 
+var githubwiki = argv.indexOf('--githubwiki');
+if (~githubwiki) {
+  mode = 'githubwiki';
+  argv.splice(githubwiki, 1);
+}
+
 var target = cleanPath(argv[2]),
   stat = fs.statSync(target);
 
