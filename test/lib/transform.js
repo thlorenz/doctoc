@@ -108,6 +108,16 @@ check(
 )
 
 check(
+    [ '## Header'
+    , 'some content'
+    , '-- preceded by two dashes but has content, therefore "some content" should not be header'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n',
+      '- [Header](#header)\n\n',
+    ].join('')
+)
+
+check(
     [ '# Different Kinds'
     , ''
     , 'In the Right Order'
