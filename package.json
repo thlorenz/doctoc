@@ -2,13 +2,13 @@
   "author": "Thorsten Lorenz <thlorenz@gmx.de> (thlorenz.com)",
   "name": "doctoc",
   "description": "Generates TOC for markdown files of local git repo.",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "repository": {
     "type": "git",
     "url": "git://github.com/thlorenz/doctoc.git"
   },
   "scripts": {
-    "test": "node-trap test/{**/*.js,*.js}"
+    "test": "node test/lib/transform.js"
   },
   "main": "doctoc.js",
   "bin": "doctoc.js",
