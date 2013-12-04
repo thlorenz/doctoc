@@ -44,3 +44,7 @@ In order to add a table of contents whose links are compatible with anchors gene
 [bitbucket](https://bitbucket.org/), supply a `--bitbucket` flag to doctoc.
 
     doctoc README.md --bitbucket
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/thlorenz/doctoc/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
