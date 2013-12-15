@@ -1,5 +1,7 @@
 # DocToc [![build status](https://secure.travis-ci.org/thlorenz/doctoc.png)](http://travis-ci.org/thlorenz/doctoc)
 
+[![NPM](https://nodei.co/npm/doctoc.png?downloads=true&stars=true)](https://nodei.co/npm/doctoc/)
+
 Generates table of contents for markdown files inside local git repository. Links are compatible with anchors generated
 by github or bitbucket via a command line flag.
 
