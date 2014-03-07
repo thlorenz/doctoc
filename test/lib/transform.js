@@ -11,8 +11,24 @@ function inspect(obj, depth) {
 function check(md, anchors, mode) {
   test('transforming ' + md , function (t) {
     var res = transform(md, mode)
-    t.ok(res.transformed, 'transforms it')     
-    t.equal(res.data, anchors + md, 'generates correct anchors')
+
+    // remove wrapper
+    var data = res.data.split('\n');
+
+    // rig our expected value to include the wrapper
+    var startLines = transform.start.split('\n')
+      , anchorLines = anchors.split('\n')
+      , endLines = transform.end.split('\n')
+      , mdLines = md.split('\n')
+
+    var rig = startLines
+      .concat(anchorLines.slice(0, -2))
+      .concat(endLines)
+      .concat('')
+      .concat(mdLines);
+
+    t.ok(res.transformed, 'transforms it');
+    t.deepEqual(data, rig, 'generates correct anchors')
     t.end()
   })
 }
@@ -32,7 +48,7 @@ check(
     ,   '\t- [API](#api)\n'
     ,     '\t\t- [Method One](#method-one)\n'
     ,     '\t\t- [Method Two](#method-two)\n'
-    ,         '\t\t\t- [Main Usage](#main-usage)\n\n'
+    ,         '\t\t\t- [Main Usage](#main-usage)\n\n\n'
     ].join('')
 )
 
@@ -51,7 +67,7 @@ check(
     ,   '\t- [API](#api)\n'
     ,     '\t\t- [Method One](#method-one)\n'
     ,     '\t\t- [Method Two](#method-two)\n'
-    ,         '\t\t\t- [Main Usage](#main-usage)\n\n'
+    ,         '\t\t\t- [Main Usage](#main-usage)\n\n\n'
     ].join('')
 )
 
@@ -64,7 +80,7 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [My Module](#my-module)\n'
-    ,   '\t- [API](#api)\n\n'
+    ,   '\t- [API](#api)\n\n\n'
     ].join('')
 )
 
@@ -75,7 +91,7 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [My Module](#my-module)\n'
-    ,   '\t- [API](#api)\n\n'
+    ,   '\t- [API](#api)\n\n\n'
     ].join('')
 )
 
@@ -93,7 +109,7 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [Title should be included](#title-should-be-included)\n'
-    , '- [Title should also be included](#title-should-also-be-included)\n\n'
+    , '- [Title should also be included](#title-should-also-be-included)\n\n\n'
     ].join('')
 )
 
@@ -104,7 +120,7 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [Repeating A Title](#repeating-a-title)\n'
-    , '- [Repeating A Title](#repeating-a-title-1)\n\n'
+    , '- [Repeating A Title](#repeating-a-title-1)\n\n\n'
     ].join('')
 )
 
@@ -114,7 +130,7 @@ check(
     , '-- preceded by two dashes but has content, therefore "some content" should not be header'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n',
-      '- [Header](#header)\n\n',
+      '- [Header](#header)\n\n\n',
     ].join('')
 )
 
@@ -126,7 +142,7 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [Different Kinds](#different-kinds)\n'
-    , '- [In the Right Order](#in-the-right-order)\n\n'
+    , '- [In the Right Order](#in-the-right-order)\n\n\n'
     ].join('')
 )
 
@@ -138,9 +154,65 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [Different Kinds 2](#different-kinds-2)\n'
-    , '- [In the Right Order 2](#in-the-right-order-2)\n\n'
+    , '- [In the Right Order 2](#in-the-right-order-2)\n\n\n'
     ].join('')
 )
+
+test('transforming when old toc exists', function (t) {
+  var md = [ 
+      '## Header'
+    , 'some content'
+    , ''
+    , '<!-- START doctoc generated TOC please keep comment here to allow auto update -->'
+    , '<!-- DON\'T EDIT THIS SECTION INSTEAD RE-RUN doctoc TO UPDATE -->'
+    , '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*'
+    , ''
+    , '- [OldHeader](#oldheader)'
+    , ''
+    , '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' 
+    ].join('\n')
+
+  var res = transform(md)
+
+  t.ok(res.transformed, 'transforms it')     
+  t.deepEqual(
+      res.toc.split('\n')
+    , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*',
+      '',
+      '- [Header](#header)',
+      '' ]
+    , 'replaces old toc' 
+  )
+  
+  t.deepEqual(
+      res.wrappedToc.split('\n')
+    , [ '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
+        '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
+        '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*',
+        '',
+        '- [Header](#header)',
+        '',
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' 
+      ]
+    , 'wraps old toc'
+  )
+
+  t.deepEqual(
+      res.data.split('\n')
+    , [ '## Header',
+        'some content',
+        '',
+        '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
+        '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
+        '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*',
+        '',
+        '- [Header](#header)',
+        '',
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' ]
+    , 'updates the content with the new toc'
+  ) 
+  t.end()
+})
 
 // bigbucket.org
 check(
@@ -158,7 +230,7 @@ check(
     ,   '\t- [API](#markdown-header-api)\n'
     ,     '\t\t- [Method One](#markdown-header-method-one)\n'
     ,     '\t\t- [Method Two](#markdown-header-method-two)\n'
-    ,         '\t\t\t- [Main Usage](#markdown-header-main-usage)\n\n'
+    ,         '\t\t\t- [Main Usage](#markdown-header-main-usage)\n\n\n'
     ].join('')
   , 'bitbucket.org'
 )
