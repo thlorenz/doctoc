@@ -32,6 +32,7 @@ function check(md, anchors, mode) {
     t.end()
   })
 }
+//function check() {}
 
 check(
     [ '# My Module'
@@ -160,8 +161,9 @@ check(
 
 test('transforming when old toc exists', function (t) {
   var md = [ 
-      '## Header'
-    , 'some content'
+      '# Header above'
+    , ''
+    , 'The above header should be ignored since it is above the existing toc'
     , ''
     , '<!-- START doctoc generated TOC please keep comment here to allow auto update -->'
     , '<!-- DON\'T EDIT THIS SECTION INSTEAD RE-RUN doctoc TO UPDATE -->'
@@ -170,11 +172,15 @@ test('transforming when old toc exists', function (t) {
     , '- [OldHeader](#oldheader)'
     , ''
     , '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' 
+    , '## Header'
+    , 'some content'
+    , ''
     ].join('\n')
 
   var res = transform(md)
 
   t.ok(res.transformed, 'transforms it')     
+
   t.deepEqual(
       res.toc.split('\n')
     , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*',
@@ -199,8 +205,9 @@ test('transforming when old toc exists', function (t) {
 
   t.deepEqual(
       res.data.split('\n')
-    , [ '## Header',
-        'some content',
+    , [ '# Header above',
+        '',
+        'The above header should be ignored since it is above the existing toc',
         '',
         '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
         '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
@@ -208,8 +215,11 @@ test('transforming when old toc exists', function (t) {
         '',
         '- [Header](#header)',
         '',
-        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' ]
-    , 'updates the content with the new toc'
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->',
+        '## Header',
+        'some content',
+        '' ]
+    , 'updates the content with the new toc and ignores header before existing toc'
   ) 
   t.end()
 })
