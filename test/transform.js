@@ -2,7 +2,7 @@
 /*jshint asi: true */
 
 var test = require('tap').test
-  , transform = require('../../lib/transform')
+  , transform = require('../lib/transform')
 
 function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
