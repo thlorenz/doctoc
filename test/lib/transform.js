@@ -1,7 +1,7 @@
 'use strict';
 /*jshint asi: true */
 
-var test = require('trap').test
+var test = require('tap').test
   , transform = require('../../lib/transform')
 
 function inspect(obj, depth) {
@@ -13,6 +13,7 @@ function check(md, anchors, mode) {
     var res = transform(md, mode)
     t.ok(res.transformed, 'transforms it')     
     t.equal(res.data, anchors + md, 'generates correct anchors')
+    t.end()
   })
 }
 

@@ -20,7 +20,7 @@
     "anchor-markdown-header": "~0.3.0"
   },
   "devDependencies": {
-    "trap": "~0.3.2"
+    "tap": "^0.4.8"
   },
   "license": "MIT",
   "keywords": [
