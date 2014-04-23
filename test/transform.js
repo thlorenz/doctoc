@@ -46,10 +46,10 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [My Module](#my-module)\n'
-    ,   '\t- [API](#api)\n'
-    ,     '\t\t- [Method One](#method-one)\n'
-    ,     '\t\t- [Method Two](#method-two)\n'
-    ,         '\t\t\t- [Main Usage](#main-usage)\n\n\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method One](#method-one)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
     ].join('')
 )
 
@@ -65,10 +65,10 @@ check(
     ].join('\r\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [My Module using \\r\\n line endings](#my-module-using-\\r\\n-line-endings)\n'
-    ,   '\t- [API](#api)\n'
-    ,     '\t\t- [Method One](#method-one)\n'
-    ,     '\t\t- [Method Two](#method-two)\n'
-    ,         '\t\t\t- [Main Usage](#main-usage)\n\n\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method One](#method-one)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
     ].join('')
 )
 
@@ -81,7 +81,7 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [My Module](#my-module)\n'
-    ,   '\t- [API](#api)\n\n\n'
+    ,   '  - [API](#api)\n\n\n'
     ].join('')
 )
 
@@ -92,7 +92,7 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [My Module](#my-module)\n'
-    ,   '\t- [API](#api)\n\n\n'
+    ,   '  - [API](#api)\n\n\n'
     ].join('')
 )
 
@@ -237,10 +237,10 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
     , '- [My Module](#markdown-header-my-module)\n'
-    ,   '\t- [API](#markdown-header-api)\n'
-    ,     '\t\t- [Method One](#markdown-header-method-one)\n'
-    ,     '\t\t- [Method Two](#markdown-header-method-two)\n'
-    ,         '\t\t\t- [Main Usage](#markdown-header-main-usage)\n\n\n'
+    ,   '  - [API](#markdown-header-api)\n'
+    ,     '    - [Method One](#markdown-header-method-one)\n'
+    ,     '    - [Method Two](#markdown-header-method-two)\n'
+    ,         '      - [Main Usage](#markdown-header-main-usage)\n\n\n'
     ].join('')
   , 'bitbucket.org'
 )

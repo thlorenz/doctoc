@@ -4,7 +4,32 @@
 var test = require('tap').test
   , transform = require('../lib/transform')
 
-test('\ngiven a file that includes html with header tags', function (t) {
+test('\ngiven a file that includes html with header tags and maxHeaderNo 8', function (t) {
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-html.md', 'utf8');
+  var headers = transform(content, 'github.com', 8);
+
+  t.deepEqual(
+      headers.toc.split('\n')
+    , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*',
+        '',
+        '- [Installation](#installation)',
+        '- [API](#api)',
+        '    - [dockops::Containers(docker) → {Object}](#dockopscontainersdocker-→-{object})',
+        '      - [Parameters:](#parameters)',
+        '      - [Returns:](#returns)',
+        '    - [dockops::Containers::activePorts(cb)](#dockopscontainersactiveportscb)',
+        '      - [Parameters:](#parameters-1)',
+        '    - [dockops::Containers::clean(id, cb)](#dockopscontainerscleanid-cb)',
+        '      - [Parameters:](#parameters-2)',
+        '- [License](#license)',
+        '' ]
+    , 'generates correct toc for non html and html headers'
+  )
+
+  t.end()
+})
+
+test('\ngiven a file that includes html with header tags using default maxHeaderNo', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-html.md', 'utf8');
   var headers = transform(content);
 
@@ -14,16 +39,12 @@ test('\ngiven a file that includes html with header tags', function (t) {
         '',
         '- [Installation](#installation)',
         '- [API](#api)',
-        '\t\t- [dockops::Containers(docker) → {Object}](#dockopscontainersdocker-→-{object})',
-        '\t\t\t- [Parameters:](#parameters)',
-        '\t\t\t- [Returns:](#returns)',
-        '\t\t- [dockops::Containers::activePorts(cb)](#dockopscontainersactiveportscb)',
-        '\t\t\t- [Parameters:](#parameters-1)',
-        '\t\t- [dockops::Containers::clean(id, cb)](#dockopscontainerscleanid-cb)',
-        '\t\t\t- [Parameters:](#parameters-2)',
+        '    - [dockops::Containers(docker) → {Object}](#dockopscontainersdocker-→-{object})',
+        '    - [dockops::Containers::activePorts(cb)](#dockopscontainersactiveportscb)',
+        '    - [dockops::Containers::clean(id, cb)](#dockopscontainerscleanid-cb)',
         '- [License](#license)',
         '' ]
-    , 'generates correct toc for non html and html headers'
+    , 'generates correct toc for non html and html headers omitting headers larger than maxHeaderNo'
   )
 
   t.end()
