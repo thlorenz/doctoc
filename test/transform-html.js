@@ -14,7 +14,7 @@ test('\ngiven a file that includes html with header tags and maxHeaderNo 8', fun
         '',
         '- [Installation](#installation)',
         '- [API](#api)',
-        '    - [dockops::Containers(docker) → {Object}](#dockopscontainersdocker-→-{object})',
+        '    - [dockops::Containers(docker) → {Object}](#dockopscontainersdocker-→-object)',
         '      - [Parameters:](#parameters)',
         '      - [Returns:](#returns)',
         '    - [dockops::Containers::activePorts(cb)](#dockopscontainersactiveportscb)',
@@ -39,13 +39,12 @@ test('\ngiven a file that includes html with header tags using default maxHeader
         '',
         '- [Installation](#installation)',
         '- [API](#api)',
-        '    - [dockops::Containers(docker) → {Object}](#dockopscontainersdocker-→-{object})',
+        '    - [dockops::Containers(docker) → {Object}](#dockopscontainersdocker-→-object)',
         '    - [dockops::Containers::activePorts(cb)](#dockopscontainersactiveportscb)',
         '    - [dockops::Containers::clean(id, cb)](#dockopscontainerscleanid-cb)',
         '- [License](#license)',
         '' ]
     , 'generates correct toc for non html and html headers omitting headers larger than maxHeaderNo'
   )
-
   t.end()
 })
