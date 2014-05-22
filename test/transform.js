@@ -159,6 +159,18 @@ check(
     ].join('')
 )
 
+check(
+    [ '# HTML Header Elements'
+    , 'does not break regex: <h/1>'
+    , 'does not break regex: <hX>'
+    , 'does not break regex: <a1>'
+    , 'breaks regex: <h1>'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+    , '- [HTML Header Elements](#html-header-elements)\n\n\n'
+    ].join('')
+)
+
 test('transforming when old toc exists', function (t) {
   var md = [ 
       '# Header above'
