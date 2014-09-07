@@ -42,6 +42,10 @@ If you want to convert only a specific file, do:
 
     doctoc /path/to/file
 
+To output result to stdout, instead of a file, do:
+
+    doctoc --stdout /path/to/file
+
 #### Example
 
     doctoc README.md
