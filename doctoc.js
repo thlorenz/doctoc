@@ -52,6 +52,13 @@ if (~bitbucketIdx) {
   argv.splice(bitbucketIdx, 1);
 }
 
+var gitlabIdx = argv.indexOf('--gitlab');
+
+if (~gitlabIdx) {
+  mode = 'gitlab.com';
+  argv.splice(gitlabIdx, 1);
+}
+
 var target = cleanPath(argv[2]),
   stat = fs.statSync(target);
 
