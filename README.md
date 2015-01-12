@@ -63,7 +63,3 @@ Available modes are:
 #### Example
 
     doctoc README.md --bitbucket
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/thlorenz/doctoc/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
