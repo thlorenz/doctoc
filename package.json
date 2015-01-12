@@ -19,7 +19,7 @@
     "anchor-markdown-header": "^0.5.0",
     "htmlparser2": "~3.7.1",
     "underscore": ">=1.3.3",
-    "update-section": "~0.3.0"
+    "update-section": "^0.3.0"
   },
   "devDependencies": {
     "tap": "~0.4.8"
@@ -29,6 +29,10 @@
     "github",
     "markdown",
     "documentation",
-    "parser"
+    "readme",
+    "parser",
+    "bitbucket",
+    "gitlab",
+    "ghost"
   ]
 }

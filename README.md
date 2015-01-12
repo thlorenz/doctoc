@@ -3,7 +3,7 @@
 [![NPM](https://nodei.co/npm/doctoc.png?downloads=true&stars=true)](https://nodei.co/npm/doctoc/)
 
 Generates table of contents for markdown files inside local git repository. Links are compatible with anchors generated
-by github or bitbucket via a command line flag.
+by github or other sites via a command line flag.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
