@@ -10,7 +10,7 @@ test('\ngiven a file that includes html with header tags and maxHeaderNo 8', fun
 
   t.deepEqual(
       headers.toc.split('\n')
-    , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*',
+    , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
         '',
         '- [Installation](#installation)',
         '- [API](#api)',
@@ -35,7 +35,7 @@ test('\ngiven a file that includes html with header tags using default maxHeader
 
   t.deepEqual(
       headers.toc.split('\n')
-    , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*',
+    , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
         '',
         '- [Installation](#installation)',
         '- [API](#api)',

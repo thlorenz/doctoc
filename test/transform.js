@@ -44,7 +44,7 @@ check(
     , '#### Main Usage'
     , 'some main usage here'
     ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [My Module](#my-module)\n'
     ,   '  - [API](#api)\n'
     ,     '    - [Method One](#method-one)\n'
@@ -63,7 +63,7 @@ check(
     , '#### Main Usage'
     , 'some main usage here'
     ].join('\r\n')
-  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [My Module using \\r\\n line endings](#my-module-using-\\r\\n-line-endings)\n'
     ,   '  - [API](#api)\n'
     ,     '    - [Method One](#method-one)\n'
@@ -79,7 +79,7 @@ check(
     , 'API'
     , '---------'
     ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [My Module](#my-module)\n'
     ,   '  - [API](#api)\n\n\n'
     ].join('')
@@ -90,7 +90,7 @@ check(
     , 'Some text here'
     , '## API ##'
     ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [My Module](#my-module)\n'
     ,   '  - [API](#api)\n\n\n'
     ].join('')
@@ -108,7 +108,7 @@ check(
     , ''
     , '## Title should also be included'
     ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [Title should be included](#title-should-be-included)\n'
     , '- [Title should also be included](#title-should-also-be-included)\n\n\n'
     ].join('')
@@ -119,7 +119,7 @@ check(
     , ''
     , '# Repeating A Title'
     ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [Repeating A Title](#repeating-a-title)\n'
     , '- [Repeating A Title](#repeating-a-title-1)\n\n\n'
     ].join('')
@@ -130,7 +130,7 @@ check(
     , 'some content'
     , '-- preceded by two dashes but has content, therefore "some content" should not be header'
     ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n',
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n',
       '- [Header](#header)\n\n\n',
     ].join('')
 )
@@ -141,7 +141,7 @@ check(
     , 'In the Right Order'
     , '=================='
     ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [Different Kinds](#different-kinds)\n'
     , '- [In the Right Order](#in-the-right-order)\n\n\n'
     ].join('')
@@ -153,7 +153,7 @@ check(
     , ''
     , '# In the Right Order 2'
     ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [Different Kinds 2](#different-kinds-2)\n'
     , '- [In the Right Order 2](#in-the-right-order-2)\n\n\n'
     ].join('')
@@ -167,7 +167,7 @@ test('transforming when old toc exists', function (t) {
     , ''
     , '<!-- START doctoc generated TOC please keep comment here to allow auto update -->'
     , '<!-- DON\'T EDIT THIS SECTION INSTEAD RE-RUN doctoc TO UPDATE -->'
-    , '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*'
+    , '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*'
     , ''
     , '- [OldHeader](#oldheader)'
     , ''
@@ -183,7 +183,7 @@ test('transforming when old toc exists', function (t) {
 
   t.deepEqual(
       res.toc.split('\n')
-    , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*',
+    , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
       '',
       '- [Header](#header)',
       '' ]
@@ -194,7 +194,7 @@ test('transforming when old toc exists', function (t) {
       res.wrappedToc.split('\n')
     , [ '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
         '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
-        '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*',
+        '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
         '',
         '- [Header](#header)',
         '',
@@ -211,7 +211,7 @@ test('transforming when old toc exists', function (t) {
         '',
         '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
         '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
-        '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*',
+        '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
         '',
         '- [Header](#header)',
         '',
@@ -235,7 +235,7 @@ check(
     , '#### Main Usage'
     , 'some main usage here'
     ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*\n\n'
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [My Module](#markdown-header-my-module)\n'
     ,   '  - [API](#markdown-header-api)\n'
     ,     '    - [Method One](#markdown-header-method-one)\n'
