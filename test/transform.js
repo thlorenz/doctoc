@@ -237,10 +237,10 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [My Module](#markdown-header-my-module)\n'
-    ,   '  - [API](#markdown-header-api)\n'
-    ,     '    - [Method One](#markdown-header-method-one)\n'
-    ,     '    - [Method Two](#markdown-header-method-two)\n'
-    ,         '      - [Main Usage](#markdown-header-main-usage)\n\n\n'
+    ,   '    - [API](#markdown-header-api)\n'
+    ,     '        - [Method One](#markdown-header-method-one)\n'
+    ,     '        - [Method Two](#markdown-header-method-two)\n'
+    ,         '            - [Main Usage](#markdown-header-main-usage)\n\n\n'
     ].join('')
   , 'bitbucket.org'
 )
