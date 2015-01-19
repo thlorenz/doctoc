@@ -40,7 +40,7 @@ by the markdown parser. Doctoc defaults to using the GitHub parser, but other [m
 
 ### Update existing doctoc TOCs effortlessly
 
-If you already have a TOC inserted by doctoc, it will automatically be updated by running the command (rather than inserting a duplicate toc).
+If you already have a TOC inserted by doctoc, it will automatically be updated by running the command (rather than inserting a duplicate toc). Doctoc locates the TOC by the `<!-- START doctoc -->` and `<!-- END doctoc -->` comments, so you can also move a generated TOC to any other portion of your document and it will be updated there.
 
 ### Adding toc to a single file
 
