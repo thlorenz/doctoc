@@ -4,9 +4,11 @@
 
 var path      =  require('path')
   , fs        =  require('fs')
+  , util      =  require('util')
   , file      =  require('./lib/file')
   , transform =  require('./lib/transform')
   , argv      =  process.argv
+  , output    =  'file'
   , files;
 
 function cleanPath(path) {
@@ -17,7 +19,7 @@ function cleanPath(path) {
 }
 
 function transformAndSave(files, mode) {
-  console.log('\n==================\n');
+  log('\n==================\n');
   
   var transformed = files
     .map(function (x) {
@@ -26,17 +28,31 @@ function transformAndSave(files, mode) {
       result.path = x.path;
       return result;
     });
-  var changed = transformed.filter(function (x) { return x.transformed; })
-    , unchanged = transformed.filter(function (x) { return !x.transformed; });
 
-  unchanged.forEach(function (x) {
-    console.log('"%s" is up to date', x.path);
-  });
+  if (output != 'stdout') {
+    var changed = transformed.filter(function (x) { return x.transformed; })
+      , unchanged = transformed.filter(function (x) { return !x.transformed; });
 
-  changed.forEach(function (x) { 
-    console.log('"%s" will be updated', x.path);
-    fs.writeFileSync(x.path, x.data, 'utf8'); 
-  });
+    unchanged.forEach(function (x) {
+      log(util.format('"%s" is up to date', x.path));
+    });
+
+    changed.forEach(function (x) { 
+      log(util.format('"%s" will be updated', x.path));
+      fs.writeFileSync(x.path, x.data, 'utf8'); 
+    });
+  } else {
+    process.stdout.write(transformed[0].data);
+  }
+}
+
+function log(msg) {
+  if (output != 'stdout') {
+    console.log(msg);
+  }
+}
+function logError(msg) {
+  process.stderr.write(msg + '\n');
 }
 
 var modes = [ 
@@ -50,12 +66,12 @@ var modes = [
 var mode = 'github.com'
 
 if (argv.length < 3) {
-  console.error('Usage: doctoc [mode] <path> (where path is some path to a directory (i.e. .) or a file (i.e. README.md) )');
-  console.error('\nAvailable modes are:');
+  logError('Usage: doctoc [mode] <path> (where path is some path to a directory (i.e. .) or a file (i.e. README.md) )');
+  logError('\nAvailable modes are:');
   for (var i = 0; i < modes.length; i++) {
-    console.error('  --%s\t%s', modes[i][0], modes[i][1]);
+    logError('  --%s\t%s', modes[i][0], modes[i][1]);
   }
-  console.error('Defaults to \'github.com\'.')
+  logError('Defaults to \'github.com\'.')
   process.exit(0);
 }
 
@@ -71,14 +87,29 @@ for (var i = 0; i < modes.length; i++) {
 var target = cleanPath(argv[2])
   , stat = fs.statSync(target)
 
+var stdoutIdx = argv.indexOf('--stdout');
+
+if (~stdoutIdx) {
+  output = 'stdout';
+  argv.splice(stdoutIdx, 1);
+}
+
+
+
+
 if (stat.isDirectory()) {
-  console.log ('\nDocToccing "%s" and its sub directories for %s.', target, mode);
-  files = file.findMarkdownFiles(target);
+  if (output == 'file') {
+    log (util.format('\nDocToccing "%s" and its sub directories for %s.', target, mode));
+    files = file.findMarkdownFiles(target);
+  } else {
+    logError ('Error: --stdout flag can only be used with single files.');
+  }
+
 } else {
-  console.log ('\nDocToccing single file "%s" for %s.', target, mode);
+  log (util.format('\nDocToccing single file "%s" for %s.', target, mode));
   files = [{ path: target }];
 }
 
 transformAndSave(files, mode);
 
-console.log('\nEverything is OK.');
+log('\nEverything is OK.');
