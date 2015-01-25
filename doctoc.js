@@ -4,6 +4,7 @@
 
 var path      =  require('path')
   , fs        =  require('fs')
+  , util      =  require('util')
   , file      =  require('./lib/file')
   , transform =  require('./lib/transform')
   , argv      =  process.argv
@@ -33,11 +34,11 @@ function transformAndSave(files, mode) {
       , unchanged = transformed.filter(function (x) { return !x.transformed; });
 
     unchanged.forEach(function (x) {
-      log('"%s" is up to date', x.path);
+      log(util.format('"%s" is up to date', x.path));
     });
 
     changed.forEach(function (x) { 
-      log('"%s" will be updated', x.path);
+      log(util.format('"%s" will be updated', x.path));
       fs.writeFileSync(x.path, x.data, 'utf8'); 
     });
   } else {
@@ -98,14 +99,14 @@ if (~stdoutIdx) {
 
 if (stat.isDirectory()) {
   if (output == 'file') {
-    log ('\nDocToccing "%s" and its sub directories for %s.', target, mode);
+    log (util.format('\nDocToccing "%s" and its sub directories for %s.', target, mode));
     files = file.findMarkdownFiles(target);
   } else {
     logError ('Error: --stdout flag can only be used with single files.');
   }
 
 } else {
-  log ('\nDocToccing single file "%s" for %s.', target, mode);
+  log (util.format('\nDocToccing single file "%s" for %s.', target, mode));
   files = [{ path: target }];
 }
 
