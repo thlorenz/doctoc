@@ -4,7 +4,7 @@
 var test = require('tap').test
   , transform = require('../lib/transform')
 
-test('\ngiven a file that includes html with header tags and maxHeaderNo 8', function (t) {
+test('\ngiven a file that includes html with header tags and maxHeaderLevel 8', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-html.md', 'utf8');
   var headers = transform(content, 'github.com', 8);
 
@@ -29,7 +29,7 @@ test('\ngiven a file that includes html with header tags and maxHeaderNo 8', fun
   t.end()
 })
 
-test('\ngiven a file that includes html with header tags using default maxHeaderNo', function (t) {
+test('\ngiven a file that includes html with header tags using default maxHeaderLevel', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-html.md', 'utf8');
   var headers = transform(content);
 
@@ -44,7 +44,7 @@ test('\ngiven a file that includes html with header tags using default maxHeader
         '    - [dockops::Containers::clean(id, cb)](#dockopscontainerscleanid-cb)',
         '- [License](#license)',
         '' ]
-    , 'generates correct toc for non html and html headers omitting headers larger than maxHeaderNo'
+    , 'generates correct toc for non html and html headers omitting headers larger than maxHeaderLevel'
   )
   t.end()
 })

@@ -18,6 +18,8 @@ by github or other sites via a command line flag.
   - [Using doctoc to generate links compatible with other sites](#using-doctoc-to-generate-links-compatible-with-other-sites)
     - [Example](#example-1)
   - [Specifying location of toc](#specifying-location-of-toc)
+  - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
+  - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -95,4 +97,17 @@ Here we'll discuss...
 
 ```
 
-Running doctoc will insert the toc to that location.
+Running doctoc will insert the toc at that location.
+
+### Specifying a custom TOC title
+
+Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .`
+
+### Specifying a maximum heading level for TOC entries
+
+Use the `--maxlevel` option to limit TOC entries to headings only up to the specified level; e.g., `doctoc --maxlevel 3 .`
+
+By default, 
+
+* no limit is placed on Markdown-formatted headings,
+* whereas headings from embedded HTML are limited to 4 levels.
