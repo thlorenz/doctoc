@@ -4,9 +4,9 @@
 
 var path      =  require('path')
   , fs        =  require('fs')
+  , minimist  =  require('minimist')
   , file      =  require('./lib/file')
   , transform =  require('./lib/transform')
-  , argv      =  process.argv
   , files;
 
 function cleanPath(path) {
@@ -16,13 +16,13 @@ function cleanPath(path) {
   return homeExpanded.replace(/\s/g, '\\ ');
 }
 
-function transformAndSave(files, mode) {
+function transformAndSave(files, mode, maxHeaderLevel, title) {
   console.log('\n==================\n');
   
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode);
+        , result = transform(content, mode, maxHeaderLevel, title);
       result.path = x.path;
       return result;
     });
@@ -39,36 +39,55 @@ function transformAndSave(files, mode) {
   });
 }
 
-var modes = [ 
-  [ 'bitbucket', 'bitbucket.org' ]
-, [ 'nodejs'   , 'nodejs.org'    ]
-, [ 'github'   , 'github.com'    ]
-, [ 'gitlab'   , 'gitlab.com'    ]
-, [ 'ghost'    , 'ghost.org'     ]
-];
+function printUsageAndExit(isErr) {
 
-var mode = 'github.com'
+  var outputFunc = isErr ? console.error : console.info;
 
-if (argv.length < 3) {
-  console.error('Usage: doctoc [mode] <path> (where path is some path to a directory (i.e. .) or a file (i.e. README.md) )');
-  console.error('\nAvailable modes are:');
-  for (var i = 0; i < modes.length; i++) {
-    console.error('  --%s\t%s', modes[i][0], modes[i][1]);
+  outputFunc('Usage: doctoc [mode] [--title title] [--maxlevel level] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('\nAvailable modes are:');
+  for (var key in modes) {
+    outputFunc('  --%s\t%s', key, modes[key]);
   }
-  console.error('Defaults to \'github.com\'.')
-  process.exit(0);
+  outputFunc('Defaults to \'' + mode + '\'.');
+
+  process.exit(isErr ? 2 : 0);
 }
 
-for (var i = 0; i < modes.length; i++) {
-  var idx = argv.indexOf('--' + modes[i][0]);
-  if (~idx) {
-    mode = modes[i][1];
-    argv.splice(idx, 1);
-    break;
+var modes = {
+    bitbucket: 'bitbucket.org'
+  , nodejs: 'nodejs.org'
+  , github:    'github.com'
+  , gitlab:    'gitlab.com'
+  , ghost:     'ghost.org'
+}
+
+var mode = modes['github'];
+
+var argv = minimist(process.argv.slice(2)
+    , { boolean: [ 'h', 'help' ].concat(Object.keys(modes))
+    , string: [ 'title', 't', 'maxlevel', 'm' ]
+    , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
+    });
+
+if (argv.h || argv.help) {
+  printUsageAndExit();
+} else if (argv._.length != 1) {
+  console.error('Please specify exactly one file or directory path.');
+  printUsageAndExit(true);
+}
+
+for (var key in modes) {
+  if (argv[key]) {
+    mode = modes[key];
   }
 }
 
-var target = cleanPath(argv[2])
+var title = argv.t || argv.title;
+
+var maxHeaderLevel = argv.m || argv.maxlevel;
+if (maxHeaderLevel && isNaN(maxHeaderLevel) || maxHeaderLevel < 0) { console.error('Max. heading level specified is not a positive number: ' + maxHeaderLevel), printUsageAndExit(true); }
+
+var target = cleanPath(argv._[0])
   , stat = fs.statSync(target)
 
 if (stat.isDirectory()) {
@@ -79,6 +98,6 @@ if (stat.isDirectory()) {
   files = [{ path: target }];
 }
 
-transformAndSave(files, mode);
+transformAndSave(files, mode, maxHeaderLevel, title);
 
 console.log('\nEverything is OK.');

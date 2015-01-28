@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode) {
+function check(md, anchors, mode, maxHeaderLevel, title) {
   test('transforming ' + md , function (t) {
-    var res = transform(md, mode)
+    var res = transform(md, mode, maxHeaderLevel, title)
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -158,6 +158,66 @@ check(
     , '- [In the Right Order 2](#in-the-right-order-2)\n\n\n'
     ].join('')
 )
+
+check(
+    [ '# Heading'
+    , ''
+    , 'Custom TOC title test'
+    ].join('\n')
+  , [ '**Contents**\n\n'
+    , '- [Heading](#heading)\n\n\n'
+    ].join('')
+  , undefined
+  , undefined
+  , '**Contents**'
+)
+
+check(
+    [ '# H1h'
+    , '## H2h'
+    , '### H3h'
+    , ''
+    , 'Max. level test - hashed'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [H1h](#h1h)\n'
+    , '  - [H2h](#h2h)\n\n\n'
+    ].join('')
+  , undefined
+  , 2
+)
+
+check(
+    [
+      'H1u'
+    , '==='
+    , 'H2u'
+    , '---'
+    , ''
+    , 'Max. level test - underlined'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [H1u](#h1u)\n\n\n'
+    ].join('')
+  , undefined
+  , 1
+)
+
+check(
+    [
+      '<html><head></head><body>'
+    , '<h1>H1html</h1><h2>H2html</h2><h3>H3html</h3>'
+    , '</body></html>'
+    , 'Max. level test - HTML'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [H1html](#h1html)\n'
+    , '  - [H2html](#h2html)\n\n\n'
+    ].join('')
+  , undefined
+  , 2
+)
+
 
 test('transforming when old toc exists', function (t) {
   var md = [ 
