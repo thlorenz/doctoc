@@ -109,5 +109,5 @@ Use the `--maxlevel` option to limit TOC entries to headings only up to the spec
 
 By default,
 
-* no limit is placed on Markdown-formatted headings,
-* whereas headings from embedded HTML are limited to 4 levels.
+- no limit is placed on Markdown-formatted headings,
+- whereas headings from embedded HTML are limited to 4 levels.

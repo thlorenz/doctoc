@@ -54,11 +54,11 @@ function printUsageAndExit(isErr) {
 }
 
 var modes = {
-    bitbucket: 'bitbucket.org'
-  , nodejs: 'nodejs.org'
-  , github:    'github.com'
-  , gitlab:    'gitlab.com'
-  , ghost:     'ghost.org'
+    bitbucket : 'bitbucket.org'
+  , nodejs    : 'nodejs.org'
+  , github    : 'github.com'
+  , gitlab    : 'gitlab.com'
+  , ghost     : 'ghost.org'
 }
 
 var mode = modes['github'];
