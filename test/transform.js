@@ -304,3 +304,26 @@ check(
     ].join('')
   , 'bitbucket.org'
 )
+
+// gitlab (similar to bitbucket) both have 4-spaces indentation
+// however headers are note prefixed in bitbucket specific way
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#my-module)\n'
+    ,   '    - [API](#api)\n'
+    ,     '        - [Method One](#method-one)\n'
+    ,     '        - [Method Two](#method-two)\n'
+    ,         '            - [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+
+  , 'gitlab.com'
+)
