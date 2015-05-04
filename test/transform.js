@@ -9,7 +9,7 @@ function inspect(obj, depth) {
 }
 
 function check(md, anchors, mode, maxHeaderLevel, title) {
-  test('transforming ' + md , function (t) {
+  test('transforming', function (t) {
     var res = transform(md, mode, maxHeaderLevel, title)
 
     // remove wrapper
