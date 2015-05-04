@@ -101,7 +101,9 @@ Running doctoc will insert the toc at that location.
 
 ### Specifying a custom TOC title
 
-Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .`
+Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will will keep the title you specified.
+
+Alternatively, to blank out the title with a newline, use the `--notitle` option. This will simply remove the title from the TOC.
 
 ### Specifying a maximum heading level for TOC entries
 
