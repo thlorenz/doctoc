@@ -71,9 +71,6 @@ var argv = minimist(process.argv.slice(2)
 
 if (argv.h || argv.help) {
   printUsageAndExit();
-} else if (argv._.length != 1) {
-  console.error('Please specify exactly one file or directory path.');
-  printUsageAndExit(true);
 }
 
 for (var key in modes) {
@@ -88,17 +85,19 @@ var notitle = argv.T || argv.notitle;
 var maxHeaderLevel = argv.m || argv.maxlevel;
 if (maxHeaderLevel && isNaN(maxHeaderLevel) || maxHeaderLevel < 0) { console.error('Max. heading level specified is not a positive number: ' + maxHeaderLevel), printUsageAndExit(true); }
 
-var target = cleanPath(argv._[0])
-  , stat = fs.statSync(target)
+for (var i = 0; i < argv._.length; i++) {
+  var target = cleanPath(argv._[i])
+    , stat = fs.statSync(target)
 
-if (stat.isDirectory()) {
-  console.log ('\nDocToccing "%s" and its sub directories for %s.', target, mode);
-  files = file.findMarkdownFiles(target);
-} else {
-  console.log ('\nDocToccing single file "%s" for %s.', target, mode);
-  files = [{ path: target }];
+  if (stat.isDirectory()) {
+    console.log ('\nDocToccing "%s" and its sub directories for %s.', target, mode);
+    files = file.findMarkdownFiles(target);
+  } else {
+    console.log ('\nDocToccing single file "%s" for %s.', target, mode);
+    files = [{ path: target }];
+  }
+
+  transformAndSave(files, mode, maxHeaderLevel, title, notitle);
+
+  console.log('\nEverything is OK.');
 }
-
-transformAndSave(files, mode, maxHeaderLevel, title, notitle);
-
-console.log('\nEverything is OK.');

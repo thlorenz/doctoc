@@ -13,10 +13,10 @@ by github or other sites via a command line flag.
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Update existing doctoc TOCs effortlessly](#update-existing-doctoc-tocs-effortlessly)
-  - [Adding toc to a single file](#adding-toc-to-a-single-file)
-    - [Example](#example)
+  - [Adding toc to individual files](#adding-toc-to-individual-files)
+    - [Examples](#examples)
   - [Using doctoc to generate links compatible with other sites](#using-doctoc-to-generate-links-compatible-with-other-sites)
-    - [Example](#example-1)
+    - [Example](#example)
   - [Specifying location of toc](#specifying-location-of-toc)
   - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
   - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
@@ -30,6 +30,11 @@ by github or other sites via a command line flag.
 
 ## Usage
 
+In it's simplest usage, you can pass one or more files or folders to the
+`doctoc` command. This will update the TOCs of each file specified as well as of
+each markdown file found by recursively searching each folder. Below are some
+examples.
+
 ### Adding toc to all files in a directory and sub directories
 
 Go into the directory that contains you local git project and type:
@@ -38,21 +43,34 @@ Go into the directory that contains you local git project and type:
 
 This will update all markdown files in the current directory and all its
 subdirectories with a table of content that will point at the anchors generated
-by the markdown parser. Doctoc defaults to using the GitHub parser, but other [modes can be specified](#using-doctoc-to-generate-links-compatible-with-other-sites).
+by the markdown parser. Doctoc defaults to using the GitHub parser, but other
+[modes can be
+specified](#using-doctoc-to-generate-links-compatible-with-other-sites).
+
 
 ### Update existing doctoc TOCs effortlessly
 
 If you already have a TOC inserted by doctoc, it will automatically be updated by running the command (rather than inserting a duplicate toc). Doctoc locates the TOC by the `<!-- START doctoc -->` and `<!-- END doctoc -->` comments, so you can also move a generated TOC to any other portion of your document and it will be updated there.
 
-### Adding toc to a single file
+### Adding toc to individual files
 
-If you want to convert only a specific file, do:
+If you want to convert only specific files, do:
 
-    doctoc /path/to/file
+    doctoc /path/to/file [...]
 
-#### Example
+#### Examples
 
     doctoc README.md
+
+    doctoc CONTRIBUTING.md LICENSE.md
+
+You can use this feature to do more sophisticated things. For example, if you
+have [ack][ack] installed, you could add `<!-- DOCTOC SKIP -->` to specific
+files and then use
+
+    ack -L 'DOCTOC SKIP' | xargs doctoc
+
+to recompile only those files which don't have the DOCTOC SKIP comment.
 
 ### Using doctoc to generate links compatible with other sites
 
@@ -113,3 +131,5 @@ By default,
 
 - no limit is placed on Markdown-formatted headings,
 - whereas headings from embedded HTML are limited to 4 levels.
+
+[ack]: http://beyondgrep.com/
