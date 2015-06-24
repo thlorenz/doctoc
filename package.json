@@ -2,7 +2,7 @@
   "author": "Thorsten Lorenz <thlorenz@gmx.de> (thlorenz.com)",
   "name": "doctoc",
   "description": "Generates TOC for markdown files of local git repo.",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/thlorenz/doctoc.git"
