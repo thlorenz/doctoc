@@ -30,7 +30,7 @@ by github or other sites via a command line flag.
 
 ## Usage
 
-In it's simplest usage, you can pass one or more files or folders to the
+In its simplest usage, you can pass one or more files or folders to the
 `doctoc` command. This will update the TOCs of each file specified as well as of
 each markdown file found by recursively searching each folder. Below are some
 examples.
