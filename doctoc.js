@@ -40,7 +40,7 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
     console.log('"%s" is up to date', x.path);
   });
 
-  changed.forEach(function (x) { 
+  changed.forEach(function (x) {
     if (stdOut) {
       console.log('==================\n\n"%s" should be updated', x.path)
     } else {
@@ -48,6 +48,12 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
       fs.writeFileSync(x.path, x.data, 'utf8');
     }
   });
+
+  // aggregate all tocs into a big one
+  var toc = transformed.map(function (x) {
+    return x.toc;
+  }).join('');
+  return toc;
 }
 
 function printUsageAndExit(isErr) {
@@ -75,7 +81,7 @@ var modes = {
 var mode = modes['github'];
 
 var argv = minimist(process.argv.slice(2)
-    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout'].concat(Object.keys(modes))
+    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'main'].concat(Object.keys(modes))
     , string: [ 'title', 't', 'maxlevel', 'm', 'entryprefix' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
@@ -98,6 +104,7 @@ var stdOut = argv.s || argv.stdout
 var maxHeaderLevel = argv.m || argv.maxlevel;
 if (maxHeaderLevel && isNaN(maxHeaderLevel) || maxHeaderLevel < 0) { console.error('Max. heading level specified is not a positive number: ' + maxHeaderLevel), printUsageAndExit(true); }
 
+var main_toc = '';
 for (var i = 0; i < argv._.length; i++) {
   var target = cleanPath(argv._[i])
     , stat = fs.statSync(target)
@@ -110,7 +117,11 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut);
+  main_toc += transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut);
 
   console.log('\nEverything is OK.');
+}
+
+if (argv.main) {
+  fs.writeFileSync('main_toc.md', main_toc);
 }
