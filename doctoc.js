@@ -7,6 +7,7 @@ var path      =  require('path')
   , minimist  =  require('minimist')
   , file      =  require('./lib/file')
   , transform =  require('./lib/transform')
+  , md        =  require('markdown-to-ast')
   , files;
 
 function cleanPath(path) {
@@ -51,9 +52,24 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
 
   // aggregate all tocs into a big one
   var toc = transformed.map(function (x) {
-    return x.toc;
+    // add paths to all the links
+    return md.parse(x.toc).children.filter(function (y) {
+      return y.type === md.Syntax.List;
+    }).map(function (y) {
+      return y.children.map(function (y) {
+        var link_node = y.children[0].children[0];
+        var link = x.path + link_node.href;
+        return {link: link, name: link_node.children[0].raw};
+        // TODO: subheadings aren't added
+      });
+    }).map(function (links) {
+      return links.map(function (link) {
+        var text = '- [' + link.name + '](' + link.link + ')';
+        return text;
+      }).join('\n');
+    }).join('\n');
   }).join('');
-  return toc;
+  return toc + '\n';
 }
 
 function printUsageAndExit(isErr) {
