@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode, maxHeaderLevel, title) {
+function check(md, anchors, mode, maxHeaderLevel, title, notitle, asteriskFlag) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, title)
+    var res = transform(md, mode, maxHeaderLevel, title, notitle, asteriskFlag)
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -326,4 +326,29 @@ check(
     ].join('')
 
   , 'gitlab.com'
+)
+
+// check that the asteriskFlag successfully uses '* ' instead of '- '
+check(    
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '* [My Module](#my-module)\n'
+    ,   '  * [API](#api)\n'
+    ,     '    * [Method One](#method-one)\n'
+    ,     '    * [Method Two](#method-two)\n'
+    ,         '      * [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , true // set asteriskFlag which is passed to transform() to true
 )
