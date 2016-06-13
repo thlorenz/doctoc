@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode, maxHeaderLevel, title) {
+function check(md, anchors, mode, maxHeaderLevel, title, notitle, entryPrefix) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, title)
+    var res = transform(md, mode, maxHeaderLevel, title, notitle, entryPrefix)
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -327,3 +327,76 @@ check(
 
   , 'gitlab.com'
 )
+
+// check the --entryprefix flag
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '* [My Module](#my-module)\n'
+    ,   '  * [API](#api)\n'
+    ,     '    * [Method One](#method-one)\n'
+    ,     '    * [Method Two](#method-two)\n'
+    ,         '      * [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , '*' // pass '*' as the prefix for toc entries
+)
+
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '>> [My Module](#my-module)\n'
+    ,   '  >> [API](#api)\n'
+    ,     '    >> [Method One](#method-one)\n'
+    ,     '    >> [Method Two](#method-two)\n'
+    ,         '      >> [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , '>>' // pass '>>' as the prefix for toc entries)
+  )
+
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '1. [My Module](#my-module)\n'
+    ,   '  1. [API](#api)\n'
+    ,     '    1. [Method One](#method-one)\n'
+    ,     '    1. [Method Two](#method-two)\n'
+    ,         '      1. [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , '1.' // pass '1.' as the prefix for toc entries
+  )
