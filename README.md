@@ -132,4 +132,8 @@ By default,
 - no limit is placed on Markdown-formatted headings,
 - whereas headings from embedded HTML are limited to 4 levels.
 
+### Printing to stdout
+
+You can print to stdout by using the `-s` or `--stdout` option.
+
 [ack]: http://beyondgrep.com/
