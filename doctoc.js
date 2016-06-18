@@ -37,14 +37,14 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
   }
 
   unchanged.forEach(function (x) {
-    console.log('"%s" is up to date', x.path);
+    console.log('"%s" is up to date.', x.path);
   });
 
   changed.forEach(function (x) { 
     if (stdOut) {
-      console.log('==================\n\n"%s" should be updated', x.path)
+      console.log('==================\n\n"%s" was not updated.', x.path)
     } else {
-      console.log('"%s" will be updated', x.path);
+      console.log('"%s" will be updated.', x.path);
       fs.writeFileSync(x.path, x.data, 'utf8');
     }
   });
@@ -54,7 +54,11 @@ function printUsageAndExit(isErr) {
 
   var outputFunc = isErr ? console.error : console.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc <path> [--help | -h] [mode] [--maxlevel <level> | -m]\n' +
+    '[--title <title> | -t] [--notitle | -T] [--stdout | -s]\n' +
+    '[--entryprefix <prefix>]\n\n' +
+    "<path> must be some path to a directory (e.g., .) or a file (e.g., README.md)");
+
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc('  --%s\t%s', key, modes[key]);
