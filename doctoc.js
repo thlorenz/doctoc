@@ -17,12 +17,12 @@ function cleanPath(path) {
 }
 
 function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut) {
-  console.log('\n==================\n');
+  console.error('\n==================\n');
 
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, title, notitle, entryPrefix);
+        , result = transform(content, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut);
       result.path = x.path;
       return result;
     });
@@ -37,13 +37,11 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
   }
 
   unchanged.forEach(function (x) {
-    console.log('"%s" is up to date.', x.path);
+    console.error('"%s" is up to date.', x.path);
   });
 
   changed.forEach(function (x) { 
-    if (stdOut) {
-      console.log('==================\n\n"%s" was not updated.', x.path)
-    } else {
+    if (!stdOut) {
       console.log('"%s" will be updated.', x.path);
       fs.writeFileSync(x.path, x.data, 'utf8');
     }
@@ -107,14 +105,14 @@ for (var i = 0; i < argv._.length; i++) {
     , stat = fs.statSync(target)
 
   if (stat.isDirectory()) {
-    console.log ('\nDocToccing "%s" and its sub directories for %s.', target, mode);
+    console.error('\nDocToccing "%s" and its sub directories for %s.', target, mode);
     files = file.findMarkdownFiles(target);
   } else {
-    console.log ('\nDocToccing single file "%s" for %s.', target, mode);
+    console.error('\nDocToccing single file "%s" for %s.', target, mode);
     files = [{ path: target }];
   }
 
   transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut);
 
-  console.log('\nEverything is OK.');
+  console.error('\nEverything is OK.');
 }
