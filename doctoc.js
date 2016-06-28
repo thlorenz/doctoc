@@ -56,20 +56,32 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
     return md.parse(x.toc).children.filter(function (y) {
       return y.type === md.Syntax.List;
     }).map(function (y) {
-      return y.children.map(function (y) {
-        var link_node = y.children[0].children[0];
-        var link = x.path + link_node.href;
-        return {link: link, name: link_node.children[0].raw};
-        // TODO: subheadings aren't added
-      });
-    }).map(function (links) {
-      return links.map(function (link) {
-        var text = '- [' + link.name + '](' + link.link + ')';
-        return text;
-      }).join('\n');
+      var links = flattenSublists(y);
+      return links;
+    }).reduce(function (arr, arr1) {
+      return arr.concat(arr1);
+    }).map(function (link) {
+      var text = '  '.repeat(link.level) + '- [' + link.name + '](' + x.path +
+        link.link + ')';
+      return text;
     }).join('\n');
   }).join('');
   return toc + '\n';
+}
+
+function flattenSublists(list, level) {
+  var array = [];
+  level = level || 0;
+  list.children.forEach(function (y) {
+    var link_node = y.children[0].children[0];
+    var link = link_node.href;
+    array.push({link: link, name: link_node.children[0].raw, level: level});
+    // add subheadings
+    if (y.children.length === 2) {
+      array = array.concat(flattenSublists(y.children[1], level + 1));
+    }
+  });
+  return array;
 }
 
 function printUsageAndExit(isErr) {
