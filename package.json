@@ -17,14 +17,14 @@
   },
   "dependencies": {
     "anchor-markdown-header": "^0.5.5",
-    "htmlparser2": "^3.9.2",
-    "markdown-to-ast": "^3.4.0",
-    "minimist": "^1.2.0",
-    "underscore": ">=1.8.3",
+    "htmlparser2": "~3.9.2",
+    "markdown-to-ast": "~3.4.0",
+    "minimist": "~1.2.0",
+    "underscore": "~1.8.3",
     "update-section": "^0.3.0"
   },
   "devDependencies": {
-    "tap": "^10.2.1"
+    "tap": "~10.2.1"
   },
   "license": "MIT",
   "keywords": [
