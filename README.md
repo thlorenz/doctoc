@@ -25,7 +25,6 @@ by github or other sites via a command line flag.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
 ## Installation
 
     npm install -g doctoc
@@ -52,7 +51,16 @@ specified](#using-doctoc-to-generate-links-compatible-with-other-sites).
 
 ### Update existing doctoc TOCs effortlessly
 
-If you already have a TOC inserted by doctoc, it will automatically be updated by running the command (rather than inserting a duplicate toc). Doctoc locates the TOC by the `<!-- START doctoc -->` and `<!-- END doctoc -->` comments, so you can also move a generated TOC to any other portion of your document and it will be updated there.
+If you already have a TOC inserted by doctoc, it will automatically be updated 
+by running the command (rather than inserting a duplicate toc).
+Doctoc locates the TOC by the `<!-- START doctoc -->` and `<!-- END doctoc -->` comments, 
+so you can also move a generated TOC to any other portion of your document and it will be updated there.
+
+You can tell doctoc to **only update** files that **already** have a TOC 
+(including those that [specify location of toc](#specifying-location-of-toc)),
+by adding the `--explicit` flag:
+
+    doctoc . --explicit
 
 ### Adding toc to individual files
 
