@@ -135,6 +135,24 @@ By default,
 
 ### Printing to stdout
 
-You can print to stdout by using the `-s` or `--stdout` option.
+You can print to stdout by using the `-s` or `--stdout` option. This will print out the TOC to `stdout`, but any extra information provided by doctoc will be printed to `stderr`. Piping or copying the `stdout` will result in a clean TOC. For example:
+
+```
+$ doctoc readme -s
+
+DocToccing single file "readme.md" for github.com.
+
+==================
+- [Example](#example)
+==================
+
+"readme.md" should be updated
+
+Everything is OK.
+$ doctoc readme -s > test
+...
+$ cat test
+- [Example](#example)
+```
 
 [ack]: http://beyondgrep.com/

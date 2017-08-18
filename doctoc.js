@@ -41,8 +41,10 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
   });
 
   changed.forEach(function (x) { 
-    if (!stdOut) {
-      console.log('"%s" will be updated.', x.path);
+    if (stdOut) {
+      console.error('==================\n\n"%s" should be updated', x.path)
+    } else {
+      console.error('"%s" will be updated', x.path);
       fs.writeFileSync(x.path, x.data, 'utf8');
     }
   });
