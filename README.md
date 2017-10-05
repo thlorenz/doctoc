@@ -21,6 +21,7 @@ by github or other sites via a command line flag.
   - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
   - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
   - [Printing to stdout](#printing-to-stdout)
+  - [Usage as a `git` hook](#usage-as-a-git-hook)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -138,3 +139,19 @@ By default,
 You can print to stdout by using the `-s` or `--stdout` option.
 
 [ack]: http://beyondgrep.com/
+
+### Usage as a `git` hook
+
+doctoc can be used as a [pre-commit](http://pre-commit.com) hook by using the
+following configuration:
+
+```yaml
+repos:
+-   repo: https://github.com/thlorenz/doctoc
+    sha: ...  # substitute a tagged version
+    hooks:
+    -   id: doctoc
+```
+
+This will run `doctoc` against markdown files when committing to ensure the
+TOC stays up-to-date.
