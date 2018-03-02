@@ -7,7 +7,7 @@ by github or other sites via a command line flag.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -20,6 +20,7 @@ by github or other sites via a command line flag.
   - [Specifying location of toc](#specifying-location-of-toc)
   - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
   - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
+  - [Specifying the minimum number of headings required for TOC generation](#specifying-the-minimum-number-of-headings-required-for-toc-generation)
   - [Printing to stdout](#printing-to-stdout)
   - [Usage as a `git` hook](#usage-as-a-git-hook)
 
@@ -133,6 +134,17 @@ By default,
 
 - no limit is placed on Markdown-formatted headings,
 - whereas headings from embedded HTML are limited to 4 levels.
+
+### Specifying the minimum number of headings required for TOC generation
+
+Use the `--minheaders` option to limit when a TOC is generated; e.g., `doctoc --minheaders 3 .`
+
+This allows you to only generate TOCs if there are a minimum number of headings.
+
+By default,
+
+- no minimum count is placed on headings
+- passing `0` will generate a TOC when any number of headings exist
 
 ### Printing to stdout
 

@@ -16,13 +16,13 @@ function cleanPath(path) {
   return homeExpanded.replace(/\s/g, '\\ ');
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut) {
+function transformAndSave(files, mode, maxHeaderLevel, minHeadersLevel, title, notitle, entryPrefix, stdOut) {
   console.log('\n==================\n');
 
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, title, notitle, entryPrefix);
+        , result = transform(content, mode, maxHeaderLevel, minHeadersLevel, title, notitle, entryPrefix);
       result.path = x.path;
       return result;
     });
@@ -76,7 +76,7 @@ var mode = modes['github'];
 
 var argv = minimist(process.argv.slice(2)
     , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'entryprefix' ]
+    , string: [ 'title', 't', 'maxlevel', 'm', 'entryprefix', 'minheaders' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -98,6 +98,9 @@ var stdOut = argv.s || argv.stdout
 var maxHeaderLevel = argv.m || argv.maxlevel;
 if (maxHeaderLevel && isNaN(maxHeaderLevel) || maxHeaderLevel < 0) { console.error('Max. heading level specified is not a positive number: ' + maxHeaderLevel), printUsageAndExit(true); }
 
+var minHeadersLevel = argv.m || argv.minheaders;
+if (minHeadersLevel && isNaN(minHeadersLevel) || minHeadersLevel < 0) { console.error('Min headers level specified is not a positive number: ' + minHeadersLevel), printUsageAndExit(true); }
+
 for (var i = 0; i < argv._.length; i++) {
   var target = cleanPath(argv._[i])
     , stat = fs.statSync(target)
@@ -110,7 +113,7 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut);
+  transformAndSave(files, mode, maxHeaderLevel, minHeadersLevel, title, notitle, entryPrefix, stdOut);
 
   console.log('\nEverything is OK.');
 }
