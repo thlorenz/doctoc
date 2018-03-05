@@ -49,6 +49,8 @@ by the markdown parser. Doctoc defaults to using the GitHub parser, but other
 [modes can be
 specified](#using-doctoc-to-generate-links-compatible-with-other-sites).
 
+### Ignoring individual files
+In order to ignore a specific file when running `doctoc` on an entire directory, just add `<!-- DOCTOC SKIP -->` to the top of the file you wish to ignore.
 
 ### Update existing doctoc TOCs effortlessly
 
@@ -65,14 +67,6 @@ If you want to convert only specific files, do:
     doctoc README.md
 
     doctoc CONTRIBUTING.md LICENSE.md
-
-You can use this feature to do more sophisticated things. For example, if you
-have [ack][ack] installed, you could add `<!-- DOCTOC SKIP -->` to specific
-files and then use
-
-    ack -L 'DOCTOC SKIP' | xargs doctoc
-
-to recompile only those files which don't have the DOCTOC SKIP comment.
 
 ### Using doctoc to generate links compatible with other sites
 
