@@ -74,7 +74,7 @@ function flattenSublists(list, level) {
   level = level || 0;
   list.children.forEach(function (y) {
     var link_node = y.children[0].children[0];
-    var link = link_node.href;
+    var link = link_node.url;
     array.push({link: link, name: link_node.children[0].raw, level: level});
     // add subheadings
     if (y.children.length === 2) {
