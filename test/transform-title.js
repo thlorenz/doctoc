@@ -45,7 +45,6 @@ test('\nclobber existing title', function (t) {
   t.deepEqual(
       headers.toc.split('\n')
     , [ '',
-        '',
         '- [Installation](#installation)',
         '- [API](#api)',
         '- [License](#license)',
