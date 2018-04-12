@@ -17,13 +17,13 @@ function cleanPath(path) {
   return homeExpanded.replace(/\s/g, '\\ ');
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut) {
+function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut, mainToc) {
   console.log('\n==================\n');
 
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, title, notitle, entryPrefix);
+        , result = transform(content, mode, maxHeaderLevel, title, notitle, entryPrefix, mainToc);
       result.path = x.path;
       return result;
     });
@@ -50,23 +50,25 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
     }
   });
 
-  // aggregate all tocs into a big one
-  var toc = transformed.map(function (x) {
-    // add paths to all the links
-    return md.parse(x.toc).children.filter(function (y) {
-      return y.type === md.Syntax.List;
-    }).map(function (y) {
-      var links = flattenSublists(y);
-      return links;
-    }).reduce(function (arr, arr1) {
-      return arr.concat(arr1);
-    }).map(function (link) {
-      var text = '  '.repeat(link.level) + '- [' + link.name + '](' + x.path +
-        link.link + ')';
-      return text;
-    }).join('\n');
-  }).join('');
-  return toc + '\n';
+  if (mainToc === undefined) {
+    // aggregate all tocs into a big one
+    var toc = transformed.map(function (x) {
+      // add paths to all the links
+      return md.parse(x.toc).children.filter(function (y) {
+        return y.type === md.Syntax.List;
+      }).map(function (y) {
+        var links = flattenSublists(y);
+        return links;
+      }).reduce(function (arr, arr1) {
+        return arr.concat(arr1);
+      }).map(function (link) {
+        var text = '  '.repeat(link.level) + '- [' + link.name + '](' +
+          x.path + link.link + ')';
+        return text;
+      }).join('\n');
+    }).join('');
+    return toc + '\n';
+  }
 }
 
 function flattenSublists(list, level) {
@@ -146,10 +148,9 @@ for (var i = 0; i < argv._.length; i++) {
   }
 
   mainToc += transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut);
-
   console.log('\nEverything is OK.');
 }
 
 if (argv.main) {
-  fs.writeFileSync(argv.main, mainToc);
+  transformAndSave([{ path: cleanPath(argv.main) }], mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut, mainToc);
 }
