@@ -97,8 +97,10 @@ Available modes are:
 By default, doctoc places the toc at the top of the file. You can indicate to have it placed elsewhere with the following format:
 
 ```
-<!-- START doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <!-- END doctoc -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ```
 
 You place this code directly in your .md file. For example:
