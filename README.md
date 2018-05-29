@@ -97,9 +97,8 @@ Available modes are:
 By default, doctoc places the toc at the top of the file. You can indicate to have it placed elsewhere with the following format:
 
 ```
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc -->
+<!-- END doctoc -->
 ```
 
 You place this code directly in your .md file. For example:
@@ -118,7 +117,18 @@ Here we'll discuss...
 
 ```
 
-Running doctoc will insert the toc at that location.
+Running doctoc will insert the toc at that location. Note that `doctoc --title '**Contents**'` will change the comments to be like so:
+```
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Contents**
+
+- ...
+...
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+```
+
 
 ### Specifying a custom TOC title
 
