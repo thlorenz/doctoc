@@ -66,7 +66,7 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
           x.path + link.link + ')';
         return text;
       }).join('\n');
-    }).join('');
+    }).join('\n'); // Ensure there are newlines between each toc in a directory
     return toc + '\n';
   }
 }
