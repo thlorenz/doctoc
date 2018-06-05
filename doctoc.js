@@ -17,7 +17,7 @@ function cleanPath(path) {
   return homeExpanded.replace(/\s/g, '\\ ');
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut, mainToc) {
+function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut, mainToc, saveMainOnly) {
   console.log('\n==================\n');
 
   var transformed = files
@@ -31,20 +31,22 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
     , unchanged = transformed.filter(function (x) { return !x.transformed; })
     , toc = transformed.filter(function (x) { return x.toc; })
 
-  if (stdOut) {
+  if (stdOut && (!saveMainOnly || mainToc)) {
     toc.forEach(function (x) {
       console.log(x.toc)
     })
   }
 
   unchanged.forEach(function (x) {
-    console.log('"%s" is up to date', x.path);
+    if (!saveMainOnly || mainToc) {
+      console.log('"%s" is up to date', x.path);
+    }
   });
 
   changed.forEach(function (x) {
-    if (stdOut) {
+    if (stdOut && (!saveMainOnly || mainToc)) {
       console.log('==================\n\n"%s" should be updated', x.path)
-    } else {
+    } else if (!saveMainOnly || mainToc) {
       console.log('"%s" will be updated', x.path);
       fs.writeFileSync(x.path, x.data, 'utf8');
     }
@@ -147,10 +149,13 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  mainToc += transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut);
+  mainToc += transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut, undefined, /* saveMainOnly */ argv.main);
   console.log('\nEverything is OK.');
 }
 
 if (argv.main) {
-  transformAndSave([{ path: cleanPath(argv.main) }], mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut, mainToc);
+  target = cleanPath(argv.main);
+  console.log('\nDocToccing main TOC file "%s" for %s.', target, mode);
+  transformAndSave([{ path: target }], mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut, mainToc, /* saveMainOnly */ argv.main);
+  console.log('\nEverything is OK.');
 }
