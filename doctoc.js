@@ -64,8 +64,8 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
       }).reduce(function (arr, arr1) {
         return arr.concat(arr1);
       }).map(function (link) {
-        var text = '  '.repeat(link.level) + '- [' + link.name + '](' +
-          x.path + link.link + ')';
+        var text = '  '.repeat(link.level) + entryPrefix + ' [' + link.name +
+          '](' + x.path + link.link + ')';
         return text;
       }).join('\n');
     }).join('\n'); // Ensure there are newlines between each toc in a directory
