@@ -40,7 +40,7 @@ examples.
 ### Adding toc to all files in a directory and sub directories
 
 Go into the directory that contains you local git project and type:
-    
+
     doctoc .
 
 This will update all markdown files in the current directory and all its
@@ -155,3 +155,31 @@ repos:
 
 This will run `doctoc` against markdown files when committing to ensure the
 TOC stays up-to-date.
+
+### Generating a main TOC
+
+You can use the `--main` option to generate a main TOC based on the headers in
+other files. For example, `doctoc a.md b.md --main index.md` will put a TOC in
+`index.md` of the headers in `a.md` and `b.md`, in that order.
+
+The anchors in the TOCs will have file paths attached to them. The paths will
+be:
+* As what was given to doctoc, preserving the path separators used, if the path
+  given to doctoc is to a file
+* Relative to the current directory, using the path given to doctoc as the stem
+  and using the system path separator, if the path was found in a directory
+  given to doctoc
+
+The order in which files/directories have their headers compiled into the main
+TOC is the same as their order on the command line. The files inside
+directories are processed in the order that `fs.readdirSync` returns them.
+Thus, if there is a directory `foo` containing `c.md` and `d.md`, in that
+order, running `doctoc a.md b.md ../bar/foo --main index.md` in the directory
+`bar` leaves a TOC like the following in `index.md`.
+
+```md
+- [Header from A](a.md#header-from-a)
+- [Header from B](b.md#header-from-b)
+- [Header from C](../bar/foo/c.md#header-from-c)
+- [Header from D](../bar/foo/d.md#header-from-d)
+```
