@@ -22,6 +22,7 @@ by github or other sites via a command line flag.
   - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
   - [Printing to stdout](#printing-to-stdout)
   - [Usage as a `git` hook](#usage-as-a-git-hook)
+  - [Generating a main TOC](#generating-a-main-toc)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
