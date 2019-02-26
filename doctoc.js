@@ -115,7 +115,4 @@ for (var i = 0; i < argv._.length; i++) {
   console.log('\nEverything is OK.');
 }
 
-module.exports.transform=function(content, mode, maxHeaderLevel, title, notitle, entryPrefix){
-  return transform(content, mode, maxHeaderLevel, title, notitle, entryPrefix);
-};
-
+module.exports.transform = transform;
