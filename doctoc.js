@@ -114,3 +114,5 @@ for (var i = 0; i < argv._.length; i++) {
 
   console.log('\nEverything is OK.');
 }
+
+module.exports.transform = transform;
