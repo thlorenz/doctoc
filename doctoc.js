@@ -10,10 +10,7 @@ var path      =  require('path')
   , files;
 
 function cleanPath(path) {
-  var homeExpanded = (path.indexOf('~') === 0) ? process.env.HOME + path.substr(1) : path;
-
-  // Escape all spaces
-  return homeExpanded.replace(/\s/g, '\\ ');
+  return homeExpanded = (path.indexOf('~') === 0) ? process.env.HOME + path.substr(1) : path;
 }
 
 function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut) {
