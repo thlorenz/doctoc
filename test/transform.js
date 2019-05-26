@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode, maxHeaderLevel, title, notitle, entryPrefix) {
+function check(md, anchors, options) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, title, notitle, entryPrefix)
+    var res = transform(md, options || {})
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -32,7 +32,6 @@ function check(md, anchors, mode, maxHeaderLevel, title, notitle, entryPrefix) {
     t.end()
   })
 }
-//function check() {}
 
 check(
     [ '# My Module'
@@ -167,9 +166,9 @@ check(
   , [ '**Contents**\n\n'
     , '- [Heading](#heading)\n\n\n'
     ].join('')
-  , undefined
-  , undefined
-  , '**Contents**'
+  , {
+    title: '**Contents**'
+  }
 )
 
 check(
@@ -183,8 +182,9 @@ check(
     , '- [H1h](#h1h)\n'
     , '  - [H2h](#h2h)\n\n\n'
     ].join('')
-  , undefined
-  , 2
+  , {
+    maxHeaderLevel: 2
+  }
 )
 
 check(
@@ -199,8 +199,9 @@ check(
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [H1u](#h1u)\n\n\n'
     ].join('')
-  , undefined
-  , 1
+  , {
+    maxHeaderLevel: 1
+  }
 )
 
 check(
@@ -214,8 +215,9 @@ check(
     , '- [H1html](#h1html)\n'
     , '  - [H2html](#h2html)\n\n\n'
     ].join('')
-  , undefined
-  , 2
+  , {
+    maxHeaderLevel: 2
+  }
 )
 
 
@@ -237,7 +239,7 @@ test('transforming when old toc exists', function (t) {
     , ''
     ].join('\n')
 
-  var res = transform(md)
+  var res = transform(md, {})
 
   t.ok(res.transformed, 'transforms it')     
 
@@ -302,7 +304,9 @@ check(
     ,     '        - [Method Two](#markdown-header-method-two)\n'
     ,         '            - [Main Usage](#markdown-header-main-usage)\n\n\n'
     ].join('')
-  , 'bitbucket.org'
+  , {
+    mode: 'bitbucket.org'
+  }
 )
 
 // gitlab (similar to bitbucket) both have 4-spaces indentation
@@ -325,7 +329,9 @@ check(
     ,         '            - [Main Usage](#main-usage)\n\n\n'
     ].join('')
 
-  , 'gitlab.com'
+  , {
+    mode: 'gitlab.com'
+  }
 )
 
 // check the --entryprefix flag
@@ -346,11 +352,9 @@ check(
     ,     '    * [Method Two](#method-two)\n'
     ,         '      * [Main Usage](#main-usage)\n\n\n'
     ].join('')
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , '*' // pass '*' as the prefix for toc entries
+  , {
+    entryPrefix: '*' // pass '*' as the prefix for toc entries
+  }
 )
 
 check(
@@ -370,12 +374,10 @@ check(
     ,     '    >> [Method Two](#method-two)\n'
     ,         '      >> [Main Usage](#main-usage)\n\n\n'
     ].join('')
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , '>>' // pass '>>' as the prefix for toc entries)
-  )
+  , {
+    entryPrefix: '>>' // pass '>>' as the prefix for toc entries)
+  }
+)
 
 check(
     [ '# My Module'
@@ -394,9 +396,7 @@ check(
     ,     '    1. [Method Two](#method-two)\n'
     ,         '      1. [Main Usage](#main-usage)\n\n\n'
     ].join('')
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , '1.' // pass '1.' as the prefix for toc entries
-  )
+  , {
+    entryPrefix: '1.' // pass '1.' as the prefix for toc entries
+  }
+)

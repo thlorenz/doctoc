@@ -6,7 +6,7 @@ var test = require('tap').test
 
 test('\ngiven a file with edge-case header names', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-weird-headers.md', 'utf8');
-  var headers = transform(content);
+  var headers = transform(content, {});
 
   t.deepEqual(
       headers.toc.split('\n')
@@ -23,7 +23,7 @@ test('\ngiven a file with edge-case header names', function (t) {
 
 test('\nnameless table headers', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-nameless-table-headers.md', 'utf8');
-  var headers = transform(content);
+  var headers = transform(content, {});
 
   t.deepEqual(
       headers.toc.split('\n')
