@@ -148,7 +148,7 @@ following configuration:
 ```yaml
 repos:
 -   repo: https://github.com/thlorenz/doctoc
-    sha: ...  # substitute a tagged version
+    rev: ...  # substitute a tagged version
     hooks:
     -   id: doctoc
 ```
