@@ -16,12 +16,12 @@
   "main": "doctoc.js",
   "bin": "doctoc.js",
   "dependencies": {
-    "@textlint/markdown-to-ast": "^6.1.7",
-    "anchor-markdown-header": "^0.5.7",
-    "htmlparser2": "^4.1.0",
-    "minimist": "^1.2.5",
-    "underscore": "^1.10.2",
-    "update-section": "^0.3.3"
+    "@textlint/markdown-to-ast": "~6.1.7",
+    "anchor-markdown-header": "~0.5.7",
+    "htmlparser2": "~4.1.0",
+    "minimist": "~1.2.5",
+    "underscore": "~1.10.2",
+    "update-section": "~0.3.3"
   },
   "devDependencies": {
     "tap": "^14.10.7"
