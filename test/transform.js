@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode, maxHeaderLevel, title, notitle, entryPrefix) {
+function check(md, anchors, mode, maxHeaderLevel, title, notitle, entryPrefix, entire) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, title, notitle, entryPrefix)
+    var res = transform(md, mode, maxHeaderLevel, title, notitle, entryPrefix, entire)
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -283,6 +283,75 @@ test('transforming when old toc exists', function (t) {
   ) 
   t.end()
 })
+
+test('transforming when old toc exists and --entire flag is set', function (t) {
+  var md = [ 
+      '# Header above'
+    , ''
+    , 'The above header should be ignored since it is above the existing toc'
+    , ''
+    , '<!-- START doctoc generated TOC please keep comment here to allow auto update -->'
+    , '<!-- DON\'T EDIT THIS SECTION INSTEAD RE-RUN doctoc TO UPDATE -->'
+    , '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*'
+    , ''
+    , '- [OldHeader](#oldheader)'
+    , ''
+    , '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' 
+    , '## Header'
+    , 'some content'
+    , ''
+    ].join('\n')
+
+  var res = transform(md, undefined, undefined, undefined, undefined, undefined, true)
+
+  t.ok(res.transformed, 'transforms it')     
+
+  t.deepEqual(
+      res.toc.split('\n')
+    , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
+      '',
+      '- [Header above](#header-above)',
+      '  - [Header](#header)',
+      '' ]
+    , 'replaces old toc' 
+  )
+  
+  t.deepEqual(
+      res.wrappedToc.split('\n')
+    , [ '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
+        '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
+        '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
+        '',
+        '- [Header above](#header-above)',
+        '  - [Header](#header)',
+        '',
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' 
+      ]
+    , 'wraps old toc'
+  )
+
+  t.deepEqual(
+      res.data.split('\n')
+    , [ '# Header above',
+        '',
+        'The above header should be ignored since it is above the existing toc',
+        '',
+        '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
+        '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
+        '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
+        '',
+        '- [Header above](#header-above)',
+        '  - [Header](#header)',
+        '',
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->',
+        '## Header',
+        'some content',
+        '' ]
+    , 'updates the content with the new toc and ignores header before existing toc'
+  ) 
+  t.end()
+})
+
 
 // bigbucket.org
 check(
