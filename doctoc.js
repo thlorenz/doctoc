@@ -17,6 +17,10 @@ function cleanPath(path) {
 }
 
 function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll, stdOut) {
+  if (processAll) {
+    console.log('--all flag is enabled. Including headers before the TOC location.')
+  }
+  
   console.log('\n==================\n');
 
   var transformed = files
