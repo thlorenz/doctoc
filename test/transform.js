@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode, maxHeaderLevel, title, notitle, entryPrefix, entire) {
+function check(md, anchors, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, title, notitle, entryPrefix, entire)
+    var res = transform(md, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll)
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -284,7 +284,7 @@ test('transforming when old toc exists', function (t) {
   t.end()
 })
 
-test('transforming when old toc exists and --entire flag is set', function (t) {
+test('transforming when old toc exists and --all flag is set', function (t) {
   var md = [ 
       '# Header above'
     , ''
