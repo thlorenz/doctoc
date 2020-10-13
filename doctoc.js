@@ -16,37 +16,36 @@ function cleanPath(path) {
   return homeExpanded.replace(/\s/g, '\\ ');
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut) {
+function transformAndSave(files, options) {
   console.log('\n==================\n');
 
-  var transformed = files
-    .map(function (x) {
-      var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, title, notitle, entryPrefix);
-      result.path = x.path;
-      return result;
-    });
-  var changed = transformed.filter(function (x) { return x.transformed; })
-    , unchanged = transformed.filter(function (x) { return !x.transformed; })
-    , toc = transformed.filter(function (x) { return x.toc; })
+  files.forEach(function (x) {
+    var content = fs.readFileSync(x.path, 'utf8')
+    
+    if (options.minLines) {
+      var lines = content.split('\n')
+      if(lines.length < options.minLines) {
+        console.log('"%s" will be ignored', x.path);
+        return;
+      }
+    } 
+    
+    var result = transform(content, options);
 
-  if (stdOut) {
-    toc.forEach(function (x) {
-      console.log(x.toc)
-    })
-  }
-
-  unchanged.forEach(function (x) {
-    console.log('"%s" is up to date', x.path);
-  });
-
-  changed.forEach(function (x) { 
-    if (stdOut) {
-      console.log('==================\n\n"%s" should be updated', x.path)
-    } else {
-      console.log('"%s" will be updated', x.path);
-      fs.writeFileSync(x.path, x.data, 'utf8');
+    if (result.toc && options.stdOut) {
+      console.log(result.toc)
     }
+
+    if(result.transformed) {
+      if(options.stdOut) {
+        console.log('==================\n\n"%s" should be updated', x.path)
+      } else {
+        console.log('"%s" will be updated', x.path);
+        fs.writeFileSync(x.path, result.data, 'utf8');
+      }
+    } else {
+      console.log('"%s" is up to date', x.path);
+    } 
   });
 }
 
@@ -54,7 +53,7 @@ function printUsageAndExit(isErr) {
 
   var outputFunc = isErr ? console.error : console.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlines lines] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc('  --%s\t%s', key, modes[key]);
@@ -75,8 +74,8 @@ var modes = {
 var mode = modes['github'];
 
 var argv = minimist(process.argv.slice(2)
-    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'entryprefix' ]
+  , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout'].concat(Object.keys(modes))
+    , string: [ 'title', 't', 'maxlevel', 'm', 'entryprefix', 'minlines', 'l' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -96,7 +95,26 @@ var entryPrefix = argv.entryprefix || '-';
 var stdOut = argv.s || argv.stdout
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
-if (maxHeaderLevel && isNaN(maxHeaderLevel) || maxHeaderLevel < 0) { console.error('Max. heading level specified is not a positive number: ' + maxHeaderLevel), printUsageAndExit(true); }
+if (maxHeaderLevel) {
+  maxHeaderLevel = parseInt(maxHeaderLevel);
+
+  if(isNaN(maxHeaderLevel) || maxHeaderLevel < 0) {
+    console.error('Max. heading level specified is not a positive number: ' + maxHeaderLevel);
+    printUsageAndExit(true);
+  }
+}
+
+var minLines = argv.minlines || argv.l;
+if (minLines) {
+  minLines = parseInt(minLines);
+
+  if (isNaN(minLines) || minLines < 1) {
+    console.error('Min. lines specified is not a positive number: ' + minLines);
+    printUsageAndExit(true);
+  }
+} else {
+  minLines = 30;
+}
 
 for (var i = 0; i < argv._.length; i++) {
   var target = cleanPath(argv._[i])
@@ -110,7 +128,15 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, stdOut);
+  transformAndSave(files, {
+    mode: mode,
+    maxHeaderLevel: maxHeaderLevel,
+    title: title,
+    notitle: notitle,
+    entryPrefix: entryPrefix,
+    stdOut: stdOut,
+    minLines: minLines
+  });
 
   console.log('\nEverything is OK.');
 }

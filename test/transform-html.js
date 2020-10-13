@@ -6,7 +6,10 @@ var test = require('tap').test
 
 test('\ngiven a file that includes html with header tags and maxHeaderLevel 8', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-html.md', 'utf8');
-  var headers = transform(content, 'github.com', 8);
+  var headers = transform(content, {
+    mode: 'github.com',
+    maxHeaderLevel: 8
+  });
 
   t.deepEqual(
       headers.toc.split('\n')
@@ -31,7 +34,7 @@ test('\ngiven a file that includes html with header tags and maxHeaderLevel 8', 
 
 test('\ngiven a file that includes html with header tags using default maxHeaderLevel', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-html.md', 'utf8');
-  var headers = transform(content);
+  var headers = transform(content, {});
 
   t.deepEqual(
       headers.toc.split('\n')
@@ -51,7 +54,7 @@ test('\ngiven a file that includes html with header tags using default maxHeader
 
 test('\ngiven a file with headers embedded in code', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-code.md', 'utf8');
-  var headers = transform(content);
+  var headers = transform(content, {});
 
   t.deepEqual(
       headers.toc.split('\n')
@@ -70,7 +73,7 @@ test('\ngiven a file with headers embedded in code', function (t) {
 
 test('\ngiven a file with benign backticks', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-benign-backticks.md', 'utf8');
-  var headers = transform(content);
+  var headers = transform(content, {});
 
   t.deepEqual(
       headers.toc.split('\n')

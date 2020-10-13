@@ -134,6 +134,11 @@ By default,
 - no limit is placed on Markdown-formatted headings,
 - whereas headings from embedded HTML are limited to 4 levels.
 
+### Filter files by number of lines
+By default, files with less than 30 lines will be ignored.
+
+Use `--minlines` or `--l` to change the minimum number of lines.
+
 ### Printing to stdout
 
 You can print to stdout by using the `-s` or `--stdout` option.

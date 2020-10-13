@@ -6,7 +6,10 @@ var test = require('tap').test
 
 test('\noverwrite existing title', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-custom-title.md', 'utf8');
-  var headers = transform(content, null, null, '## Table of Contents', false);
+  var headers = transform(content, {
+    title: '## Table of Contents',
+    notitle: false
+  });
 
   t.deepEqual(
       headers.toc.split('\n')
@@ -23,7 +26,9 @@ test('\noverwrite existing title', function (t) {
 
 test('\ndo not overwrite existing title', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-custom-title.md', 'utf8');
-  var headers = transform(content, null, null, null, false);
+  var headers = transform(content, {
+    notitle: false
+  });
 
   t.deepEqual(
       headers.toc.split('\n')
@@ -40,7 +45,9 @@ test('\ndo not overwrite existing title', function (t) {
 
 test('\nclobber existing title', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-custom-title.md', 'utf8');
-  var headers = transform(content, null, null, null, true);
+  var headers = transform(content, {
+    notitle: true
+  });
 
   t.deepEqual(
       headers.toc.split('\n')

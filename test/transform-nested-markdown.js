@@ -6,7 +6,10 @@ var test = require('tap').test
 
 test('\nhandle inline links and images', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-nested-markdown.md', 'utf8');
-  var headers = transform(content, null, null, '', false);
+  var headers = transform(content, {
+    title: '',
+    notitle: false
+  });
 
   t.deepEqual(
       headers.toc.split('\n')
