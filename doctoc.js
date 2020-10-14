@@ -62,7 +62,7 @@ function printUsageAndExit(isErr) {
 
   var outputFunc = isErr ? console.error : console.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--all] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--all] [--update-only] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc('  --%s\t%s', key, modes[key]);
