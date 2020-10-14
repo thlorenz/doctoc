@@ -20,6 +20,10 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
   if (processAll) {
     console.log('--all flag is enabled. Including headers before the TOC location.')
   }
+
+  if (updateOnly) {
+    console.log('--update-only flag is enabled. Only updating existing TOC.')
+  }
   
   console.log('\n==================\n');
 
