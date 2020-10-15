@@ -22,7 +22,7 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
   }
 
   if (updateOnly) {
-    console.log('--update-only flag is enabled. Only updating existing TOC.')
+    console.log('--update-only flag is enabled. Only updating files that already have a TOC.')
   }
   
   console.log('\n==================\n');
