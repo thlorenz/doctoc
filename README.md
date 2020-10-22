@@ -140,6 +140,10 @@ You can print to stdout by using the `-s` or `--stdout` option.
 
 [ack]: http://beyondgrep.com/
 
+### Only update existing ToC
+
+Use `--update-only` or `-u` to only update the existing ToC. That is, the Markdown files without ToC will be left untouched. It is good if you want to use `doctoc` with `lint-staged`.
+
 ### Usage as a `git` hook
 
 doctoc can be used as a [pre-commit](http://pre-commit.com) hook by using the
