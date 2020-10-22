@@ -10,21 +10,21 @@
   "scripts": {
     "test": "set -e; for t in test/*.js; do node $t; done"
   },
+  "files": [
+    "lib"
+  ],
   "main": "doctoc.js",
   "bin": "doctoc.js",
-  "engines": {
-    "node": ">=0.4"
-  },
   "dependencies": {
-    "@textlint/markdown-to-ast": "~6.0.9",
-    "anchor-markdown-header": "^0.5.5",
-    "htmlparser2": "~3.9.2",
-    "minimist": "~1.2.0",
-    "underscore": "~1.8.3",
-    "update-section": "^0.3.0"
+    "@textlint/markdown-to-ast": "~6.1.7",
+    "anchor-markdown-header": "~0.5.7",
+    "htmlparser2": "~4.1.0",
+    "minimist": "~1.2.5",
+    "underscore": "~1.10.2",
+    "update-section": "~0.3.3"
   },
   "devDependencies": {
-    "tap": "~10.2.1"
+    "tap": "^14.10.7"
   },
   "license": "MIT",
   "keywords": [
