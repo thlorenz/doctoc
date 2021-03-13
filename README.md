@@ -19,8 +19,10 @@ by github or other sites via a command line flag.
     - [Example](#example)
   - [Specifying location of toc](#specifying-location-of-toc)
   - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
+  - [Specifying a custom `DON'T EDIT THIS` message](#specifying-a-custom-dont-edit-this-message)
   - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
   - [Printing to stdout](#printing-to-stdout)
+  - [Only update existing ToC](#only-update-existing-toc)
   - [Usage as a `git` hook](#usage-as-a-git-hook)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -124,6 +126,10 @@ Running doctoc will insert the toc at that location.
 Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will will keep the title you specified.
 
 Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
+
+### Specifying a custom `DON'T EDIT THIS` message
+
+Use the `--edit-message` option to specify a custom message about not editing the TOC manually, and how to regenerate the section instead.
 
 ### Specifying a maximum heading level for TOC entries
 
