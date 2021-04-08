@@ -1,11 +1,11 @@
 {
-  "author": "Thorsten Lorenz <thlorenz@gmx.de> (thlorenz.com)",
+  "author": "Root Documentation Guild",
   "name": "doctoc",
   "description": "Generates TOC for markdown files of local git repo.",
   "version": "2.0.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/thlorenz/doctoc.git"
+    "url": "git://github.com/Root-App/doctoc.git"
   },
   "scripts": {
     "test": "set -e; for t in test/*.js; do node $t; done"
