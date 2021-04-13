@@ -2,11 +2,12 @@
 
 'use strict';
 
-var path      =  require('path')
-  , fs        =  require('fs')
-  , minimist  =  require('minimist')
-  , file      =  require('./lib/file')
-  , transform =  require('./lib/transform')
+var path          =  require('path')
+  , fs            =  require('fs')
+  , minimist      =  require('minimist')
+  , file          =  require('./lib/file')
+  , transform     =  require('./lib/transform')
+  , processFolder =  require('./lib/build-parent-toc')
   , files;
 
 function cleanPath(path) {
@@ -16,7 +17,7 @@ function cleanPath(path) {
   return homeExpanded.replace(/\s/g, '\\ ');
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly) {
+function addTocToFiles(files, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly) {
   if (processAll) {
     console.log('--all flag is enabled. Including headers before the TOC location.')
   }
@@ -24,7 +25,7 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
   if (updateOnly) {
     console.log('--update-only flag is enabled. Only updating files that already have a TOC.')
   }
-  
+
   console.log('\n==================\n');
 
   var transformed = files
@@ -58,11 +59,32 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
   });
 }
 
+function addParentTocs(folder) {
+  if (!fs.existsSync(folder)) {
+    console.log(`\nBuild parent directory ${folder} does not exist.`);
+    return;
+  }
+
+  const stats = fs.statSync(folder);
+
+  if (!stats.isDirectory()) {
+    console.log(`\nBuild parent directory ${folder} is actually a file.`);
+    return;
+  }
+
+  const { changeList } = processFolder({ folder });
+
+  changeList.forEach(({ path, data }) => {
+    console.log(`${path}" will be updated`);
+    fs.writeFileSync(path, data, 'utf8');
+  });
+}
+
 function printUsageAndExit(isErr) {
 
   var outputFunc = isErr ? console.error : console.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--all] [--update-only] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--all] [--update-only] [--build-parent-tocs=rootDir] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc('  --%s\t%s', key, modes[key]);
@@ -84,7 +106,7 @@ var mode = modes['github'];
 
 var argv = minimist(process.argv.slice(2)
     , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'entryprefix' ]
+    , string: [ 'title', 't', 'maxlevel', 'm', 'b', 'build-parent-tocs', 'entryprefix' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -100,6 +122,7 @@ for (var key in modes) {
 
 var title = argv.t || argv.title;
 var notitle = argv.T || argv.notitle;
+var buildParentToc = argv.b || argv['build-parent-tocs'];
 var entryPrefix = argv.entryprefix || '-';
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout
@@ -120,9 +143,14 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly);
+  addTocToFiles(files, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly);
 
   console.log('\nEverything is OK.');
+}
+
+if (buildParentToc) {
+  const parentTarget = cleanPath(buildParentToc);
+  addParentTocs(parentTarget, mode);
 }
 
 module.exports.transform = transform;
