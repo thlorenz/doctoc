@@ -1,8 +1,16 @@
 language: node_js
+
+os: linux
+
+dist: bionic
+
 node_js:
-  - 0.10
-  - 0.12
-  - 4
-  - 6
-  - 8
-  - 9
+  - 10        # Previous LST
+  - 12.18.1   # Actual LTS
+  - 14.4.0    # Latest version
+
+install: npm install
+  
+script: npm test
+
+cache: npm

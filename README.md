@@ -117,7 +117,7 @@ Running doctoc will insert the toc at that location.
 
 Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will will keep the title you specified.
 
-Alternatively, to blank out the title with a newline, use the `--notitle` option. This will simply remove the title from the TOC.
+Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
 
 ### Specifying a maximum heading level for TOC entries
 
@@ -134,6 +134,10 @@ You can print to stdout by using the `-s` or `--stdout` option.
 
 [ack]: http://beyondgrep.com/
 
+### Only update existing ToC
+
+Use `--update-only` or `-u` to only update the existing ToC. That is, the Markdown files without ToC will be left untouched. It is good if you want to use `doctoc` with `lint-staged`.
+
 ### Usage as a `git` hook
 
 doctoc can be used as a [pre-commit](http://pre-commit.com) hook by using the
@@ -142,7 +146,7 @@ following configuration:
 ```yaml
 repos:
 -   repo: https://github.com/thlorenz/doctoc
-    sha: ...  # substitute a tagged version
+    rev: ...  # substitute a tagged version
     hooks:
     -   id: doctoc
 ```
