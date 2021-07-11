@@ -20,6 +20,7 @@ by github or other sites via a command line flag.
   - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
   - [Printing to stdout](#printing-to-stdout)
   - [Usage as a `git` hook](#usage-as-a-git-hook)
+  - [Usage on CI](#usage-on-ci)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -151,3 +152,11 @@ repos:
 
 This will run `doctoc` against markdown files when committing to ensure the
 TOC stays up-to-date.
+
+### Usage on CI
+
+doctoc can be used on a CI/CD system
+to ensure that the table of contents is up to date
+and fail if it is not.
+
+Please check [formatMarkdown](https://github.com/fluidattacks/makes#formatmarkdown) on [Makes](https://github.com/fluidattacks/makes) for more information.
