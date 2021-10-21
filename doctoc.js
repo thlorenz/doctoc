@@ -2,7 +2,8 @@
 
 'use strict';
 
-var path      =  require('path')
+var os        = require('os')
+  , path      = require('path')
   , fs        =  require('fs')
   , minimist  =  require('minimist')
   , file      =  require('./lib/file')
@@ -14,6 +15,28 @@ function cleanPath(path) {
 
   // Escape all spaces
   return homeExpanded.replace(/\s/g, '\\ ');
+}
+
+function readFile(path, encoding) {
+  var content = fs.readFileSync(path, encoding);
+
+  // On Windows platform, convert CRLF line endings to LF line endings.
+  // The line ending style is unified for easier handling.
+  if (os.EOL === '\r\n') {
+    content = content.replace(/\r\n/g, '\n');
+  }
+
+  return content;
+}
+
+function writeFile(path, data, encoding) {
+
+  // On Windows platform, convert LF line endings to CRLF line endings.
+  if (os.EOL === '\r\n') {
+    data = data.replace(/(?<!\r)\n/g, '\r\n');
+  }
+
+  fs.writeFileSync(path, data, encoding);
 }
 
 function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly) {
@@ -29,7 +52,7 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
 
   var transformed = files
     .map(function (x) {
-      var content = fs.readFileSync(x.path, 'utf8')
+      var content = readFile(x.path, 'utf8')
         , result = transform(content, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll, updateOnly);
       result.path = x.path;
       return result;
@@ -53,7 +76,7 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, entryPref
       console.log('==================\n\n"%s" should be updated', x.path)
     } else {
       console.log('"%s" will be updated', x.path);
-      fs.writeFileSync(x.path, x.data, 'utf8');
+      writeFile(x.path, x.data, 'utf8');
     }
   });
 }
