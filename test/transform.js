@@ -76,8 +76,9 @@ check(
     [ 'My Module'
     , '========='
     , 'Some text here'
+    , ''
     , 'API'
-    , '---------'
+    , '---'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [My Module](#my-module)\n'
