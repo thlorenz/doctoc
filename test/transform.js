@@ -76,6 +76,7 @@ check(
     [ 'My Module'
     , '========='
     , 'Some text here'
+    , ''
     , 'API'
     , '---------'
     ].join('\n')
