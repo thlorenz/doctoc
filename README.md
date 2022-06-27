@@ -20,6 +20,7 @@ by github or other sites via a command line flag.
   - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
   - [Printing to stdout](#printing-to-stdout)
   - [Usage as a `git` hook](#usage-as-a-git-hook)
+  - [Docker image](#docker-image)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -151,3 +152,7 @@ repos:
 
 This will run `doctoc` against markdown files when committing to ensure the
 TOC stays up-to-date.
+
+### Docker image
+
+There's an unofficial Docker image project for doctoc, if you'd like to use doctoc via Docker or other container based CI/CD pipeline, you can take a look at [PeterDaveHello/docker-doctoc](https://github.com/PeterDaveHello/docker-doctoc)
