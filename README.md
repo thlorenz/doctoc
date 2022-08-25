@@ -1,4 +1,4 @@
-# DocToc [![build status](https://secure.travis-ci.org/thlorenz/doctoc.svg)](http://travis-ci.org/thlorenz/doctoc)
+# DocToc [![Node.js CI](https://github.com/thlorenz/doctoc/actions/workflows/node.js.yml/badge.svg)](https://github.com/thlorenz/doctoc/actions/workflows/node.js.yml)
 
 Generates table of contents for markdown files inside local git repository. Links are compatible with anchors generated
 by github or other sites via a command line flag.
