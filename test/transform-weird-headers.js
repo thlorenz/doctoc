@@ -60,3 +60,23 @@ test('\nemoji-first header names', function (t) {
   t.end()
 })
 
+
+test('\nformatted headers', function (t) {
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-formatted-headers.md', 'utf8');
+  var headers = transform(content);
+
+  t.same(
+      headers.toc.split('\n')
+    , [ '',
+        '- [foo _bar_](#foo-bar)',
+        '- [foo **baz**](#foo-baz)',
+        '- [foo ~baf~](#foo-baf)',
+        '- [bar_foo](#bar_foo)',
+        '- [baz_foo_](#baz_foo_)',
+        '- [_foo_bax_](#foo_bax)',
+        '' ]
+    , 'generates a correct toc when readme includes formatting in the heading title'
+  )
+
+  t.end()
+})
