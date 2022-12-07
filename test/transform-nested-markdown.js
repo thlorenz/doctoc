@@ -8,7 +8,7 @@ test('\nhandle inline links and images', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-nested-markdown.md', 'utf8');
   var headers = transform(content, null, null, '', false);
 
-  t.deepEqual(
+  t.same(
       headers.toc.split('\n')
     , [
         '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
