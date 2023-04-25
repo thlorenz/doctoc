@@ -7,23 +7,27 @@ by github or other sites via a command line flag.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
-  - [Update existing doctoc TOCs effortlessly](#update-existing-doctoc-tocs-effortlessly)
-  - [Adding toc to individual files](#adding-toc-to-individual-files)
-    - [Examples](#examples)
-  - [Using doctoc to generate links compatible with other sites](#using-doctoc-to-generate-links-compatible-with-other-sites)
-    - [Example](#example)
-  - [Specifying location of toc](#specifying-location-of-toc)
-  - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
-  - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
-  - [Printing to stdout](#printing-to-stdout)
-  - [Usage as a `git` hook](#usage-as-a-git-hook)
-  - [Docker image](#docker-image)
+- [DocToc ](#doctoc-)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
+    - [Ignoring individual files](#ignoring-individual-files)
+    - [Update existing doctoc TOCs effortlessly](#update-existing-doctoc-tocs-effortlessly)
+    - [Adding toc to individual files](#adding-toc-to-individual-files)
+      - [Examples](#examples)
+    - [Using doctoc to generate links compatible with other sites](#using-doctoc-to-generate-links-compatible-with-other-sites)
+      - [Example](#example)
+    - [Specifying location of toc](#specifying-location-of-toc)
+    - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
+    - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
+    - [Printing to stdout](#printing-to-stdout)
+    - [Only update existing ToC](#only-update-existing-toc)
+    - [Usage as a `git` hook](#usage-as-a-git-hook)
+    - [Docker image](#docker-image)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+> This fork adds MDX support.
 
 ## Installation
 

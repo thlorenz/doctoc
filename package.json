@@ -1,11 +1,11 @@
 {
   "author": "Thorsten Lorenz <thlorenz@gmx.de> (thlorenz.com)",
-  "name": "doctoc",
+  "name": "@chris-dura/doctoc",
   "description": "Generates TOC for markdown files of local git repo.",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/thlorenz/doctoc.git"
+    "url": "git://github.com/chris-dura/doctoc.git"
   },
   "scripts": {
     "test": "set -e; for t in test/*.js; do node $t; done"
