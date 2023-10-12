@@ -4,13 +4,14 @@
 
 var path      =  require('path')
   , fs        =  require('fs')
+  , os        =  require('os')
   , minimist  =  require('minimist')
   , file      =  require('./lib/file')
   , transform =  require('./lib/transform')
   , files;
 
 function cleanPath(path) {
-  var homeExpanded = (path.indexOf('~') === 0) ? process.env.HOME + path.substr(1) : path;
+  var homeExpanded = (path.indexOf('~') === 0) ? path.join(os.homedir() + path.substr(1)) : path;
 
   // Escape all spaces
   return homeExpanded.replace(/\s/g, '\\ ');
