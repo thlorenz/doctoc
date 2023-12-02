@@ -155,7 +155,9 @@ TOC stays up-to-date.
 
 ### Docker image
 
-There's an unofficial Docker image project for doctoc, if you'd like to use doctoc via Docker or other container based CI/CD pipeline, you can take a look at [PeterDaveHello/docker-doctoc](https://github.com/PeterDaveHello/docker-doctoc). You can create an GitHub workflow to automatically update you table of contents. For instance, if you want to automatically update the table of contents of your `README.md` file, the following command should work (you must give read and write permission to the worflows of your repository):
+There's an unofficial Docker image project for doctoc, if you'd like to use doctoc via Docker or other container based CI/CD pipeline, you can take a look at [PeterDaveHello/docker-doctoc](https://github.com/PeterDaveHello/docker-doctoc). You can create an GitHub workflow to automatically update you table of contents.
+
+For instance, if you want to automatically update the table of contents of your `README.md` file, the following command should work (you must give read and write permission to the worflows of your repository):
 ```yaml
 name: Update Table of Contents
 
