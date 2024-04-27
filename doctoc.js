@@ -114,7 +114,7 @@ for (var i = 0; i < argv._.length; i++) {
 
   if (stat.isDirectory()) {
     console.log ('\nDocToccing "%s" and its sub directories for %s.', target, mode);
-    files = file.findMarkdownFiles(target);
+    files = file.findMarkdownFiles(target, syntax);
   } else {
     console.log ('\nDocToccing single file "%s" for %s.', target, mode);
     files = [{ path: target }];
