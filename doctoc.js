@@ -62,7 +62,7 @@ function printUsageAndExit(isErr) {
 
   var outputFunc = isErr ? console.error : console.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--all] [--update-only] [--syntax (md|mdx)] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--all] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc('  --%s\t%s', key, modes[key]);
@@ -72,6 +72,7 @@ function printUsageAndExit(isErr) {
   process.exit(isErr ? 2 : 0);
 }
 
+var supportedSyntaxes = ['md', 'mdx']
 var modes = {
     bitbucket : 'bitbucket.org'
   , nodejs    : 'nodejs.org'
@@ -92,6 +93,11 @@ if (argv.h || argv.help) {
   printUsageAndExit();
 }
 
+if(argv['syntax']!==undefined && !supportedSyntaxes.includes(argv['syntax'])){
+  console.error('Unknown syntax:',argv['syntax'])
+  console.error('\nSupported Syntaxes are:', supportedSyntaxes.join(", "))
+  process.exit(2)
+}
 for (var key in modes) {
   if (argv[key]) {
     mode = modes[key];
