@@ -104,7 +104,7 @@ var entryPrefix = argv.entryprefix || '-';
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout
 var updateOnly = argv.u || argv['update-only']
-var syntax = argv['syntax'] || "md"
+var syntax = argv['syntax'] || 'md'
 var maxHeaderLevel = argv.m || argv.maxlevel;
 if (maxHeaderLevel && isNaN(maxHeaderLevel) || maxHeaderLevel < 0) { console.error('Max. heading level specified is not a positive number: ' + maxHeaderLevel), printUsageAndExit(true); }
 
