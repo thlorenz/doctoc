@@ -93,9 +93,9 @@ if (argv.h || argv.help) {
   printUsageAndExit();
 }
 
-if(argv['syntax']!==undefined && !supportedSyntaxes.includes(argv['syntax'])){
-  console.error('Unknown syntax:',argv['syntax'])
-  console.error('\nSupported Syntaxes are:', supportedSyntaxes.join(", "))
+if (argv['syntax'] !== undefined && !supportedSyntaxes.includes(argv['syntax'])) {
+  console.error('Unknown syntax:', argv['syntax'])
+  console.error('Supported options:', supportedSyntaxes.join(", "))
   process.exit(2)
 }
 for (var key in modes) {
