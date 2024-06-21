@@ -28,7 +28,7 @@ function check(md, anchors, mode, maxHeaderLevel, title, notitle, entryPrefix, p
       .concat(mdLines);
 
     t.ok(res.transformed, 'transforms it');
-    t.deepEqual(data, rig, 'generates correct anchors')
+    t.same(data, rig, 'generates correct anchors')
     t.end()
   })
 }
@@ -242,7 +242,7 @@ test('transforming when old toc exists', function (t) {
 
   t.ok(res.transformed, 'transforms it')     
 
-  t.deepEqual(
+  t.same(
       res.toc.split('\n')
     , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
       '',
@@ -251,7 +251,7 @@ test('transforming when old toc exists', function (t) {
     , 'replaces old toc' 
   )
   
-  t.deepEqual(
+  t.same(
       res.wrappedToc.split('\n')
     , [ '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
         '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
@@ -264,7 +264,7 @@ test('transforming when old toc exists', function (t) {
     , 'wraps old toc'
   )
 
-  t.deepEqual(
+  t.same(
       res.data.split('\n')
     , [ '# Header above',
         '',
@@ -307,7 +307,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
 
   t.ok(res.transformed, 'transforms it')     
 
-  t.deepEqual(
+  t.same(
       res.toc.split('\n')
     , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
       '',
@@ -317,7 +317,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
     , 'replaces old toc' 
   )
   
-  t.deepEqual(
+  t.same(
       res.wrappedToc.split('\n')
     , [ '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
         '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
@@ -331,7 +331,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
     , 'wraps old toc'
   )
 
-  t.deepEqual(
+  t.same(
       res.data.split('\n')
     , [ '# Header above',
         '',
