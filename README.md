@@ -38,7 +38,7 @@ examples.
 
 ### Adding toc to all files in a directory and sub directories
 
-Go into the directory that contains you local git project and type:
+Go into the directory that contains your local git project and type:
     
     doctoc .
 
