@@ -354,7 +354,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
 })
 
 
-// bigbucket.org
+// bitbucket.org
 check(
     [ '# My Module'
     , 'Some text here'
