@@ -89,14 +89,14 @@ Available modes are:
 
 By default, doctoc places the toc at the top of the file. You can indicate to have it placed elsewhere with the following format:
 
-```
+```markdown
 <!-- START doctoc -->
 <!-- END doctoc -->
 ```
 
 You place this code directly in your .md file. For example:
 
-```
+```markdown
 // my_new_post.md
 Here we are, introducing the post. It's going to be great!
 But first: a TOC for easy reference.
