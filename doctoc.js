@@ -11,7 +11,7 @@ var path = require("path"),
   files;
 
 function cleanPath(filePath) {
-  var homeExpanded = (filePath.indexOf('~') === 0) ? path.join(os.homedir() + filePath.substr(1)) : filePath;
+  var homeExpanded = (filePath.indexOf('~') === 0) ? path.join(os.homedir(), filePath.substr(1)) : filePath;
 
   return homeExpanded;
 }
