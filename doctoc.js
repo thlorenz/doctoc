@@ -10,8 +10,8 @@ var path      =  require('path')
   , transform =  require('./lib/transform')
   , files;
 
-function cleanPath(path) {
-  var homeExpanded = (path.indexOf('~') === 0) ? path.join(os.homedir() + path.substr(1)) : path;
+function cleanPath(filepath) {
+  var homeExpanded = (filepath.indexOf('~') === 0) ? path.join(os.homedir(), filepath.substr(1)) : filepath;
 
   // Escape all spaces
   return homeExpanded.replace(/\s/g, '\\ ');
