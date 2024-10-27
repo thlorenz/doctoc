@@ -6,9 +6,7 @@ README to test doctoc with user-specified titles.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [Installation](#installation)
-- [API](#api)
-- [License](#license)
+Out of date
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
