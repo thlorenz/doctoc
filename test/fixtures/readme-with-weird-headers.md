@@ -4,8 +4,7 @@ README to test doctoc with edge-case headers.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [hasOwnProperty](#hasownproperty)
-- [something else](#something-else)
+Out of date
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
