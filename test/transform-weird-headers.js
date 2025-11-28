@@ -8,7 +8,7 @@ test('\ngiven a file with edge-case header names', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-weird-headers.md', 'utf8');
   var headers = transform(content);
 
-  t.deepEqual(
+  t.same(
       headers.toc.split('\n')
     , [ '## Table of Contents',
         '',
@@ -25,7 +25,7 @@ test('\nnameless table headers', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-nameless-table-headers.md', 'utf8');
   var headers = transform(content);
 
-  t.deepEqual(
+  t.same(
       headers.toc.split('\n')
     , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
         '',
