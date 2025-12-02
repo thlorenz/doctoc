@@ -15,7 +15,7 @@ function cleanPath(path) {
   return homeExpanded;
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, title, notitle, noh1, entryPrefix, processAll, stdOut, updateOnly) {
+function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly) {
   if (processAll) {
     console.log('--all flag is enabled. Including headers before the TOC location.')
   }
@@ -29,7 +29,7 @@ function transformAndSave(files, mode, maxHeaderLevel, title, notitle, noh1, ent
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, title, notitle, noh1, entryPrefix, processAll, updateOnly);
+        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, updateOnly);
       result.path = x.path;
       return result;
     });
@@ -82,8 +82,8 @@ var modes = {
 var mode = modes['github'];
 
 var argv = minimist(process.argv.slice(2)
-    , { boolean: [ 'h', 'help', 'H', 'noh1', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'entryprefix' ]
+    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only'].concat(Object.keys(modes))
+    , string: [ 'title', 't', 'maxlevel', 'm', 'minHeaderLevel', 'l', 'entryprefix' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -99,7 +99,6 @@ for (var key in modes) {
 
 var title = argv.t || argv.title;
 var notitle = argv.T || argv.notitle;
-var noh1 = argv.H || argv.noh1;
 var entryPrefix = argv.entryprefix || '-';
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout
@@ -107,6 +106,10 @@ var updateOnly = argv.u || argv['update-only']
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
 if (maxHeaderLevel && isNaN(maxHeaderLevel) || maxHeaderLevel < 0) { console.error('Max. heading level specified is not a positive number: ' + maxHeaderLevel), printUsageAndExit(true); }
+
+var minHeaderLevel = argv.l || argv.minlevel;
+if (!minHeaderLevel) { minHeaderLevel = 1; }
+else if (minHeaderLevel && isNaN(minHeaderLevel) || minHeaderLevel < 0) { console.error('Min. heading level specified is not a positive number: ' + minHeaderLevel), printUsageAndExit(true); }
 
 for (var i = 0; i < argv._.length; i++) {
   var target = cleanPath(argv._[i])
@@ -120,7 +123,7 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, title, notitle, noh1, entryPrefix, processAll, stdOut, updateOnly);
+  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly);
 
   console.log('\nEverything is OK.');
 }
