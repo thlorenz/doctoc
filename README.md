@@ -1,4 +1,4 @@
-# DocToc [![Node.js CI](https://github.com/thlorenz/doctoc/actions/workflows/node.js.yml/badge.svg)](https://github.com/thlorenz/doctoc/actions/workflows/node.js.yml) ![NPM Version](https://img.shields.io/npm/v/doctoc?logo=Npm&logoColor=%23CB3837&color=%23CB3837&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fdoctoc) ![NPM Downloads](https://img.shields.io/npm/dw/doctoc?logo=npm&logoColor=%23CB3837&color=%23CB3837&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fdoctoc)
+# DocToc [![Node.js CI](https://github.com/thlorenz/doctoc/actions/workflows/node.js.yml/badge.svg)](https://github.com/thlorenz/doctoc/actions/workflows/node.js.yml) [![NPM Version](https://img.shields.io/npm/v/doctoc?logo=Npm&logoColor=%23CB3837&color=%23CB3837)](https://www.npmjs.com/package/doctoc) [![NPM Downloads](https://img.shields.io/npm/dw/doctoc?logo=npm&logoColor=%23CB3837&color=%23CB3837)](https://www.npmjs.com/package/doctoc)
 
 Generates table of contents for markdown files inside local git repository. Links are compatible with anchors generated
 by github or other sites via a command line flag.
