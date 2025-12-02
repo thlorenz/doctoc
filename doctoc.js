@@ -105,11 +105,14 @@ var stdOut = argv.s || argv.stdout
 var updateOnly = argv.u || argv['update-only']
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
-if (maxHeaderLevel && isNaN(maxHeaderLevel) || maxHeaderLevel < 0) { console.error('Max. heading level specified is not a positive number: ' + maxHeaderLevel), printUsageAndExit(true); }
+if (maxHeaderLevel && isNaN(maxHeaderLevel)) { console.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
 
 var minHeaderLevel = argv.l || argv.minlevel;
 if (!minHeaderLevel) { minHeaderLevel = 1; }
 else if (minHeaderLevel && isNaN(minHeaderLevel) || minHeaderLevel < 0) { console.error('Min. heading level specified is not a positive number: ' + minHeaderLevel), printUsageAndExit(true); }
+
+if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { console.error('Max. heading level: ' + maxHeaderLevel + ' is less than the defined Min. heading level: ' + minHeaderLevel), printUsageAndExit(true); }
+
 
 for (var i = 0; i < argv._.length; i++) {
   var target = cleanPath(argv._[i])
