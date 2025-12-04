@@ -83,7 +83,7 @@ var mode = modes['github'];
 
 var argv = minimist(process.argv.slice(2)
     , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'l', 'entryprefix' ]
+    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'n', 'entryprefix' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -107,7 +107,7 @@ var updateOnly = argv.u || argv['update-only']
 var maxHeaderLevel = argv.m || argv.maxlevel;
 if (maxHeaderLevel && isNaN(maxHeaderLevel)) { console.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
 
-var minHeaderLevel = argv.l || argv.minlevel;
+var minHeaderLevel = argv.n || argv.minlevel;
 if (!minHeaderLevel) { minHeaderLevel = 1; }
 else if (minHeaderLevel && isNaN(minHeaderLevel) || minHeaderLevel < 0) { console.error('Min. heading level specified is not a positive number: ' + minHeaderLevel), printUsageAndExit(true); }
 else if (minHeaderLevel && minHeaderLevel > 2) { console.error('Min. heading level: ' + minHeaderLevel + ' is not currently supported as greater than 2'), printUsageAndExit(true); }
