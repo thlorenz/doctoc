@@ -194,7 +194,7 @@ check(
     , '## H2h'
     , '### H3h'
     , ''
-    , 'Max. level test - hashed'
+    , 'Different Min. & Max. level test - hashed'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [H2h](#h2h)\n'
@@ -210,7 +210,7 @@ check(
     , '## H2h'
     , '### H3h'
     , ''
-    , 'Max. level test - hashed'
+    , 'Same Max. & Min. level (not 1) test - hashed'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [H2h](#h2h)\n\n\n'
@@ -243,7 +243,7 @@ check(
     , 'H2u'
     , '---'
     , ''
-    , 'Max. level test - underlined'
+    , 'Min. & Max. level both 1 test - underlined'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [H1u](#h1u)\n\n\n'

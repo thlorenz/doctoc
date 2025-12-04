@@ -124,7 +124,7 @@ Use the `--minlevel` option to limit TOC entries to headings only at or above th
 
 By default,
 
-- if not set the min level used is 1
+- the min level used is 1 if it is not set
 
 Note: Currently supported values are only 1 and 2.
 
