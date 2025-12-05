@@ -14,6 +14,7 @@ by github or other sites via a command line flag.
   - [Max. heading level](#max-heading-level)
   - [Include all headings](#include-all-headings)
   - [Min. ToC items](#min-toc-items)
+  - [Pad table of contents title](#pad-table-of-contents-title)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
@@ -77,6 +78,14 @@ Use the `--mintocitems` option to specify the minimum items required to be in a 
 By default,
 
 - The min items is set to 1
+
+### Pad table of contents title
+
+Use the `--padtitle` option to add a padding line above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --padtitle true .`
+
+By default,
+
+- no padding is added above the table of contents title
 
 ## Usage
 
