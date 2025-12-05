@@ -176,6 +176,14 @@ Here we'll discuss...
 Use the `--dryrun` option to not write changes to files but instead return an exit code of 1 to indicates files are out of date and should be updated.
 This is useful CI environments where you want to check if your docs are up to date as part of your build process.
 
+### Specifying the required number of headers to trigger toc generation
+
+Use the `--requiredHeaders` option to specify the minimum items required to be in a table of contents for it to be included in a markdown page.
+
+By default,
+
+- The required items is set to 1
+
 ### Printing to stdout
 
 You can print to stdout by using the `-s` or `--stdout` option.

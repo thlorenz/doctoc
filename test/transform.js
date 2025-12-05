@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll) {
+function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, requiredHeaders, title, notitle, entryPrefix, processAll) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll)
+    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, requiredHeaders, title, notitle, entryPrefix, processAll)
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -171,6 +171,7 @@ check(
   , undefined
   , undefined
   , undefined
+  , undefined
   , '**Contents**'
 )
 
@@ -210,6 +211,20 @@ check(
     , '## H2h'
     , '### H3h'
     , ''
+    , 'Not enough required items - hashed'
+    ].join('\n')
+  , [ ''
+    ].join('')
+  , undefined
+  , 2
+  , 3
+)
+
+check(
+    [ '# H1h'
+    , '## H2h'
+    , '### H3h'
+    , ''
     , 'Same Max. & Min. level (not 1) test - hashed'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
@@ -218,6 +233,25 @@ check(
   , undefined
   , 2
   , 2
+)
+
+check(
+    [ '# H1h'
+    , '## H2a'
+    , '### H3h'
+    , '## H2b'
+    , ''
+    , 'Enough required items - hashed'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [H1h](#h1h)\n'
+    , '  - [H2a](#h2a)\n'
+    , '  - [H2b](#h2b)\n\n\n'
+    ].join('')
+  , undefined
+  , 2
+  , undefined
+  , 3
 )
 
 check(
@@ -352,7 +386,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
     , ''
     ].join('\n')
 
-  var res = transform(md, undefined, undefined, undefined, undefined, undefined, undefined, true)
+  var res = transform(md, undefined, undefined, undefined, undefined, undefined, undefined, undefined, true)
 
   t.ok(res.transformed, 'transforms it')     
 
@@ -470,6 +504,7 @@ check(
   , undefined
   , undefined
   , undefined
+  , undefined
   , '*' // pass '*' as the prefix for toc entries
 )
 
@@ -495,6 +530,7 @@ check(
   , undefined
   , undefined
   , undefined
+  , undefined
   , '>>' // pass '>>' as the prefix for toc entries)
   )
 
@@ -515,6 +551,7 @@ check(
     ,     '    1. [Method Two](#method-two)\n'
     ,         '      1. [Main Usage](#main-usage)\n\n\n'
     ].join('')
+  , undefined
   , undefined
   , undefined
   , undefined
