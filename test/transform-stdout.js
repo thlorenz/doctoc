@@ -7,13 +7,13 @@ var test = require('tap').test,
 
 test('\nshould print to stdout with --stdout option', function (t) {
 
-    exec('node doctoc.js test/fixtures/readme-with-custom-title.md --stdout', function (error, stdout, stderr) {
+    exec('node doctoc.js test/fixtures/readme-with-custom-title.md --stdout --loglevel=trace', function (error, stdout, stderr) {
       if (error) {
         console.error('exec error: ', error);
         return;
       }
       t.deepEqual(stdout
-        , fs.readFileSync(__dirname + '/fixtures/stdout.log', 'utf8')
+        , fs.readFileSync(__dirname + '/fixtures/stdout_trace.log', 'utf8')
         , 'spits out the correct table of contents')
 
       t.end()
@@ -22,13 +22,28 @@ test('\nshould print to stdout with --stdout option', function (t) {
 
 test('\nshould print to stdout with -s option', function (t) {
 
-    exec('node doctoc.js test/fixtures/readme-with-custom-title.md -s', function (error, stdout, stderr) {
+    exec('node doctoc.js test/fixtures/readme-with-custom-title.md -s --loglevel=trace', function (error, stdout, stderr) {
+      if (error) {
+        console.error('exec error: ', error);
+        return;
+      }
+      t.same(stdout
+        , fs.readFileSync(__dirname + '/fixtures/stdout_trace.log', 'utf8')
+        , 'spits out the correct table of contents')
+
+      t.end()
+    })
+})
+
+test('\nshould print to stdout with --stdout option and default logging aka info', function (t) {
+
+    exec('node doctoc.js test/fixtures/readme-with-custom-title.md --stdout', function (error, stdout, stderr) {
       if (error) {
         console.error('exec error: ', error);
         return;
       }
       t.deepEqual(stdout
-        , fs.readFileSync(__dirname + '/fixtures/stdout.log', 'utf8')
+        , fs.readFileSync(__dirname + '/fixtures/stdout_info.log', 'utf8')
         , 'spits out the correct table of contents')
 
       t.end()
