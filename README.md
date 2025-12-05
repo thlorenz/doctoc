@@ -118,6 +118,16 @@ Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g
 
 Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
 
+### Specifying a minimum heading level for TOC entries
+
+Use the `--minlevel` option to limit TOC entries to headings only at or above the specified level; e.g., `doctoc --minlevel 2 .`
+
+By default,
+
+- the min level used is 1 if it is not set
+
+Note: Currently supported values are only 1 and 2.
+
 ### Specifying a maximum heading level for TOC entries
 
 Use the `--maxlevel` option to limit TOC entries to headings only up to the specified level; e.g., `doctoc --maxlevel 3 .`
