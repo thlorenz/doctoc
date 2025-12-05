@@ -110,7 +110,18 @@ Here we'll discuss...
 
 ```
 
-Running doctoc will insert the toc at that location.
+Running doctoc will insert the toc at that location. Note that `doctoc --title '**Contents**'` will change the comments to be like so:
+```
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Contents**
+
+- ...
+...
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+```
+
 
 ### Specifying a custom TOC title
 
