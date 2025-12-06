@@ -16,7 +16,7 @@
   "main": "doctoc.js",
   "bin": "doctoc.js",
   "dependencies": {
-    "@textlint/markdown-to-ast": "^12.1.1",
+    "@textlint/markdown-to-ast": "^12.6.1",
     "anchor-markdown-header": "^0.7.0",
     "htmlparser2": "^7.2.0",
     "minimist": "^1.2.6",
