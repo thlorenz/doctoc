@@ -10,6 +10,7 @@ by github or other sites via a command line flag.
 - [Installation](#installation)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
+  - [Ignoring individual files](#ignoring-individual-files)
   - [Update existing doctoc TOCs effortlessly](#update-existing-doctoc-tocs-effortlessly)
   - [Adding toc to individual files](#adding-toc-to-individual-files)
     - [Examples](#examples)
@@ -17,13 +18,14 @@ by github or other sites via a command line flag.
     - [Example](#example)
   - [Specifying location of toc](#specifying-location-of-toc)
   - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
+  - [Specifying a minimum heading level for TOC entries](#specifying-a-minimum-heading-level-for-toc-entries)
   - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
   - [Printing to stdout](#printing-to-stdout)
+  - [Only update existing ToC](#only-update-existing-toc)
   - [Usage as a `git` hook](#usage-as-a-git-hook)
   - [Docker image](#docker-image)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 
 ## Installation
 
@@ -49,6 +51,7 @@ by the markdown parser. Doctoc defaults to using the GitHub parser, but other
 specified](#using-doctoc-to-generate-links-compatible-with-other-sites).
 
 ### Ignoring individual files
+
 In order to ignore a specific file when running `doctoc` on an entire directory, just add `<!-- DOCTOC SKIP -->` to the top of the file you wish to ignore.
 
 ### Update existing doctoc TOCs effortlessly
