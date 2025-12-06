@@ -1,4 +1,4 @@
-name: Create Release when Tag is Pushed
+name: Release pakage to NPM & Github
 
 on:
   push:
@@ -20,7 +20,9 @@ jobs:
       
       - run: npm version ${{ github.ref_name }} --no-git-tag-version
 
-      - run: npm ci
+      - run: npm install
+
+      - run: npm test
 
       - run: npm pack
 
