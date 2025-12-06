@@ -1,4 +1,4 @@
-name: Create Release when Tag is Pushed
+name: Release pakage to NPM & Github
 
 on:
   push:
