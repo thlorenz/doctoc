@@ -18,9 +18,15 @@ jobs:
           node-version: 22.x
           cache: 'npm'
       
+      - run: npm version ${{ github.ref_name }} --no-git-tag-version
+
       - run: npm ci
 
       - run: npm pack
+
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Release
         uses: softprops/action-gh-release@v2
