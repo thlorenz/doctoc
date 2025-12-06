@@ -11,6 +11,6 @@ DocToccing single file "test/fixtures/readme-with-custom-title.md" for github.co
 
 ==================
 
-"test/fixtures/readme-with-custom-title.md" should be updated
+"test/fixtures/readme-with-custom-title.md" is up to date
 
 Everything is OK.
