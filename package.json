@@ -24,7 +24,7 @@
     "update-section": "^0.3.3"
   },
   "devDependencies": {
-    "tap": "^16.0.1"
+    "tap": "^21.5.0"
   },
   "license": "MIT",
   "keywords": [

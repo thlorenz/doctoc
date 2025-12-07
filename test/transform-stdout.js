@@ -12,7 +12,7 @@ test('\nshould print to stdout with --stdout option', function (t) {
         console.error('exec error: ', error);
         return;
       }
-      t.deepEqual(stdout
+      t.same(stdout
         , fs.readFileSync(__dirname + '/fixtures/stdout.md', 'utf8')
         , 'spits out the correct table of contents')
 
@@ -27,7 +27,7 @@ test('\nshould print to stdout with -s option', function (t) {
         console.error('exec error: ', error);
         return;
       }
-      t.deepEqual(stdout
+      t.same(stdout
         , fs.readFileSync(__dirname + '/fixtures/stdout.md', 'utf8')
         , 'spits out the correct table of contents')
 
