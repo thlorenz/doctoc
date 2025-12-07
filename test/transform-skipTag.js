@@ -8,7 +8,7 @@ test('\nskip tag non first line transform', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-skipTag.md', 'utf8');
   var transformedContent = transform(content);
 
-  t.deepEqual(
+  t.same(
     transformedContent.toc
     , undefined
     , 'skip correct file'
