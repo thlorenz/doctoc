@@ -16,3 +16,4 @@ npm-debug.log
 samples
 tmp_samples
 .idea
+.tap
