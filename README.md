@@ -20,6 +20,7 @@ by github or other sites via a command line flag.
   - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
   - [Specifying a minimum heading level for TOC entries](#specifying-a-minimum-heading-level-for-toc-entries)
   - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
+  - [Performing a dry run](#performing-a-dry-run)
   - [Printing to stdout](#printing-to-stdout)
   - [Only update existing ToC](#only-update-existing-toc)
   - [Usage as a `git` hook](#usage-as-a-git-hook)
