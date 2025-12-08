@@ -17,3 +17,4 @@ samples
 tmp_samples
 !test/fixtures/*.log
 .idea
+.tap
