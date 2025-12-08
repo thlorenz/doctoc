@@ -143,7 +143,7 @@ By default,
 ### Performing a dry run
 
 Use the `--dryrun` option to not write changes to files but instead return an exit code of 1 to indicates files are out of date and should be updated.
-This is useful ci environments where you want to check if your docs are upto date as part of your build process.
+This is useful CI environments where you want to check if your docs are up to date as part of your build process.
 
 ### Printing to stdout
 

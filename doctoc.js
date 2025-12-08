@@ -64,7 +64,6 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, no
     }
   });
   if (dryRun && changed.length > 0) {
-    console.log('--dryrun flag is enabled. Files need to be updated.');
     process.exitCode = 1;
   }
 }
