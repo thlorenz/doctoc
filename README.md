@@ -9,7 +9,7 @@ by github or other sites via a command line flag.
 
 - [Installation](#installation)
 - [Configuring Table of content](#configuring-table-of-content)
-  - [The Title text](#the-title-text)
+  - [TOC Title text](#toc-title-text)
   - [Min. heading level](#min-heading-level)
   - [Max. heading level](#max-heading-level)
   - [Include all Headings](#include-all-headings)
@@ -35,7 +35,7 @@ by github or other sites via a command line flag.
 
 ## Configuring Table of content
 
-### The Title text
+### TOC Title text
 
 Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
 
