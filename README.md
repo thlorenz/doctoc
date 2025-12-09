@@ -8,8 +8,8 @@ by github or other sites via a command line flag.
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Installation](#installation)
-- [Table of content config options](#table-of-content-config-options)
-  - [Setting the Title](#setting-the-title)
+- [Configuring Table of content](#configuring-table-of-content)
+  - [The Title text](#the-title-text)
   - [Min. heading level](#min-heading-level)
   - [Max. heading level](#max-heading-level)
   - [Include all Headings](#include-all-headings)
@@ -33,9 +33,9 @@ by github or other sites via a command line flag.
 
     npm install -g doctoc
 
-## Table of content config options
+## Configuring Table of content
 
-### Setting the Title
+### The Title text
 
 Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
 
