@@ -22,6 +22,7 @@ by github or other sites via a command line flag.
   - [Using doctoc to generate links compatible with other sites](#using-doctoc-to-generate-links-compatible-with-other-sites)
     - [Example](#example)
   - [Specifying location of toc](#specifying-location-of-toc)
+  - [Performing a dry run](#performing-a-dry-run)
   - [Printing to stdout](#printing-to-stdout)
   - [Only update existing ToC](#only-update-existing-toc)
   - [Usage as a `git` hook](#usage-as-a-git-hook)
@@ -151,6 +152,11 @@ Here we'll discuss...
 ```
 
 Running doctoc will insert the toc at that location.
+
+### Performing a dry run
+
+Use the `--dryrun` option to not write changes to files but instead return an exit code of 1 to indicates files are out of date and should be updated.
+This is useful CI environments where you want to check if your docs are up to date as part of your build process.
 
 ### Printing to stdout
 
