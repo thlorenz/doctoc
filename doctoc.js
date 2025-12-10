@@ -15,7 +15,7 @@ function cleanPath(path) {
   return homeExpanded;
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly) {
+function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly, dryRun) {
   if (processAll) {
     console.log('--all flag is enabled. Including headers before the TOC location.')
   }
@@ -44,17 +44,28 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, no
   }
 
   unchanged.forEach(function (x) {
-    console.log('"%s" is up to date', x.path);
+    if (stdOut) {
+      console.log('==================\n\n"%s" is up to date', x.path)
+    }
+    else {
+      console.log('"%s" is up to date', x.path);
+    }
   });
 
   changed.forEach(function (x) { 
     if (stdOut) {
       console.log('==================\n\n"%s" should be updated', x.path)
-    } else {
+    } else if (dryRun) {
+      console.log('"%s" should be updated but wasn\'t due to dry run.', x.path);
+    }
+    else {
       console.log('"%s" will be updated', x.path);
       fs.writeFileSync(x.path, x.data, 'utf8');
     }
   });
+  if (dryRun && changed.length > 0) {
+    process.exitCode = 1;
+  }
 }
 
 function printUsageAndExit(isErr) {
@@ -82,7 +93,7 @@ var modes = {
 var mode = modes['github'];
 
 var argv = minimist(process.argv.slice(2)
-    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only'].concat(Object.keys(modes))
+    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes))
     , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'n', 'entryprefix' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
@@ -103,6 +114,7 @@ var entryPrefix = argv.entryprefix || '-';
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout
 var updateOnly = argv.u || argv['update-only']
+var dryRun = argv.d || argv.dryrun || false;
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
 if (maxHeaderLevel && isNaN(maxHeaderLevel)) { console.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
@@ -126,9 +138,14 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly);
+  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly, dryRun);
 
-  console.log('\nEverything is OK.');
+  if (dryRun && process.exitCode === 1) {
+    console.log('\nDocumentation tables of contents are out of date.');
+  }
+  else {
+    console.log('\nEverything is OK.');
+  }
 }
 
 module.exports.transform = transform;

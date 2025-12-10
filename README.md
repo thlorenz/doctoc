@@ -20,6 +20,7 @@ by github or other sites via a command line flag.
   - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
   - [Specifying a minimum heading level for TOC entries](#specifying-a-minimum-heading-level-for-toc-entries)
   - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
+  - [Performing a dry run](#performing-a-dry-run)
   - [Printing to stdout](#printing-to-stdout)
   - [Only update existing ToC](#only-update-existing-toc)
   - [Usage as a `git` hook](#usage-as-a-git-hook)
@@ -139,6 +140,11 @@ By default,
 
 - no limit is placed on Markdown-formatted headings,
 - whereas headings from embedded HTML are limited to 4 levels.
+
+### Performing a dry run
+
+Use the `--dryrun` option to not write changes to files but instead return an exit code of 1 to indicates files are out of date and should be updated.
+This is useful CI environments where you want to check if your docs are up to date as part of your build process.
 
 ### Printing to stdout
 
