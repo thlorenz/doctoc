@@ -8,6 +8,11 @@ by github or other sites via a command line flag.
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Installation](#installation)
+- [Configuring Table of content](#configuring-table-of-content)
+  - [TOC Title text](#toc-title-text)
+  - [Min. heading level](#min-heading-level)
+  - [Max. heading level](#max-heading-level)
+  - [Include all Headings](#include-all-headings)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
@@ -17,9 +22,6 @@ by github or other sites via a command line flag.
   - [Using doctoc to generate links compatible with other sites](#using-doctoc-to-generate-links-compatible-with-other-sites)
     - [Example](#example)
   - [Specifying location of toc](#specifying-location-of-toc)
-  - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
-  - [Specifying a minimum heading level for TOC entries](#specifying-a-minimum-heading-level-for-toc-entries)
-  - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
   - [Performing a dry run](#performing-a-dry-run)
   - [Printing to stdout](#printing-to-stdout)
   - [Only update existing ToC](#only-update-existing-toc)
@@ -31,6 +33,41 @@ by github or other sites via a command line flag.
 ## Installation
 
     npm install -g doctoc
+
+## Configuring Table of content
+
+### TOC Title text
+
+Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
+
+Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
+
+### Min. heading level
+
+Use the `--minlevel` option to limit TOC entries to headings only at or above the specified level; e.g., `doctoc --minlevel 2 .`
+
+By default,
+
+- the min level used is 1 if it is not set
+
+Note: Currently supported values are only 1 and 2.
+
+### Max. heading level
+
+Use the `--maxlevel` option to limit TOC entries to headings only up to the specified level; e.g., `doctoc --maxlevel 3 .`
+
+By default,
+
+- no limit is placed on Markdown-formatted headings,
+- whereas headings from embedded HTML are limited to 4 levels.
+
+### Include all Headings
+
+Use the `--all` option to include all headings in the TOC regardless of their location
+
+By default,
+
+- Only headings below the TOC will be included
 
 ## Usage
 
@@ -114,32 +151,25 @@ Here we'll discuss...
 
 ```
 
-Running doctoc will insert the toc at that location.
+Running doctoc will insert the toc at the specified location as illustrated below.
 
-### Specifying a custom TOC title
+```markdown
+// my_new_post.md
+Here we are, introducing the post. It's going to be great!
+But first: a TOC for easy reference.
 
-Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Contents**
 
-Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
+- [Section One](#section-one)
 
-### Specifying a minimum heading level for TOC entries
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-Use the `--minlevel` option to limit TOC entries to headings only at or above the specified level; e.g., `doctoc --minlevel 2 .`
+# Section One
 
-By default,
-
-- the min level used is 1 if it is not set
-
-Note: Currently supported values are only 1 and 2.
-
-### Specifying a maximum heading level for TOC entries
-
-Use the `--maxlevel` option to limit TOC entries to headings only up to the specified level; e.g., `doctoc --maxlevel 3 .`
-
-By default,
-
-- no limit is placed on Markdown-formatted headings,
-- whereas headings from embedded HTML are limited to 4 levels.
+Here we'll discuss...
+```
 
 ### Performing a dry run
 

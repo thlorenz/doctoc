@@ -8,7 +8,8 @@
     "url": "git://github.com/thlorenz/doctoc.git"
   },
   "scripts": {
-    "test": "set -e; for t in test/*.js; do node $t; done"
+    "test": "set -e; for t in test/*.js; do node $t; done",
+    "doctoc": "node doctoc.js README.md --update-only"
   },
   "files": [
     "lib"
