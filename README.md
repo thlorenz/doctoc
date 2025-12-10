@@ -8,11 +8,11 @@ by github or other sites via a command line flag.
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Installation](#installation)
-- [Configuring Table of content](#configuring-table-of-content)
-  - [TOC Title text](#toc-title-text)
+- [Configuring Table of Contents](#configuring-table-of-contents)
+  - [TOC title text](#toc-title-text)
   - [Min. heading level](#min-heading-level)
   - [Max. heading level](#max-heading-level)
-  - [Include all Headings](#include-all-headings)
+  - [Include all headings](#include-all-headings)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
@@ -34,9 +34,9 @@ by github or other sites via a command line flag.
 
     npm install -g doctoc
 
-## Configuring Table of content
+## Configuring Table of Contents
 
-### TOC Title text
+### TOC title text
 
 Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
 
@@ -61,7 +61,7 @@ By default,
 - no limit is placed on Markdown-formatted headings,
 - whereas headings from embedded HTML are limited to 4 levels.
 
-### Include all Headings
+### Include all headings
 
 Use the `--all` option to include all headings in the TOC regardless of their location
 
