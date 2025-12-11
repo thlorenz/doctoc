@@ -15,3 +15,4 @@ node_modules
 npm-debug.log
 samples
 tmp_samples
+!test/fixtures/*.log

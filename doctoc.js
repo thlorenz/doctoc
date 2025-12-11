@@ -136,7 +136,7 @@ for (var i = 0; i < argv._.length; i++) {
     , stat = fs.statSync(target);
 
   if (stat.isDirectory() && stdOut){
-    console.log('StdOut can not be used on a directory. Using dryrun instead.')
+    console.log('StdOut can not be used on a directory. Using dryrun instead.');
     stdOut = false;
     dryRun = true;
   }
