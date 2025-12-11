@@ -13,7 +13,7 @@ test('\nshould print to stdout with --stdout option', function (t) {
         return;
       }
       t.deepEqual(stdout
-        , fs.readFileSync(__dirname + '/fixtures/stdout.md', 'utf8')
+        , fs.readFileSync(__dirname + '/fixtures/stdout.log', 'utf8')
         , 'spits out the correct table of contents')
 
       t.end()
@@ -28,8 +28,23 @@ test('\nshould print to stdout with -s option', function (t) {
         return;
       }
       t.deepEqual(stdout
-        , fs.readFileSync(__dirname + '/fixtures/stdout.md', 'utf8')
+        , fs.readFileSync(__dirname + '/fixtures/stdout.log', 'utf8')
         , 'spits out the correct table of contents')
+
+      t.end()
+    })
+})
+
+test('\nshould be a dry run even though the --stdout option provided due to being a directory', function (t) {
+
+    exec('node doctoc.js test/fixtures/invalid_stdout --stdout', function (error, stdout, stderr) {
+      if (error) {
+        console.error('exec error: ', error);
+        return;
+      }
+      t.deepEqual(stdout
+        , fs.readFileSync(__dirname + '/fixtures/stdout_run_on_directory.log', 'utf8')
+        , 'spits out the correct logs for stdout on directory')
 
       t.end()
     })
