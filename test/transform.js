@@ -64,7 +64,7 @@ check(
     , 'some main usage here'
     ].join('\r\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
-    , '- [My Module using \\r\\n line endings](#my-module-using-%5Cr%5Cn-line-endings)\n'
+    , '- [My Module using \\r\\n line endings](#my-module-using-rn-line-endings)\n'
     ,   '  - [API](#api)\n'
     ,     '    - [Method One](#method-one)\n'
     ,     '    - [Method Two](#method-two)\n'
