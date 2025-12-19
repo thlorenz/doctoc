@@ -57,3 +57,6 @@ CJK Symbols
 
 ## ¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿Latin 1
 Latin 1
+
+## Instance properties inherited from [`EventEmitter`](http://nodejs.org/api/events.html)
+Text

@@ -108,6 +108,7 @@ test('\nrandom md characters', function (t) {
         '- [Header & noise](#header--noise)',
         '- [CJK。](#cjk)',
         '- [¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿Latin 1](#%C2%AA%C2%B5%C2%BAlatin-1)',
+        '- [Instance properties inherited from `EventEmitter`](#instance-properties-inherited-from-eventemitter)',
         '' ]
     , 'generates a correct toc when readme has nameless table headers'
   )
