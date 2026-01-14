@@ -126,9 +126,9 @@ else if (minHeaderLevel && minHeaderLevel > 2) { console.error('Min. heading lev
 if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { console.error('Max. heading level: ' + maxHeaderLevel + ' is less than the defined Min. heading level: ' + minHeaderLevel), printUsageAndExit(true); }
 
 if (argv._.length > 1 && stdout) {
-  console.log('StdOut can not be used with multiple files/directories. Using dryrun instead.');
-  stdOut = false;
-  dryRun = true;
+  console.log('--stdout can not be used with multiple files/directories. Use --dryrun instead.');
+  process.exitCode = 2;
+  return;
 }
 
 for (var i = 0; i < argv._.length; i++) {
@@ -136,9 +136,9 @@ for (var i = 0; i < argv._.length; i++) {
     , stat = fs.statSync(target);
 
   if (stat.isDirectory() && stdOut){
-    console.log('StdOut can not be used on a directory. Using dryrun instead.');
-    stdOut = false;
-    dryRun = true;
+    console.log('--stdout can not be used with multiple files/directories. Use --dryrun instead.');
+    process.exitCode = 2;
+    return;
   }
 
   if (stat.isDirectory()) {
