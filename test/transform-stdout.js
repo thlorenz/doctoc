@@ -40,7 +40,7 @@ test('\nshould exit with error code as --stdout option is not supported on a dir
     exec('node doctoc.js test/fixtures/invalid_stdout --stdout', function (error, stdout, stderr) {
       if (error) {
         t.deepEqual(error.code, 2, 'process exited with error code 2 as expected');
-        t.end('process did have an error');
+        t.end();
       } else {
         t.fail('process did not produce an error: ' + error);
         t.end();

@@ -1,4 +1,4 @@
-StdOut can not be used on a directory. Using dryrun instead.
+StdOut cannot be used on a directory. Using dryrun instead.
 
 DocToccing "test/fixtures/invalid_stdout" and its sub directories for github.com.
 
