@@ -59,4 +59,4 @@ test('\nshould exit with error code as --stdout option is not supported on multi
         t.end();
       }
     })
-  })
+ })
