@@ -47,3 +47,16 @@ test('\nshould exit with error code as --stdout option is not supported on a dir
       }
     })
 })
+
+test('\nshould exit with error code as --stdout option is not supported on multiple files', function (t) {
+
+    exec('node doctoc.js test/fixtures/first.md text/fixtures/second.md --stdout', function (error, stdout, stderr) {
+      if (error) {
+        t.deepEqual(error.code, 2, 'process exited with error code 2 as expected');
+        t.end();
+      } else {
+        t.fail('process did not produce an error: ' + error);
+        t.end();
+      }
+    })
+  })
