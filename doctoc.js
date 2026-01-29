@@ -112,7 +112,7 @@ var title = argv.t || argv.title;
 var notitle = argv.T || argv.notitle;
 var entryPrefix = argv.entryprefix || '-';
 var processAll = argv.all;
-var stdOut = argv.s || argv.stdout
+var stdOut = argv.s || argv.stdout || false;
 var updateOnly = argv.u || argv['update-only']
 var dryRun = argv.d || argv.dryrun || false;
 
@@ -125,10 +125,21 @@ else if (minHeaderLevel && minHeaderLevel > 2) { console.error('Min. heading lev
 
 if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { console.error('Max. heading level: ' + maxHeaderLevel + ' is less than the defined Min. heading level: ' + minHeaderLevel), printUsageAndExit(true); }
 
+if (argv._.length > 1 && stdOut) {
+  console.error('--stdout cannot be used to process multiple files/directories. Use --dryrun instead.');
+  process.exitCode = 2;
+  return;
+}
 
 for (var i = 0; i < argv._.length; i++) {
   var target = cleanPath(argv._[i])
-    , stat = fs.statSync(target)
+    , stat = fs.statSync(target);
+
+  if (stat.isDirectory() && stdOut) {
+    console.error('--stdout cannot be used to process a directory. Use --dryrun instead.');
+    process.exitCode = 2;
+    return;
+  }
 
   if (stat.isDirectory()) {
     console.log ('\nDocToccing "%s" and its sub directories for %s.', target, mode);
