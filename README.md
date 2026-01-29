@@ -13,6 +13,7 @@ by github or other sites via a command line flag.
   - [Min. heading level](#min-heading-level)
   - [Max. heading level](#max-heading-level)
   - [Include all headings](#include-all-headings)
+  - [Required number of headers](#required-number-of-headers)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
@@ -68,6 +69,14 @@ Use the `--all` option to include all headings in the TOC regardless of their lo
 By default,
 
 - Only headings below the TOC will be included
+
+### Required number of headers
+
+Use the `--requiredHeaders` option to specify the minimum items required to be in a table of contents for it to be included in the page.
+
+By default,
+
+- The required items is set to 1
 
 ## Usage
 
@@ -175,14 +184,6 @@ Here we'll discuss...
 
 Use the `--dryrun` option to not write changes to files but instead return an exit code of 1 to indicates files are out of date and should be updated.
 This is useful CI environments where you want to check if your docs are up to date as part of your build process.
-
-### Specifying the required number of headers to trigger toc generation
-
-Use the `--requiredHeaders` option to specify the minimum items required to be in a table of contents for it to be included in a markdown page.
-
-By default,
-
-- The required items is set to 1
 
 ### Printing to stdout
 
