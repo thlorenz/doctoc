@@ -211,20 +211,6 @@ check(
     , '## H2h'
     , '### H3h'
     , ''
-    , 'Not enough required items - hashed'
-    ].join('\n')
-  , [ ''
-    ].join('')
-  , undefined
-  , 2
-  , 3
-)
-
-check(
-    [ '# H1h'
-    , '## H2h'
-    , '### H3h'
-    , ''
     , 'Same Max. & Min. level (not 1) test - hashed'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
@@ -233,6 +219,21 @@ check(
   , undefined
   , 2
   , 2
+)
+
+check(
+    [ '# H1h'
+    , '## H2h'
+    , '### H3h'
+    , ''
+    , 'Not enough required items - hashed'
+    ].join('\n')
+  , [ ''
+    ].join('')
+  , undefined
+  , 2
+  , undefined
+  , 3
 )
 
 check(
