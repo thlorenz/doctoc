@@ -9,6 +9,7 @@ on:
 permissions:
   id-token: write  # Required for OIDC
   contents: write
+  issues: write # Required for raising issues
 
 jobs:
   build:
@@ -23,15 +24,30 @@ jobs:
           node-version: 22.x
           cache: 'npm'
       
+      # This explicitly sets the version of the npm package to match that of the tag.
       - run: npm version ${{ github.ref_name }} --no-git-tag-version
 
       - run: npm install
 
       - run: npm test
 
+      # note if locally preparing packages you will need to explicitly set the version in package.json,
+      # see for discussion https://github.com/thlorenz/doctoc/pull/289#discussion_r2649551681 for more details.
       - run: npm pack
 
-      - run: npm publish
+      - name: NPM Publish
+        id: publish
+        run: npm publish
+
+      - name: Create issue on npm publish failure
+        if: ${{ steps.publish.outcome == 'failure' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "NPM Publish step failed for release ${GITHUB_REF_NAME}" \
+            --body "The NPM publish step failed for release: ${GITHUB_REF_NAME}. The npm package will need to be manually uploaded to NPM.
+            --assignee AndrewSouthpaw
 
       - name: Release
         if: ${{ always() }}
