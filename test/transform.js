@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll) {
+function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, updateOnly, syntax) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll)
+    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, updateOnly, syntax)
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -31,6 +31,11 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, title, notitle
     t.deepEqual(data, rig, 'generates correct anchors')
     t.end()
   })
+}
+
+function getCommentLines(transformRes){
+    var lines = transformRes.wrappedToc.split('\n')
+    return lines.slice(0,2).concat(lines[lines.length - 1])
 }
 //function check() {}
 
@@ -522,3 +527,114 @@ check(
   , undefined
   , '1.' // pass '1.' as the prefix for toc entries
   )
+
+
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#my-module)\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method One](#method-one)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , 'md'
+)
+
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#my-module)\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method One](#method-one)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , 'mdx'
+)
+
+test('should use <!-- --> comments if syntax=md', function (t) {
+    var res = transform(
+                  [ '# My Module'
+                  , 'Some text here'
+                  , '## API'
+                  , '### Method One'
+                  , 'works like this'
+                  , '### Method Two'
+                  , '#### Main Usage'
+                  , 'some main usage here'
+                  ].join('\n')
+                  , undefined
+                  , undefined
+                  , undefined
+                  , undefined
+                  , undefined
+                  , undefined
+                  , undefined
+                  , undefined
+                  , 'md'
+              )
+
+    var commentLines = getCommentLines(res);
+    t.deepEqual(commentLines.every((line) => line.startsWith('<!--') && line.endsWith('-->')), true)
+    t.end()
+})
+
+test('should use {/* */} comments if syntax=mdx', function (t) {
+    var res = transform(
+                  [ '# My Module'
+                  , 'Some text here'
+                  , '## API'
+                  , '### Method One'
+                  , 'works like this'
+                  , '### Method Two'
+                  , '#### Main Usage'
+                  , 'some main usage here'
+                  ].join('\n')
+                  , undefined
+                  , undefined
+                  , undefined
+                  , undefined
+                  , undefined
+                  , undefined
+                  , undefined
+                  , undefined
+                  , 'mdx'
+              )
+
+    var commentLines = getCommentLines(res);
+    t.deepEqual(commentLines.every((line) => line.startsWith('{/*') && line.endsWith('*/}')), true)
+    t.end()
+})
