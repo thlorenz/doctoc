@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, requiredHeaders, title, notitle, entryPrefix, processAll) {
+function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, requiredHeaders, title, notitle, entryPrefix, processAll)
+    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll)
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -226,7 +226,7 @@ check(
     , '## H2h'
     , '### H3h'
     , ''
-    , 'Not enough required items - hashed'
+    , 'Not enough toc items - hashed'
     ].join('\n')
   , [ ''
     ].join('')
@@ -242,7 +242,7 @@ check(
     , '### H3h'
     , '## H2b'
     , ''
-    , 'Enough required items - hashed'
+    , 'Enough toc items - hashed'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [H1h](#h1h)\n'

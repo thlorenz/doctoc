@@ -13,7 +13,7 @@ by github or other sites via a command line flag.
   - [Min. heading level](#min-heading-level)
   - [Max. heading level](#max-heading-level)
   - [Include all headings](#include-all-headings)
-  - [Required number of headers](#required-number-of-headers)
+  - [Min. ToC items](#min-toc-items)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
@@ -70,13 +70,13 @@ By default,
 
 - Only headings below the TOC will be included
 
-### Required number of headers
+### Min. ToC items
 
-Use the `--requiredHeaders` option to specify the minimum items required to be in a table of contents for it to be included in the page.
+Use the `--tocitemsmin` option to specify the minimum items required to be in a table of contents for it to be included in the page.
 
 By default,
 
-- The required items is set to 1
+- The min items is set to 1
 
 ## Usage
 
