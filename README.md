@@ -189,6 +189,8 @@ This is useful CI environments where you want to check if your docs are up to da
 
 You can print to stdout by using the `-s` or `--stdout` option.
 
+This option is only applicable when specifying a single filename which doctoc is to run on. If you are specifying a folder or multiple files, the dry run option should be used instead.
+
 ### Only update existing ToC
 
 Use `--update-only` or `-u` to only update the existing ToC. That is, the Markdown files without ToC will be left untouched. It is good if you want to use `doctoc` with `lint-staged`.
