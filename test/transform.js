@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll, updateOnly, syntax) {
+function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, updateOnly, syntax) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, title, notitle, entryPrefix, processAll, updateOnly, syntax)
+    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, updateOnly, syntax)
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -175,6 +175,7 @@ check(
     ].join('')
   , undefined
   , undefined
+  , undefined
   , '**Contents**'
 )
 
@@ -194,6 +195,37 @@ check(
 )
 
 check(
+    [ '# H1h'
+    , '## H2h'
+    , '### H3h'
+    , ''
+    , 'Different Min. & Max. level test - hashed'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [H2h](#h2h)\n'
+    , '  - [H3h](#h3h)\n\n\n'
+    ].join('')
+  , undefined
+  , 3
+  , 2
+)
+
+check(
+    [ '# H1h'
+    , '## H2h'
+    , '### H3h'
+    , ''
+    , 'Same Max. & Min. level (not 1) test - hashed'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [H2h](#h2h)\n\n\n'
+    ].join('')
+  , undefined
+  , 2
+  , 2
+)
+
+check(
     [
       'H1u'
     , '==='
@@ -206,6 +238,23 @@ check(
     , '- [H1u](#h1u)\n\n\n'
     ].join('')
   , undefined
+  , 1
+)
+
+check(
+    [
+      'H1u'
+    , '==='
+    , 'H2u'
+    , '---'
+    , ''
+    , 'Min. & Max. level both 1 test - underlined'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [H1u](#h1u)\n\n\n'
+    ].join('')
+  , undefined
+  , 1
   , 1
 )
 
@@ -308,7 +357,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
     , ''
     ].join('\n')
 
-  var res = transform(md, undefined, undefined, undefined, undefined, undefined, true)
+  var res = transform(md, undefined, undefined, undefined, undefined, undefined, undefined, true)
 
   t.ok(res.transformed, 'transforms it')
 
@@ -359,7 +408,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
 })
 
 
-// bigbucket.org
+// bitbucket.org
 check(
     [ '# My Module'
     , 'Some text here'
@@ -425,6 +474,7 @@ check(
   , undefined
   , undefined
   , undefined
+  , undefined
   , '*' // pass '*' as the prefix for toc entries
 )
 
@@ -445,6 +495,7 @@ check(
     ,     '    >> [Method Two](#method-two)\n'
     ,         '      >> [Main Usage](#main-usage)\n\n\n'
     ].join('')
+  , undefined
   , undefined
   , undefined
   , undefined
@@ -473,6 +524,7 @@ check(
   , undefined
   , undefined
   , undefined
+  , undefined
   , '1.' // pass '1.' as the prefix for toc entries
   )
 
@@ -494,6 +546,7 @@ check(
     ,     '    - [Method Two](#method-two)\n'
     ,         '      - [Main Usage](#main-usage)\n\n\n'
     ].join('')
+    , undefined
     , undefined
     , undefined
     , undefined
@@ -528,6 +581,7 @@ check(
     , undefined
     , undefined
     , undefined
+    , undefined
     , 'mdx'
 )
 
@@ -542,6 +596,7 @@ test('should use <!-- --> comments if syntax=md', function (t) {
                   , '#### Main Usage'
                   , 'some main usage here'
                   ].join('\n')
+                  , undefined
                   , undefined
                   , undefined
                   , undefined
@@ -568,6 +623,7 @@ test('should use {/* */} comments if syntax=mdx', function (t) {
                   , '#### Main Usage'
                   , 'some main usage here'
                   ].join('\n')
+                  , undefined
                   , undefined
                   , undefined
                   , undefined

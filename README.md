@@ -8,26 +8,66 @@ by github or other sites via a command line flag.
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Installation](#installation)
+- [Configuring Table of Contents](#configuring-table-of-contents)
+  - [TOC title text](#toc-title-text)
+  - [Min. heading level](#min-heading-level)
+  - [Max. heading level](#max-heading-level)
+  - [Include all headings](#include-all-headings)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
+  - [Ignoring individual files](#ignoring-individual-files)
   - [Update existing doctoc TOCs effortlessly](#update-existing-doctoc-tocs-effortlessly)
   - [Adding toc to individual files](#adding-toc-to-individual-files)
     - [Examples](#examples)
   - [Using doctoc to generate links compatible with other sites](#using-doctoc-to-generate-links-compatible-with-other-sites)
     - [Example](#example)
   - [Specifying location of toc](#specifying-location-of-toc)
-  - [Specifying a custom TOC title](#specifying-a-custom-toc-title)
-  - [Specifying a maximum heading level for TOC entries](#specifying-a-maximum-heading-level-for-toc-entries)
+  - [Performing a dry run](#performing-a-dry-run)
   - [Printing to stdout](#printing-to-stdout)
+  - [Only update existing ToC](#only-update-existing-toc)
   - [Usage as a `git` hook](#usage-as-a-git-hook)
   - [Docker image](#docker-image)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
 ## Installation
 
     npm install -g doctoc
+
+## Configuring Table of Contents
+
+### TOC title text
+
+Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
+
+Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
+
+### Min. heading level
+
+Use the `--minlevel` option to limit TOC entries to headings only at or above the specified level; e.g., `doctoc --minlevel 2 .`
+
+By default,
+
+- the min level used is 1 if it is not set
+
+Note: Currently supported values are only 1 and 2.
+
+### Max. heading level
+
+Use the `--maxlevel` option to limit TOC entries to headings only up to the specified level; e.g., `doctoc --maxlevel 3 .`
+
+By default,
+
+- no limit is placed on Markdown-formatted headings,
+- whereas headings from embedded HTML are limited to 4 levels.
+
+### Include all headings
+
+Use the `--all` option to include all headings in the TOC regardless of their location
+
+By default,
+
+- Only headings below the TOC will be included
 
 ## Usage
 
@@ -38,8 +78,8 @@ examples.
 
 ### Adding toc to all files in a directory and sub directories
 
-Go into the directory that contains you local git project and type:
-    
+Go into the directory that contains your local git project and type:
+
     doctoc .
 
 This will update all markdown files in the current directory and all its
@@ -49,6 +89,7 @@ by the markdown parser. Doctoc defaults to using the GitHub parser, but other
 specified](#using-doctoc-to-generate-links-compatible-with-other-sites).
 
 ### Ignoring individual files
+
 In order to ignore a specific file when running `doctoc` on an entire directory, just add `<!-- DOCTOC SKIP -->` to the top of the file you wish to ignore.
 
 ### Update existing doctoc TOCs effortlessly
@@ -89,14 +130,14 @@ Available modes are:
 
 By default, doctoc places the toc at the top of the file. You can indicate to have it placed elsewhere with the following format:
 
-```
+```markdown
 <!-- START doctoc -->
 <!-- END doctoc -->
 ```
 
 You place this code directly in your .md file. For example:
 
-```
+```markdown
 // my_new_post.md
 Here we are, introducing the post. It's going to be great!
 But first: a TOC for easy reference.
@@ -110,28 +151,36 @@ Here we'll discuss...
 
 ```
 
-Running doctoc will insert the toc at that location.
+Running doctoc will insert the toc at the specified location as illustrated below.
 
-### Specifying a custom TOC title
+```markdown
+// my_new_post.md
+Here we are, introducing the post. It's going to be great!
+But first: a TOC for easy reference.
 
-Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will will keep the title you specified.
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Contents**
 
-Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
+- [Section One](#section-one)
 
-### Specifying a maximum heading level for TOC entries
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-Use the `--maxlevel` option to limit TOC entries to headings only up to the specified level; e.g., `doctoc --maxlevel 3 .`
+# Section One
 
-By default,
+Here we'll discuss...
+```
 
-- no limit is placed on Markdown-formatted headings,
-- whereas headings from embedded HTML are limited to 4 levels.
+### Performing a dry run
+
+Use the `--dryrun` option to not write changes to files but instead return an exit code of 1 to indicates files are out of date and should be updated.
+This is useful CI environments where you want to check if your docs are up to date as part of your build process.
 
 ### Printing to stdout
 
 You can print to stdout by using the `-s` or `--stdout` option.
 
-[ack]: http://beyondgrep.com/
+This option is only applicable when specifying a single filename which doctoc is to run on. If you are specifying a folder or multiple files, the dry run option should be used instead.
 
 ### Only update existing ToC
 
