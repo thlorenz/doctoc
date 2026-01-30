@@ -270,7 +270,7 @@ check(
 
 
 test('transforming when old toc exists', function (t) {
-  var md = [ 
+  var md = [
       '# Header above'
     , ''
     , 'The above header should be ignored since it is above the existing toc'
@@ -281,7 +281,7 @@ test('transforming when old toc exists', function (t) {
     , ''
     , '- [OldHeader](#oldheader)'
     , ''
-    , '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' 
+    , '<!-- END doctoc generated TOC please keep comment here to allow auto update -->'
     , '## Header'
     , 'some content'
     , ''
@@ -289,7 +289,7 @@ test('transforming when old toc exists', function (t) {
 
   var res = transform(md)
 
-  t.ok(res.transformed, 'transforms it')     
+  t.ok(res.transformed, 'transforms it')
 
   t.deepEqual(
       res.toc.split('\n')
@@ -297,9 +297,9 @@ test('transforming when old toc exists', function (t) {
       '',
       '- [Header](#header)',
       '' ]
-    , 'replaces old toc' 
+    , 'replaces old toc'
   )
-  
+
   t.deepEqual(
       res.wrappedToc.split('\n')
     , [ '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
@@ -308,7 +308,7 @@ test('transforming when old toc exists', function (t) {
         '',
         '- [Header](#header)',
         '',
-        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' 
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->'
       ]
     , 'wraps old toc'
   )
@@ -330,12 +330,12 @@ test('transforming when old toc exists', function (t) {
         'some content',
         '' ]
     , 'updates the content with the new toc and ignores header before existing toc'
-  ) 
+  )
   t.end()
 })
 
 test('transforming when old toc exists and --all flag is set', function (t) {
-  var md = [ 
+  var md = [
       '# Header above'
     , ''
     , 'The above header should be ignored since it is above the existing toc'
@@ -346,7 +346,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
     , ''
     , '- [OldHeader](#oldheader)'
     , ''
-    , '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' 
+    , '<!-- END doctoc generated TOC please keep comment here to allow auto update -->'
     , '## Header'
     , 'some content'
     , ''
@@ -354,7 +354,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
 
   var res = transform(md, undefined, undefined, undefined, undefined, undefined, undefined, true)
 
-  t.ok(res.transformed, 'transforms it')     
+  t.ok(res.transformed, 'transforms it')
 
   t.deepEqual(
       res.toc.split('\n')
@@ -363,9 +363,9 @@ test('transforming when old toc exists and --all flag is set', function (t) {
       '- [Header above](#header-above)',
       '  - [Header](#header)',
       '' ]
-    , 'replaces old toc' 
+    , 'replaces old toc'
   )
-  
+
   t.deepEqual(
       res.wrappedToc.split('\n')
     , [ '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
@@ -375,7 +375,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
         '- [Header above](#header-above)',
         '  - [Header](#header)',
         '',
-        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->' 
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->'
       ]
     , 'wraps old toc'
   )
@@ -398,7 +398,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
         'some content',
         '' ]
     , 'updates the content with the new toc and ignores header before existing toc'
-  ) 
+  )
   t.end()
 })
 

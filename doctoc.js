@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-'use strict';
+"use strict";
 
-var path      =  require('path')
-  , fs        =  require('fs')
-  , minimist  =  require('minimist')
-  , file      =  require('./lib/file')
-  , transform =  require('./lib/transform')
-  , files;
+var path = require("path"),
+  fs = require("fs"),
+  minimist = require("minimist"),
+  file = require("./lib/file"),
+  transform = require("./lib/transform"),
+  files;
 
 function cleanPath(path) {
   var homeExpanded = (path.indexOf('~') === 0) ? process.env.HOME + path.substr(1) : path;
@@ -23,7 +23,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, no
   if (updateOnly) {
     console.log('--update-only flag is enabled. Only updating files that already have a TOC.')
   }
-  
+
   console.log('\n==================\n');
 
   var transformed = files
@@ -39,8 +39,8 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, no
 
   if (stdOut) {
     toc.forEach(function (x) {
-      console.log(x.toc)
-    })
+      console.log(x.toc);
+    });
   }
 
   unchanged.forEach(function (x) {
@@ -52,15 +52,15 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, no
     }
   });
 
-  changed.forEach(function (x) { 
+  changed.forEach(function (x) {
     if (stdOut) {
-      console.log('==================\n\n"%s" should be updated', x.path)
+      console.log('==================\n\n"%s" should be updated', x.path);
     } else if (dryRun) {
       console.log('"%s" should be updated but wasn\'t due to dry run.', x.path);
     }
     else {
       console.log('"%s" will be updated', x.path);
-      fs.writeFileSync(x.path, x.data, 'utf8');
+      fs.writeFileSync(x.path, x.data, "utf8");
     }
   });
   if (dryRun && changed.length > 0) {
@@ -69,28 +69,26 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, no
 }
 
 function printUsageAndExit(isErr) {
-
   var outputFunc = isErr ? console.error : console.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--all] [--update-only] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
-  outputFunc('\nAvailable modes are:');
+  outputFunc("\nAvailable modes are:");
   for (var key in modes) {
-    outputFunc('  --%s\t%s', key, modes[key]);
+    outputFunc("  --%s\t%s", key, modes[key]);
   }
-  outputFunc('Defaults to \'' + mode + '\'.');
+  outputFunc("Defaults to '" + mode + "'.");
 
   process.exit(isErr ? 2 : 0);
 }
 
 var modes = {
-    bitbucket : 'bitbucket.org'
-  , nodejs    : 'nodejs.org'
-  , github    : 'github.com'
-  , gitlab    : 'gitlab.com'
-  , ghost     : 'ghost.org'
-}
+  bitbucket: "bitbucket.org",
+  nodejs: "nodejs.org",
+  github: "github.com",
+  gitlab: "gitlab.com",
+  ghost: "ghost.org",
+};
 
-var mode = modes['github'];
+var mode = modes["github"];
 
 var argv = minimist(process.argv.slice(2)
     , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes))
@@ -110,10 +108,10 @@ for (var key in modes) {
 
 var title = argv.t || argv.title;
 var notitle = argv.T || argv.notitle;
-var entryPrefix = argv.entryprefix || '-';
+var entryPrefix = argv.entryprefix || "-";
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout || false;
-var updateOnly = argv.u || argv['update-only']
+var updateOnly = argv.u || argv["update-only"];
 var dryRun = argv.d || argv.dryrun || false;
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
@@ -132,8 +130,8 @@ if (argv._.length > 1 && stdOut) {
 }
 
 for (var i = 0; i < argv._.length; i++) {
-  var target = cleanPath(argv._[i])
-    , stat = fs.statSync(target);
+  var target = cleanPath(argv._[i]),
+    stat = fs.statSync(target);
 
   if (stat.isDirectory() && stdOut) {
     console.error('--stdout cannot be used to process a directory. Use --dryrun instead.');
@@ -145,7 +143,7 @@ for (var i = 0; i < argv._.length; i++) {
     console.log ('\nDocToccing "%s" and its sub directories for %s.', target, mode);
     files = file.findMarkdownFiles(target);
   } else {
-    console.log ('\nDocToccing single file "%s" for %s.', target, mode);
+    console.log('\nDocToccing single file "%s" for %s.', target, mode);
     files = [{ path: target }];
   }
 
