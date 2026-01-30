@@ -2,7 +2,7 @@
 
 README to test doctoc with skipTag.
 
-<!-- DOCTOC SKIP Bad -->`
+<!-- DOCTOC SKIP -->`
 
 ## Installation
 ## API
