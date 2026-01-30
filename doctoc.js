@@ -82,7 +82,7 @@ function printUsageAndExit(isErr) {
   process.exit(isErr ? 2 : 0);
 }
 
-var supportedSyntaxes = ['md', 'mdx']
+var supportedSyntaxes = ['md', 'mdx'];
 var modes = {
     bitbucket : 'bitbucket.org'
   , nodejs    : 'nodejs.org'
@@ -104,9 +104,10 @@ if (argv.h || argv.help) {
 }
 
 if (argv['syntax'] !== undefined && !supportedSyntaxes.includes(argv['syntax'])) {
-  console.error('Unknown syntax:', argv['syntax'])
-  console.error('Supported options:', supportedSyntaxes.join(", "))
-  process.exit(2)
+  console.error('Unknown syntax:', argv['syntax']);
+  console.error('Supported options:', supportedSyntaxes.join(", "));
+  process.exit(2);
+  return;
 }
 for (var key in modes) {
   if (argv[key]) {
@@ -119,8 +120,8 @@ var notitle = argv.T || argv.notitle;
 var entryPrefix = argv.entryprefix || '-';
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout || false;
-var updateOnly = argv.u || argv['update-only']
-var syntax = argv['syntax'] || 'md'
+var updateOnly = argv.u || argv['update-only'];
+var syntax = argv['syntax'] || 'md';
 var dryRun = argv.d || argv.dryrun || false;
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
