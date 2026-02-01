@@ -72,7 +72,7 @@ By default,
 
 ### Min. ToC items
 
-Use the `--tocitemsmin` option to specify the minimum items required to be in a table of contents for it to be included in the page.
+Use the `--tocitemsmin` option to specify the minimum items required to be in a table of contents for it to be included in the page; e.g., `doctoc --tocitemsmin 3 .`.
 
 By default,
 
