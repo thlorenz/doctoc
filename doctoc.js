@@ -119,6 +119,7 @@ var title = argv.t || argv.title;
 var notitle = argv.T || argv.notitle;
 var entryPrefix = argv.entryprefix || '-';
 var minTocItems = argv.tocitemsmin || 1;
+if (minTocItems && (isNaN(minTocItems) || minTocItems <= 0)) { console.error('Min. TOC items specified is not a positive number: ' + minTocItems), printUsageAndExit(true); }
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout || false;
 var updateOnly = argv.u || argv['update-only'];
