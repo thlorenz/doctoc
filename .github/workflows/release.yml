@@ -1,4 +1,4 @@
-config borrowed from: https://docs.npmjs.com/trusted-publishers#github-actions-configuration
+# config borrowed from: https://docs.npmjs.com/trusted-publishers#github-actions-configuration
 name: Release package
 
 on:
