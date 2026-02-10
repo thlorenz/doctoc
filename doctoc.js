@@ -15,7 +15,7 @@ function cleanPath(path) {
   return homeExpanded;
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun) {
+function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun) {
   if (processAll) {
     console.log('--all flag is enabled. Including headers before the TOC location.')
   }
@@ -29,7 +29,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, no
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, updateOnly, syntax);
+        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax);
       result.path = x.path;
       return result;
     });
@@ -72,7 +72,7 @@ function printUsageAndExit(isErr) {
 
   var outputFunc = isErr ? console.error : console.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--all] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--all] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc('  --%s\t%s', key, modes[key]);
@@ -95,7 +95,7 @@ var mode = modes['github'];
 
 var argv = minimist(process.argv.slice(2)
     , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax' ]
+    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -118,6 +118,8 @@ for (var key in modes) {
 var title = argv.t || argv.title;
 var notitle = argv.T || argv.notitle;
 var entryPrefix = argv.entryprefix || '-';
+var minTocItems = argv.mintocitems || 1;
+if (minTocItems && (isNaN(minTocItems) || minTocItems <= 0)) { console.error('Min. TOC items specified is not a positive number: ' + minTocItems), printUsageAndExit(true); }
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout || false;
 var updateOnly = argv.u || argv['update-only'];
@@ -157,7 +159,7 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun);
+  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun);
 
   if (dryRun && process.exitCode === 1) {
     console.log('\nDocumentation tables of contents are out of date.');

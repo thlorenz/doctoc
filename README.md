@@ -13,6 +13,7 @@ by github or other sites via a command line flag.
   - [Min. heading level](#min-heading-level)
   - [Max. heading level](#max-heading-level)
   - [Include all headings](#include-all-headings)
+  - [Min. ToC items](#min-toc-items)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
@@ -68,6 +69,14 @@ Use the `--all` option to include all headings in the TOC regardless of their lo
 By default,
 
 - Only headings below the TOC will be included
+
+### Min. ToC items
+
+Use the `--mintocitems` option to specify the minimum items required to be in a table of contents for it to be included in the page; e.g., `doctoc --mintocitems 3 .`.
+
+By default,
+
+- The min items is set to 1
 
 ## Usage
 
