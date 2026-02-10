@@ -1,5 +1,5 @@
--   id: doctoc
-    name: doctoc
-    language: node
-    entry: doctoc
-    types: [markdown]
+- id: doctoc
+  name: doctoc
+  language: node
+  entry: doctoc
+  types: [markdown]
