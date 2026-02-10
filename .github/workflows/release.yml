@@ -18,10 +18,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
     
-      - name: Use Node.js 22.x
+      - name: Use Node.js 24.x
         uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 24.x
           cache: 'npm'
       
       # This explicitly sets the version of the npm package to match that of the tag.
@@ -38,6 +38,7 @@ jobs:
       - name: NPM Publish
         id: publish
         run: npm publish
+        continue-on-error: true
 
       - name: Create issue on npm publish failure
         if: ${{ steps.publish.outcome == 'failure' }}
@@ -46,11 +47,10 @@ jobs:
         run: |
           gh issue create \
             --title "NPM Publish step failed for release ${GITHUB_REF_NAME}" \
-            --body "The NPM publish step failed for release: ${GITHUB_REF_NAME}. The npm package will need to be manually uploaded to NPM.
+            --body "The NPM publish step failed for release: ${GITHUB_REF_NAME}. The npm package will need to be manually uploaded to NPM." \
             --assignee AndrewSouthpaw
 
       - name: Release
-        if: ${{ always() }}
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
