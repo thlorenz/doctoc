@@ -40,7 +40,7 @@ test('\ndo not overwrite existing title', function (t) {
 
 test('\nclobber existing title', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-custom-title.md', 'utf8');
-  var headers = transform(content, null, null, null, null, true);
+  var headers = transform(content, null, null, null, null, null, true);
 
   t.deepEqual(
       headers.toc.split('\n')
