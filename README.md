@@ -15,6 +15,7 @@ by github or other sites via a command line flag.
   - [Include all headings](#include-all-headings)
   - [Min. ToC items](#min-toc-items)
 - [Usage](#usage)
+  - [Configuring logging level](#configuring-logging-level)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
   - [Update existing doctoc TOCs effortlessly](#update-existing-doctoc-tocs-effortlessly)
@@ -84,6 +85,22 @@ In its simplest usage, you can pass one or more files or folders to the
 `doctoc` command. This will update the TOCs of each file specified as well as of
 each markdown file found by recursively searching each folder. Below are some
 examples.
+
+### Configuring logging level
+
+Use the `--loglevel` option to configure the log levelused; e.g., `doctoc --loglevel warn .`
+
+By default,
+
+- LogLevel is set to info.
+
+Supported values are in order from lowest to highest,
+
+- trace
+- debug
+- info
+- warn
+- error
 
 ### Adding toc to all files in a directory and sub directories
 

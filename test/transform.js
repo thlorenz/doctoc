@@ -5,7 +5,7 @@ var test = require('tap').test
   , transform = require('../lib/transform')
 
 function inspect(obj, depth) {
-  console.log(require('util').inspect(obj, false, depth || 5, true));
+  log.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
 function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax) {
