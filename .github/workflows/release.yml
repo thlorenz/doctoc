@@ -7,7 +7,7 @@ on:
       - "v*.*.*"
 
 permissions:
-  id-token: write  # Required for OIDC
+  id-token: write # Required for OIDC
   contents: write
   issues: write # Required for raising issues
 
@@ -17,13 +17,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-    
+
       - name: Use Node.js 24.x
         uses: actions/setup-node@v6
         with:
           node-version: 24.x
-          cache: 'npm'
-      
+          cache: "npm"
+
       # This explicitly sets the version of the npm package to match that of the tag.
       - run: npm version ${{ github.ref_name }} --no-git-tag-version
 

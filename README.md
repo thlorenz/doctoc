@@ -202,10 +202,10 @@ following configuration:
 
 ```yaml
 repos:
--   repo: https://github.com/thlorenz/doctoc
-    rev: ...  # substitute a tagged version
+  - repo: https://github.com/thlorenz/doctoc
+    rev: ... # substitute a tagged version
     hooks:
-    -   id: doctoc
+      - id: doctoc
 ```
 
 This will run `doctoc` against markdown files when committing to ensure the
