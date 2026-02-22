@@ -81,11 +81,15 @@ By default,
 
 ### Pad table of contents title
 
-Use the `--padtitle` option to add a padding line above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --padtitle true .`
+Use the `--toctitlepaddingbefore` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toctitlepaddingbefore 1 .`
+
+NOTE: Currently it is only supported to add one line before the title.
 
 By default,
 
 - no padding is added above the table of contents title
+
+In all cases there will be padding present after the title due to the toc items always having padding before the list of items.
 
 ## Usage
 

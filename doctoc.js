@@ -94,8 +94,8 @@ var modes = {
 var mode = modes['github'];
 
 var argv = minimist(process.argv.slice(2)
-    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun', 'padtitle'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems' ]
+    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes))
+    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toctitlepaddingbefore' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -125,7 +125,12 @@ var stdOut = argv.s || argv.stdout || false;
 var updateOnly = argv.u || argv['update-only'];
 var syntax = argv['syntax'] || 'md';
 var dryRun = argv.d || argv.dryrun || false;
-var padTitle = argv.padtitle || notitle || false;
+var padTitle = false;
+
+var padBeforeTitle = argv.toctitlepaddingbefore;
+if (padBeforeTitle && isNaN(padBeforeTitle) || padBeforeTitle < 0) { console.error('Padding before title specified is not a positive number: ' + padBeforeTitle), printUsageAndExit(true); }
+else if (padBeforeTitle && padBeforeTitle > 1) { console.error('Padding before title: ' + padBeforeTitle + ' is not currently supported as greater than 1'), printUsageAndExit(true); }
+else if (padBeforeTitle || notitle) { padTitle = true; }
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
 if (maxHeaderLevel && isNaN(maxHeaderLevel)) { console.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
