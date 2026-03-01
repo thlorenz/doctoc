@@ -101,7 +101,7 @@ examples.
 
 ### Configuring logging level
 
-Use the `--loglevel` option to configure the log levelused; e.g., `doctoc --loglevel warn .`
+Use the `--loglevel` option to configure the log level used; e.g., `doctoc --loglevel warn .`
 
 By default,
 
