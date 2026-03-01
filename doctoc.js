@@ -61,7 +61,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
     }
     else {
       log.info('"%s" will be updated', x.path);
-      fs.writeFileSync(x.path, x.data, 'utf8');
+      fs.writeFileSync(x.path, x.data, "utf8");
     }
   });
   if (dryRun && changed.length > 0) {
