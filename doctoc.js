@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-'use strict';
+"use strict";
 
-var path      =  require('path')
-  , fs        =  require('fs')
-  , minimist  =  require('minimist')
-  , file      =  require('./lib/file')
-  , transform =  require('./lib/transform')
-  , log       = require('loglevel')
-  , files;
+var path = require("path"),
+  fs = require("fs"),
+  minimist = require("minimist"),
+  file = require("./lib/file"),
+  transform = require("./lib/transform"),
+  log = require('loglevel'),
+  files;
 
 function cleanPath(path) {
   var homeExpanded = (path.indexOf('~') === 0) ? process.env.HOME + path.substr(1) : path;
@@ -16,7 +16,7 @@ function cleanPath(path) {
   return homeExpanded;
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun) {
+function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, padTitle) {
   if (processAll) {
     log.debug('--all flag is enabled. Including headers before the TOC location.')
   }
@@ -30,7 +30,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax);
+        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle);
       result.path = x.path;
       return result;
     });
@@ -40,8 +40,8 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 
   if (stdOut) {
     toc.forEach(function (x) {
-      console.log(x.toc)
-    })
+      console.log(x.toc);
+    });
   }
 
   unchanged.forEach(function (x) {
@@ -55,7 +55,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 
   changed.forEach(function (x) {
     if (stdOut) {
-      console.log('==================\n\n"%s" should be updated', x.path)
+      console.log('==================\n\n"%s" should be updated', x.path);
     } else if (dryRun) {
       log.warn('"%s" should be updated but wasn\'t due to dry run.', x.path);
     }
@@ -70,33 +70,32 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 }
 
 function printUsageAndExit(isErr) {
-
   var outputFunc = isErr ? log.error : log.info;
 
   outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--all]  [--loglevel level] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
-    outputFunc('  --%s\t%s', key, modes[key]);
+    outputFunc("  --%s\t%s", key, modes[key]);
   }
-  outputFunc('Defaults to \'' + mode + '\'.');
+  outputFunc("Defaults to '" + mode + "'.");
 
   process.exit(isErr ? 2 : 0);
 }
 
 var supportedSyntaxes = ['md', 'mdx'];
 var modes = {
-    bitbucket : 'bitbucket.org'
-  , nodejs    : 'nodejs.org'
-  , github    : 'github.com'
-  , gitlab    : 'gitlab.com'
-  , ghost     : 'ghost.org'
-}
+  bitbucket: "bitbucket.org",
+  nodejs: "nodejs.org",
+  github: "github.com",
+  gitlab: "gitlab.com",
+  ghost: "ghost.org",
+};
 
-var mode = modes['github'];
+var mode = modes["github"];
 
 var argv = minimist(process.argv.slice(2)
     , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'l', 'loglevel' ]
+    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toctitlepaddingbefore', 'l', 'loglevel' ]
     , unknown: function(a) { return (a[0] == '-' ? (log.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -126,6 +125,12 @@ var stdOut = argv.s || argv.stdout || false;
 var updateOnly = argv.u || argv['update-only'];
 var syntax = argv['syntax'] || 'md';
 var dryRun = argv.d || argv.dryrun || false;
+var padTitle = false;
+
+var padBeforeTitle = argv.toctitlepaddingbefore;
+if (padBeforeTitle && isNaN(padBeforeTitle) || padBeforeTitle < 0) { console.error('Padding before title specified is not a positive number: ' + padBeforeTitle), printUsageAndExit(true); }
+else if (padBeforeTitle && padBeforeTitle > 1) { console.error('Padding before title: ' + padBeforeTitle + ' is not currently supported as greater than 1'), printUsageAndExit(true); }
+else if (padBeforeTitle || notitle) { padTitle = true; }
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
 
@@ -147,8 +152,8 @@ if (argv._.length > 1 && stdOut) {
 }
 
 for (var i = 0; i < argv._.length; i++) {
-  var target = cleanPath(argv._[i])
-    , stat = fs.statSync(target);
+  var target = cleanPath(argv._[i]),
+    stat = fs.statSync(target);
 
   if (stat.isDirectory() && stdOut) {
     console.error('--stdout cannot be used to process a directory. Use --dryrun instead.');
@@ -164,7 +169,7 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun);
+  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, padTitle);
 
   if (dryRun && process.exitCode === 1) {
     log.warn('\nDocumentation tables of contents are out of date.');
