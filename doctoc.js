@@ -24,7 +24,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
   if (updateOnly) {
     log.debug('--update-only flag is enabled. Only updating files that already have a TOC.')
   }
-  
+
   log.debug('\n==================\n');
 
   var transformed = files
