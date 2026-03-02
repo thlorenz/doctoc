@@ -14,7 +14,7 @@ test('\nRemove md header, no content', function (t) {
     } 
   });
 
-  t.deepEqual(
+  t.same(
     transformedContent.wrappedToc.split('\n')
     , [
       "<!-- START doctoc -->",
@@ -42,7 +42,7 @@ test('\nRemove md footer, no content', function (t) {
     } 
   });
 
-  t.deepEqual(
+  t.same(
     transformedContent.wrappedToc.split('\n')
     , [
       "<!-- START doctoc generated TOC please keep comment here to allow auto update -->",
@@ -71,7 +71,7 @@ test('\nSet a md header', function (t) {
     } 
   });
 
-  t.deepEqual(
+  t.same(
     transformedContent.wrappedToc.split('\n')
     , [
       "<!-- START doctoc generated TOC please keep comment here to allow auto update -->",
@@ -100,7 +100,7 @@ test('\nSet a md footer', function (t) {
     } 
   });
 
-  t.deepEqual(
+  t.same(
     transformedContent.wrappedToc.split('\n')
     , [
       "<!-- START doctoc generated TOC please keep comment here to allow auto update -->",
@@ -133,7 +133,7 @@ test('\nRemove md header/footer and use existing position', function (t) {
     } 
   });
 
-  t.deepEqual(
+  t.same(
     transformedContent.wrappedToc.split('\n')
     , [
       "<!-- START doctoc -->",
@@ -160,7 +160,7 @@ test('\nRemove mdx header, no content', function (t) {
     } 
   });
 
-  t.deepEqual(
+  t.same(
     transformedContent.wrappedToc.split('\n')
     , [
       "{/* START doctoc */}",
@@ -188,7 +188,7 @@ test('\nRemove mdx footer, no content', function (t) {
     } 
   });
 
-  t.deepEqual(
+  t.same(
     transformedContent.wrappedToc.split('\n')
     , [
       "{/* START doctoc generated TOC please keep comment here to allow auto update */}",
@@ -217,7 +217,7 @@ test('\nSet a mdx header', function (t) {
     } 
   });
 
-  t.deepEqual(
+  t.same(
     transformedContent.wrappedToc.split('\n')
     , [
       "{/* START doctoc generated TOC please keep comment here to allow auto update */}",
@@ -246,7 +246,7 @@ test('\nSet a mdx footer', function (t) {
     } 
   });
 
-  t.deepEqual(
+  t.same(
     transformedContent.wrappedToc.split('\n')
     , [
       "{/* START doctoc generated TOC please keep comment here to allow auto update */}",
