@@ -70,6 +70,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 }
 
 function printUsageAndExit(isErr) {
+  log.setLevel("info");
   var outputFunc = isErr ? log.error : log.info;
 
   outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--all] [--loglevel level] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
@@ -136,7 +137,14 @@ var maxHeaderLevel = argv.m || argv.maxlevel;
 
 var logLevel = argv.l || argv.loglevel || "info";
 
-log.setLevel(logLevel, false);
+try {
+  log.setLevel(logLevel, false);
+}
+catch (e) {
+  log.error('Unknown log level: ' + logLevel);
+  log.error('Supported options: trace, debug, info, warn, error');
+  log.setLevel("info", false);
+}
 
 if (maxHeaderLevel && isNaN(maxHeaderLevel)) { log.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
 

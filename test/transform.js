@@ -4,10 +4,6 @@
 var test = require('tap').test
   , transform = require('../lib/transform')
 
-function inspect(obj, depth) {
-  log.log(require('util').inspect(obj, false, depth || 5, true));
-}
-
 function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle) {
   test('transforming', function (t) {
     var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle)
