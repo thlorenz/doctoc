@@ -424,7 +424,7 @@ test('transforming when old toc exists', function (t) {
       '' ]
     , 'replaces old toc'
   )
-  
+
   t.same(
       res.wrappedToc.split('\n')
     , [ '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
@@ -490,7 +490,7 @@ test('transforming when old toc exists and --all flag is set', function (t) {
       '' ]
     , 'replaces old toc'
   )
-  
+
   t.same(
       res.wrappedToc.split('\n')
     , [ '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
