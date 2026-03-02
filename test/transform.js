@@ -8,9 +8,9 @@ function inspect(obj, depth) {
   console.log(require('util').inspect(obj, false, depth || 5, true));
 }
 
-function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle) {
+function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle)
+    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options)
 
     // remove wrapper
     var data = res.data.split('\n');
@@ -199,7 +199,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , true
+  , { toc: { title: { padding: { before: 1 } } } }
 )
 
 check(
@@ -220,7 +220,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , false
+  , { toc: { title: { padding: { before: 0 } } } }
 )
 
 check(
@@ -241,7 +241,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , true
+  , { toc: { title: { padding: { before: 1 } } } }
 )
 
 check(
@@ -262,7 +262,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , false
+  , { toc: { title: { padding: { before: 0 } } } }
 )
 
 check(

@@ -6,7 +6,7 @@ var test = require('tap').test
 
 test('\nRemove md header, no content', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.md', 'utf8');
-  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", undefined, { 
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", { 
     toc: { 
       header: { 
         remove: true 
@@ -34,7 +34,7 @@ test('\nRemove md header, no content', function (t) {
 
 test('\nRemove md footer, no content', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.md', 'utf8');
-  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", undefined, { 
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", { 
     toc: { 
       footer: { 
         remove: true 
@@ -63,7 +63,7 @@ test('\nRemove md footer, no content', function (t) {
 
 test('\nSet a md header', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.md', 'utf8');
-  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", undefined, { 
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", { 
     toc: { 
       header: { 
         content: "My custom header content"
@@ -92,7 +92,7 @@ test('\nSet a md header', function (t) {
 
 test('\nSet a md footer', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.md', 'utf8');
-  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", undefined, { 
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", { 
     toc: { 
       footer: { 
         content: "My custom footer content"
@@ -122,7 +122,7 @@ test('\nSet a md footer', function (t) {
 
 test('\nRemove md header/footer and use existing position', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-custom-title.md', 'utf8');
-  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", undefined, { 
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", { 
     toc: { 
       header: { 
         remove: true 
@@ -152,7 +152,7 @@ test('\nRemove md header/footer and use existing position', function (t) {
 
 test('\nRemove mdx header, no content', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.mdx', 'utf8');
-  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "mdx", undefined, { 
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "mdx", { 
     toc: { 
       header: { 
         remove: true 
@@ -180,7 +180,7 @@ test('\nRemove mdx header, no content', function (t) {
 
 test('\nRemove mdx footer, no content', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.mdx', 'utf8');
-  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "mdx", undefined, { 
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "mdx", { 
     toc: { 
       footer: { 
         remove: true 
@@ -209,7 +209,7 @@ test('\nRemove mdx footer, no content', function (t) {
 
 test('\nSet a mdx header', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.mdx', 'utf8');
-  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "mdx", undefined, { 
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "mdx", { 
     toc: { 
       header: { 
         content: "My custom header content"
@@ -238,7 +238,7 @@ test('\nSet a mdx header', function (t) {
 
 test('\nSet a mdx footer', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.mdx', 'utf8');
-  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "mdx", undefined, { 
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "mdx", { 
     toc: { 
       footer: { 
         content: "My custom footer content"

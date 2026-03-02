@@ -15,7 +15,7 @@ function cleanPath(path) {
   return homeExpanded;
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, padTitle, options) {
+function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options) {
   if (processAll) {
     console.log('--all flag is enabled. Including headers before the TOC location.')
   }
@@ -29,7 +29,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle, options);
+        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options);
       result.path = x.path;
       return result;
     });
@@ -124,12 +124,10 @@ var stdOut = argv.s || argv.stdout || false;
 var updateOnly = argv.u || argv['update-only'];
 var syntax = argv['syntax'] || 'md';
 var dryRun = argv.d || argv.dryrun || false;
-var padTitle = false;
 
 var padBeforeTitle = argv.toctitlepaddingbefore;
 if (padBeforeTitle && isNaN(padBeforeTitle) || padBeforeTitle < 0) { console.error('Padding before title specified is not a positive number: ' + padBeforeTitle), printUsageAndExit(true); }
 else if (padBeforeTitle && padBeforeTitle > 1) { console.error('Padding before title: ' + padBeforeTitle + ' is not currently supported as greater than 1'), printUsageAndExit(true); }
-else if (padBeforeTitle || notitle) { padTitle = true; }
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
 if (maxHeaderLevel && isNaN(maxHeaderLevel)) { console.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
@@ -145,6 +143,11 @@ var options = {
     header: {
       remove: argv.tocheaderremove || false,
       content: argv.tocheadercontent,
+    },
+    title: {
+      padding: {
+        before: padBeforeTitle || notitle ? 1 : 0,
+      }
     },
     footer: {
       remove: argv.tocfooterremove || false,
@@ -177,7 +180,7 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, padTitle, options);
+  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options);
 
   if (dryRun && process.exitCode === 1) {
     console.log('\nDocumentation tables of contents are out of date.');
