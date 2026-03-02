@@ -10,6 +10,8 @@ by github or other sites via a command line flag.
 - [Installation](#installation)
 - [Configuring Table of Contents](#configuring-table-of-contents)
   - [TOC title text](#toc-title-text)
+  - [TOC Header](#toc-header)
+  - [TOC Footer](#toc-footer)
   - [Min. heading level](#min-heading-level)
   - [Max. heading level](#max-heading-level)
   - [Include all headings](#include-all-headings)
