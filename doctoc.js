@@ -15,7 +15,7 @@ function cleanPath(path) {
   return homeExpanded;
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, padTitle) {
+function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, padTitle, options) {
   if (processAll) {
     console.log('--all flag is enabled. Including headers before the TOC location.')
   }
@@ -29,7 +29,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle);
+        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle, options);
       result.path = x.path;
       return result;
     });
@@ -71,7 +71,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 function printUsageAndExit(isErr) {
   var outputFunc = isErr ? console.error : console.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--all] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--tocheaderremove] [--tocfooterremove] [--tocheadercontent content] [--tocfootercontent content] [--all] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc("  --%s\t%s", key, modes[key]);
@@ -93,8 +93,8 @@ var modes = {
 var mode = modes["github"];
 
 var argv = minimist(process.argv.slice(2)
-    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toctitlepaddingbefore' ]
+    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun', 'tocheaderremove', 'tocfooterremove'].concat(Object.keys(modes))
+    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toctitlepaddingbefore', 'tocheadercontent', 'tocfootercontent' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -140,6 +140,19 @@ else if (minHeaderLevel && minHeaderLevel > 2) { console.error('Min. heading lev
 
 if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { console.error('Max. heading level: ' + maxHeaderLevel + ' is less than the defined Min. heading level: ' + minHeaderLevel), printUsageAndExit(true); }
 
+var options = {
+  toc: {
+    header: {
+      remove: argv.tocheaderremove || false,
+      content: argv.tocheadercontent,
+    },
+    footer: {
+      remove: argv.tocfooterremove || false,
+      content: argv.tocfootercontent,
+    }
+  }
+}
+
 if (argv._.length > 1 && stdOut) {
   console.error('--stdout cannot be used to process multiple files/directories. Use --dryrun instead.');
   process.exitCode = 2;
@@ -164,7 +177,7 @@ for (var i = 0; i < argv._.length; i++) {
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, padTitle);
+  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, padTitle, options);
 
   if (dryRun && process.exitCode === 1) {
     console.log('\nDocumentation tables of contents are out of date.');

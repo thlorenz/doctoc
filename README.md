@@ -44,6 +44,51 @@ Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g
 
 Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
 
+### TOC Header
+
+Use the `--tocheaderremove` option to remove both the standard header comment as well as the comments from the header pragma.
+
+What this means is rather than having at the start of each toc
+
+``` markdown
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+```
+
+you end up with just the necessary content to keep your markdown DRY.
+
+```markdown
+<!-- START doctoc -->
+```
+
+You have the ability to add arbitrary text directly below the pragma by using the `--tocheadercontent` option e.g. `doctoc --tocheadercontent "<!--Use doctoc to update-->" .`
+
+> [!NOTE]
+>
+> In v3 the default behavior of `tocheaderremove` will be set to true by default (currently false) and as such we recommend that you adopt this option when you can.
+
+### TOC Footer
+
+Use the `--tocfooterremove` option to remove the comments from the footer content.
+
+What this means is rather than having at the end of each toc
+
+``` markdown
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+```
+
+you end up with just the necessary content to keep your markdown DRY.
+
+```markdown
+<!-- END doctoc -->
+```
+
+You have the ability to add arbitrary text directly below the pragma by using the `--tocfooterremove` option e.g. `doctoc --tocfootcontent "<!--My footer-->" .`
+
+> [!NOTE]
+>
+> In v3 the default behavior of `tocfooterremove` will be set to true by default (currently false) and as such we recommend that you adopt this option when you can.
+
 ### Min. heading level
 
 Use the `--minlevel` option to limit TOC entries to headings only at or above the specified level; e.g., `doctoc --minlevel 2 .`
