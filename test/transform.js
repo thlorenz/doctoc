@@ -733,7 +733,7 @@ test('should use <!-- --> comments if syntax=md', function (t) {
               )
 
     var commentLines = getCommentLines(res);
-    t.deepEqual(commentLines.every((line) => line.startsWith('<!--') && line.endsWith('-->')), true)
+    t.same(commentLines.every((line) => line.startsWith('<!--') && line.endsWith('-->')), true)
     t.end()
 })
 
@@ -761,6 +761,6 @@ test('should use {/* */} comments if syntax=mdx', function (t) {
               )
 
     var commentLines = getCommentLines(res);
-    t.deepEqual(commentLines.every((line) => line.startsWith('{/*') && line.endsWith('*/}')), true)
+    t.same(commentLines.every((line) => line.startsWith('{/*') && line.endsWith('*/}')), true)
     t.end()
 })

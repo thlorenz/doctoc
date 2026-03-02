@@ -85,7 +85,7 @@ test('\nrandom md characters', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-special-characters.md', 'utf8');
   var headers = transform(content);
 
-  t.deepEqual(
+  t.same(
       headers.toc.split('\n')
     , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
         '',

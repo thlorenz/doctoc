@@ -9,7 +9,7 @@ test('\nshould exit with a error code due to --dryrun option', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-with-out_of_date_toc.md --dryrun', function (error, stdout, stderr) {
       if (error) {
-        t.deepEqual(error.code, 1, 'process exited with error code 1 as expected');
+        t.same(error.code, 1, 'process exited with error code 1 as expected');
         t.end('process did have an error');
       } else {
         t.fail('process did not produce an error: ' + error);
