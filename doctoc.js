@@ -9,8 +9,8 @@ var path = require("path"),
   transform = require("./lib/transform"),
   files;
 
-function cleanPath(path) {
-  var homeExpanded = (path.indexOf('~') === 0) ? process.env.HOME + path.substr(1) : path;
+function cleanPath(filePath) {
+  var homeExpanded = (filePpath.indexOf('~') === 0) ? process.env.HOME + filePath.substr(1) : filePath;
 
   return homeExpanded;
 }
