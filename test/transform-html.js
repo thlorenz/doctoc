@@ -8,7 +8,7 @@ test('\ngiven a file that includes html with header tags and maxHeaderLevel 8', 
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-html.md', 'utf8');
   var headers = transform(content, 'github.com', 8);
 
-  t.deepEqual(
+  t.same(
       headers.toc.split('\n')
     , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
         '',
@@ -33,7 +33,7 @@ test('\ngiven a file that includes html with header tags using default maxHeader
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-html.md', 'utf8');
   var headers = transform(content);
 
-  t.deepEqual(
+  t.same(
       headers.toc.split('\n')
     , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
         '',
@@ -53,7 +53,7 @@ test('\ngiven a file with headers embedded in code', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-code.md', 'utf8');
   var headers = transform(content);
 
-  t.deepEqual(
+  t.same(
       headers.toc.split('\n')
     , [ '## Table of Contents',
         '',
@@ -72,7 +72,7 @@ test('\ngiven a file with benign backticks', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-benign-backticks.md', 'utf8');
   var headers = transform(content);
 
-  t.deepEqual(
+  t.same(
       headers.toc.split('\n')
     , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
         '',
