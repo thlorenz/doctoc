@@ -10,7 +10,7 @@ var path = require("path"),
   files;
 
 function cleanPath(filePath) {
-  var homeExpanded = (filePpath.indexOf('~') === 0) ? process.env.HOME + filePath.substr(1) : filePath;
+  var homeExpanded = (filePath.indexOf('~') === 0) ? process.env.HOME + filePath.substr(1) : filePath;
 
   return homeExpanded;
 }
