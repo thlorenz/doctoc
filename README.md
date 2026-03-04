@@ -48,7 +48,7 @@ Alternatively, to blank out the title, use the `--notitle` option. This will sim
 
 ### TOC Header
 
-Use the `--tocheaderremove` option to remove both the standard header comment as well as the comments from the header pragma.
+Use the `--toc-header-remove` option to remove both the standard header comment as well as the comments from the header pragma.
 
 What this means is rather than having at the start of each toc
 
@@ -63,15 +63,15 @@ you end up with just the necessary content to keep your markdown DRY.
 <!-- START doctoc -->
 ```
 
-You have the ability to add arbitrary text directly below the pragma by using the `--tocheadercontent` option e.g. `doctoc --tocheadercontent "<!--Use doctoc to update-->" .`
+You have the ability to add arbitrary text directly below the pragma by using the `--toc-header-content` option e.g. `doctoc --toc-header-content "<!--Use doctoc to update-->" .`
 
 > [!NOTE]
 >
-> In v3 the default behavior of `tocheaderremove` will be set to true by default (currently false) and as such we recommend that you adopt this option when you can.
+> In v3 the default behavior of `toc-header-remove` will be set to true by default (currently false) and as such we recommend that you adopt this option when you can.
 
 ### TOC Footer
 
-Use the `--tocfooterremove` option to remove the comments from the footer content.
+Use the `--toc-footer-remove` option to remove the comments from the footer content.
 
 What this means is rather than having at the end of each toc
 
@@ -85,11 +85,11 @@ you end up with just the necessary content to keep your markdown DRY.
 <!-- END doctoc -->
 ```
 
-You have the ability to add arbitrary text directly below the pragma by using the `--tocfooterremove` option e.g. `doctoc --tocfootcontent "<!--My footer-->" .`
+You have the ability to add arbitrary text directly above the pragma by using the `--toc-footer-content` option e.g. `doctoc --toc-footer-content "<!--My footer-->" .`
 
 > [!NOTE]
 >
-> In v3 the default behavior of `tocfooterremove` will be set to true by default (currently false) and as such we recommend that you adopt this option when you can.
+> In v3 the default behavior of `toc-footer-remove` will be set to true by default (currently false) and as such we recommend that you adopt this option when you can.
 
 ### Min. heading level
 
