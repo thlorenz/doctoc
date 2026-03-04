@@ -71,7 +71,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 function printUsageAndExit(isErr) {
   var outputFunc = isErr ? console.error : console.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--tocheaderremove] [--tocfooterremove] [--tocheadercontent content] [--tocfootercontent content] [--all] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--toc-header-remove] [--toc-footer-remove] [--toc-header-content content] [--toc-footer-content content] [--all] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc("  --%s\t%s", key, modes[key]);
@@ -93,8 +93,8 @@ var modes = {
 var mode = modes["github"];
 
 var argv = minimist(process.argv.slice(2)
-    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun', 'tocheaderremove', 'tocfooterremove'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toctitlepaddingbefore', 'tocheadercontent', 'tocfootercontent' ]
+    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun', 'toc-header-remove', 'toc-footer-remove'].concat(Object.keys(modes))
+    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toc-title-padding-before', 'toc-header-content', 'toc-footer-content' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -125,7 +125,7 @@ var updateOnly = argv.u || argv['update-only'];
 var syntax = argv['syntax'] || 'md';
 var dryRun = argv.d || argv.dryrun || false;
 
-var padBeforeTitle = argv.toctitlepaddingbefore;
+var padBeforeTitle = argv['toc-title-padding-before'];
 if (padBeforeTitle && isNaN(padBeforeTitle) || padBeforeTitle < 0) { console.error('Padding before title specified is not a positive number: ' + padBeforeTitle), printUsageAndExit(true); }
 else if (padBeforeTitle && padBeforeTitle > 1) { console.error('Padding before title: ' + padBeforeTitle + ' is not currently supported as greater than 1'), printUsageAndExit(true); }
 
@@ -141,8 +141,8 @@ if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { console.error('Max. hea
 var options = {
   toc: {
     header: {
-      remove: argv.tocheaderremove || false,
-      content: argv.tocheadercontent,
+      remove: argv['toc-header-remove'] || false,
+      content: argv['toc-header-content'],
     },
     title: {
       padding: {
@@ -150,8 +150,8 @@ var options = {
       }
     },
     footer: {
-      remove: argv.tocfooterremove || false,
-      content: argv.tocfootercontent,
+      remove: argv['toc-footer-remove'] || false,
+      content: argv['toc-footer-content'],
     }
   }
 }
