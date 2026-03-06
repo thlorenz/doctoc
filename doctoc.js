@@ -4,7 +4,7 @@
 
 var path = require("path"),
   fs = require("fs"),
-  os = require('os'),
+  os = require("os"),
   minimist = require("minimist"),
   file = require("./lib/file"),
   transform = require("./lib/transform"),
