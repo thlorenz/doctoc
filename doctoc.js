@@ -151,6 +151,7 @@ if (maxHeaderLevel && isNaN(maxHeaderLevel)) { log.error('Max. heading level spe
 var minHeaderLevel = argv.minlevel || 1;
 if (minHeaderLevel && isNaN(minHeaderLevel) || minHeaderLevel < 0) { log.error('Min. heading level specified is not a positive number: ' + minHeaderLevel), printUsageAndExit(true); }
 else if (minHeaderLevel && minHeaderLevel > 2) { log.error('Min. heading level: ' + minHeaderLevel + ' is not currently supported as greater than 2'), printUsageAndExit(true); }
+
 if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { log.error('Max. heading level: ' + maxHeaderLevel + ' is less than the defined Min. heading level: ' + minHeaderLevel), printUsageAndExit(true); }
 
 if (argv._.length > 1 && stdOut) {
