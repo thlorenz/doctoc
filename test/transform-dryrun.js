@@ -18,7 +18,7 @@ test('\nshould exit with a error code due to --dryrun option', function (t) {
     })
 })
 
-test('\nshould exit with a error code due to invalid option', function (t) {
+test('\nshould exit with an error code due to invalid option', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-syntax.md --dryrun --random', function (error, stdout, stderr) {
       if (error) {
@@ -31,7 +31,7 @@ test('\nshould exit with a error code due to invalid option', function (t) {
     })
 })
 
-test('\nshould exit with a error code due to invalid syntax', function (t) {
+test('\nshould exit with an error code due to invalid syntax', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-syntax.md --dryrun --syntax github', function (error, stdout, stderr) {
       if (error) {
