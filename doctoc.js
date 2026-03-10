@@ -141,9 +141,10 @@ try {
   log.setLevel(logLevel, false);
 }
 catch (e) {
-  log.error('Unknown log level: ' + logLevel);
-  log.error('Supported options: trace, debug, info, warn, error');
-  log.setLevel("info", false);
+  console.error('Unknown log level: ' + logLevel);
+  console.error('Supported options: trace, debug, info, warn, error');
+  process.exitCode = 2;
+  return;
 }
 
 if (maxHeaderLevel && isNaN(maxHeaderLevel)) { log.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
