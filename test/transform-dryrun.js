@@ -44,19 +44,19 @@ test('\nshould exit with a error code due to invalid syntax', function (t) {
     })
 })
 
-test('\n help should not produce an error code', function (t) {
+test('\nhelp should not produce an error code', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-syntax.md --dryrun --help', function (error, stdout, stderr) {
       if (error) {
         t.fail('help process produced an error: ' + error);
         t.end();
-      } else {        
+      } else {
         t.end();
       }
     })
 })
 
-test('\nshould exit with no error code with --dryrun option', function (t) {
+test('\nshould exit with no error code with --dryrun, --github and --update-only options', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-with-custom-title.md --dryrun --github --update-only', function (error, stdout, stderr) {
       if (error) {
@@ -68,7 +68,7 @@ test('\nshould exit with no error code with --dryrun option', function (t) {
     })
 })
 
-test('\nshould exit no error code due to no --dryrun option for out of date toc', function (t) {
+test('\nshould exit no error code when not using --dryrun and using --all for out of date toc', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-with-out_of_date_toc.md --stdout --all', function (error, stdout, stderr) {
       if (error) {
