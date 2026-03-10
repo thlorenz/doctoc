@@ -97,8 +97,20 @@ var mode = modes["github"];
 var argv = minimist(process.argv.slice(2)
     , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes))
     , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toctitlepaddingbefore', 'l', 'loglevel' ]
-    , unknown: function(a) { return (a[0] == '-' ? (log.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
+    , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
+
+var logLevel = argv.l || argv.loglevel || "info";
+
+try {
+  log.setLevel(logLevel, false);
+}
+catch (e) {
+  console.error('Unknown log level: ' + logLevel);
+  console.error('Supported options: trace, debug, info, warn, error');
+  process.exitCode = 2;
+  return;
+}
 
 if (argv.h || argv.help) {
   printUsageAndExit();
@@ -134,19 +146,6 @@ else if (padBeforeTitle && padBeforeTitle > 1) { console.error('Padding before t
 else if (padBeforeTitle || notitle) { padTitle = true; }
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
-
-var logLevel = argv.l || argv.loglevel || "info";
-
-try {
-  log.setLevel(logLevel, false);
-}
-catch (e) {
-  console.error('Unknown log level: ' + logLevel);
-  console.error('Supported options: trace, debug, info, warn, error');
-  process.exitCode = 2;
-  return;
-}
-
 if (maxHeaderLevel && isNaN(maxHeaderLevel)) { log.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
 
 var minHeaderLevel = argv.minlevel || 1;
