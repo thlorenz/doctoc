@@ -70,7 +70,6 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 }
 
 function printUsageAndExit(isErr) {
-  log.setLevel("info");
   var outputFunc = isErr ? log.error : log.info;
 
   outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--all] [--loglevel level] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
@@ -113,6 +112,7 @@ catch (e) {
 }
 
 if (argv.h || argv.help) {
+  log.setLevel("info");
   printUsageAndExit();
 }
 
