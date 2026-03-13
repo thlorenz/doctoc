@@ -10,6 +10,8 @@ by github or other sites via a command line flag.
 - [Installation](#installation)
 - [Configuring Table of Contents](#configuring-table-of-contents)
   - [TOC title text](#toc-title-text)
+  - [TOC Header](#toc-header)
+  - [TOC Footer](#toc-footer)
   - [Min. heading level](#min-heading-level)
   - [Max. heading level](#max-heading-level)
   - [Include all headings](#include-all-headings)
@@ -43,6 +45,51 @@ by github or other sites via a command line flag.
 Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
 
 Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
+
+### TOC Header
+
+Use the `--toc-header-remove` option to remove both the standard header comment as well as the comments from the header pragma.
+
+What this means is rather than having at the start of each toc
+
+```markdown
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+```
+
+you end up with just the necessary content to keep your markdown DRY.
+
+```markdown
+<!-- START doctoc -->
+```
+
+You have the ability to add arbitrary text directly below the pragma by using the `--toc-header-content` option e.g. `doctoc --toc-header-content "<!--Use doctoc to update-->" .`
+
+> [!NOTE]
+>
+> In v3 the default behavior of `toc-header-remove` will be set to true by default (currently false) and as such we recommend that you adopt this option when you can.
+
+### TOC Footer
+
+Use the `--toc-footer-remove` option to remove the comments from the footer content.
+
+What this means is rather than having at the end of each toc
+
+```markdown
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+```
+
+you end up with just the necessary content to keep your markdown DRY.
+
+```markdown
+<!-- END doctoc -->
+```
+
+You have the ability to add arbitrary text directly above the pragma by using the `--toc-footer-content` option e.g. `doctoc --toc-footer-content "<!--My footer-->" .`
+
+> [!NOTE]
+>
+> In v3 the default behavior of `toc-footer-remove` will be set to true by default (currently false) and as such we recommend that you adopt this option when you can.
 
 ### Min. heading level
 
@@ -81,7 +128,7 @@ By default,
 
 ### Pad table of contents title
 
-Use the `--toctitlepaddingbefore` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toctitlepaddingbefore 1 .`
+Use the `--toc-title-padding-before` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toc-title-padding-before 1 .`
 
 NOTE: Currently it is only supported to add one line before the title.
 
