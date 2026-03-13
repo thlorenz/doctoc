@@ -52,7 +52,7 @@ Use the `--toc-header-remove` option to remove both the standard header comment 
 
 What this means is rather than having at the start of each toc
 
-``` markdown
+```markdown
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ```
@@ -75,7 +75,7 @@ Use the `--toc-footer-remove` option to remove the comments from the footer cont
 
 What this means is rather than having at the end of each toc
 
-``` markdown
+```markdown
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ```
 
@@ -128,7 +128,7 @@ By default,
 
 ### Pad table of contents title
 
-Use the `--toctitlepaddingbefore` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toctitlepaddingbefore 1 .`
+Use the `--toc-title-padding-before` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toc-title-padding-before 1 .`
 
 NOTE: Currently it is only supported to add one line before the title.
 

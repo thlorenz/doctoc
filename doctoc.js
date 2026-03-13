@@ -141,16 +141,16 @@ if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { console.error('Max. hea
 var options = {
   toc: {
     header: {
-      remove: argv['toc-header-remove'] || false,
+      remove: argv['toc-header-remove'] ?? false,
       content: argv['toc-header-content'],
     },
     title: {
       padding: {
-        before: padBeforeTitle || notitle ? 1 : 0,
+        before: padBeforeTitle ?? (notitle ? 1 : 0),
       }
     },
     footer: {
-      remove: argv['toc-footer-remove'] || false,
+      remove: argv['toc-footer-remove'] ?? false,
       content: argv['toc-footer-content'],
     }
   }
