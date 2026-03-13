@@ -765,7 +765,7 @@ test('should use {/* */} comments if syntax=mdx', function (t) {
     t.end()
 })
 
-test('\nignores the hX which are in content', function (t) {
+test('\nignores the hX which are in content or different line', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-hX.md', 'utf8');
   var headers = transform(content, 'github.com', 8);
 
