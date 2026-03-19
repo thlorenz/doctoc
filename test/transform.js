@@ -765,7 +765,7 @@ test('should use {/* */} comments if syntax=mdx', function (t) {
     t.end()
 })
 
-test('\nduplicate titles but but different symbols', function (t) {
+test('\nduplicate titles but with different symbols', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-duplicate-headers.md', 'utf8');
   var headers = transform(content);
 
