@@ -396,7 +396,7 @@ check(
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '- [Test 1](#test-1)\n',
-    , '- [Test á](#test-a)\n\n\n'
+    , '- [Teste á](#test-a)\n\n\n'
     ].join('')
 )
 
