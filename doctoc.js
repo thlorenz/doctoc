@@ -4,14 +4,15 @@
 
 var path = require("path"),
   fs = require("fs"),
+  os = require("os"),
   minimist = require("minimist"),
   file = require("./lib/file"),
   transform = require("./lib/transform"),
   log = require('loglevel'),
   files;
 
-function cleanPath(path) {
-  var homeExpanded = (path.indexOf('~') === 0) ? process.env.HOME + path.substr(1) : path;
+function cleanPath(filePath) {
+  var homeExpanded = (filePath.indexOf('~') === 0) ? path.join(os.homedir(), filePath.substr(1)) : filePath;
 
   return homeExpanded;
 }
