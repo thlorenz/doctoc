@@ -760,3 +760,22 @@ test('should use {/* */} comments if syntax=mdx', function (t) {
     t.same(commentLines.every((line) => line.startsWith('{/*') && line.endsWith('*/}')), true)
     t.end()
 })
+
+test('\nduplicate titles but with different symbols', function (t) {
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-duplicate-headers.md', 'utf8');
+  var headers = transform(content);
+
+  t.same(
+      headers.toc.split('\n')
+    , [ '',
+        '- [foo _bar_](#foo-bar)',
+        '- [foo _bar_](#foo-bar-1)',
+        '- [foo **bar**](#foo-bar-2)',
+        '- [foo ~bar~](#foo-bar-3)',
+        '- [_foo bar_](#foo-bar-4)',
+        '' ]
+    , 'generates a correct toc when readme includes duplicate headings with different symbols'
+  )
+
+  t.end()
+})
