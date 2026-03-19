@@ -8,7 +8,7 @@ For ones that are open and closed on the same line, they are included in the TOC
 
 `<h2>`This is invalid `</h2>`
 
-when it is embeded <h2>This becomes valid </h2> due to being on a single line
+when it is embeded <h2>This remains invalid </h2> due to being embeded and detected as a raw text node
 
 <h2>Random2
 
