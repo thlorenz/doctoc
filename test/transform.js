@@ -4,10 +4,6 @@
 var test = require('tap').test
   , transform = require('../lib/transform')
 
-function inspect(obj, depth) {
-  console.log(require('util').inspect(obj, false, depth || 5, true));
-}
-
 function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle) {
   test('transforming', function (t) {
     var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle)
@@ -765,7 +761,26 @@ test('should use {/* */} comments if syntax=mdx', function (t) {
     t.end()
 })
 
-test('\nignores the hX which are in content or different line', function (t) {
+test('\nduplicate titles but with different symbols', function (t) {
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-duplicate-headers.md', 'utf8');
+  var headers = transform(content);
+
+  t.same(
+      headers.toc.split('\n')
+    , [ '',
+        '- [foo _bar_](#foo-bar)',
+        '- [foo _bar_](#foo-bar-1)',
+        '- [foo **bar**](#foo-bar-2)',
+        '- [foo ~bar~](#foo-bar-3)',
+        '- [_foo bar_](#foo-bar-4)',
+        '' ]
+    , 'generates a correct toc when readme includes duplicate headings with different symbols'
+  )
+
+  t.end()
+})
+
+test('\nignores the hX which is in the content on or a different line', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-hX.md', 'utf8');
   var headers = transform(content, 'github.com', 8);
 
