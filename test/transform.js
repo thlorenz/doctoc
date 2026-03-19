@@ -389,6 +389,16 @@ check(
   , 2
 )
 
+check(
+    [ '# Test 1'
+    , ''
+    , '<h1 id="test-a">Teste á</h1>'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [Test 1](#test-1)\n',
+    , '- [Test á](#test-a)\n\n\n'
+    ].join('')
+)
 
 test('transforming when old toc exists', function (t) {
   var md = [
