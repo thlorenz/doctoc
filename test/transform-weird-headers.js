@@ -69,6 +69,7 @@ test('\nheaders with references', function (t) {
     , [ '',
         '- [Example `repos.yaml` file](#example-reposyaml-file)',
         '- [Secondary](#secondary)',
+        '- [Image * Ref](#image--ref)',
         '' ]
     , 'generates a correct toc when readme includes named links in the heading title'
   )
