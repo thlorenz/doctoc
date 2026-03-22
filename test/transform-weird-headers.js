@@ -71,7 +71,7 @@ test('\nheaders with references', function (t) {
         '- [Secondary](#secondary)',
         '- [Image * Ref](#image--ref)',
         '' ]
-    , 'generates a correct toc when readme includes named links in the heading title'
+    , 'generates a correct toc when readme includes image/link references in the heading title'
   )
 
   t.end()
