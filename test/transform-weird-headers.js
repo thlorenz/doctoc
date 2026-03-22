@@ -60,6 +60,21 @@ test('\nemoji-first header names', function (t) {
   t.end()
 })
 
+test('\nheaders with references', function (t) {
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-references-in-headers.md', 'utf8');
+  var headers = transform(content);
+
+  t.same(
+      headers.toc.split('\n')
+    , [ '',
+        '- [Example `repos.yaml` file](#example-reposyaml-file)',
+        '- [Secondary](#secondary)',
+        '' ]
+    , 'generates a correct toc when readme includes named links in the heading title'
+  )
+
+  t.end()
+})
 
 test('\nformatted headers', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-formatted-headers.md', 'utf8');
