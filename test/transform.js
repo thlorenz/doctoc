@@ -779,3 +779,21 @@ test('\nduplicate titles but with different symbols', function (t) {
 
   t.end()
 })
+
+test('\nignores the hX which is in the content on or a different line', function (t) {
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-hX.md', 'utf8');
+  var headers = transform(content, 'github.com', 8);
+
+  t.same(
+      headers.toc.split('\n')
+    , [ '',
+        '- [Hello, world!](#hello-world)',
+        '  - [Installation](#installation)',
+        '  - [API](#api)',
+        '  - [License](#license)',
+        '' ]
+    , 'generates correct toc for non html and html headers'
+  )
+
+  t.end()
+})
