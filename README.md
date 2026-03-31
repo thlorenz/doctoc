@@ -66,10 +66,6 @@ you end up with just the necessary content to keep your markdown DRY.
 
 You have the ability to add arbitrary text directly below the pragma by using the `--toc-header-content` option e.g. `doctoc --toc-header-content "<!--Use doctoc to update-->" .`
 
-> [!NOTE]
->
-> In v3 the default behavior of `toc-header-remove` will be set to true by default (currently false) and as such we recommend that you adopt this option when you can.
-
 ### TOC Footer
 
 Use the `--toc-footer-remove` option to remove the comments from the footer content.
@@ -87,10 +83,6 @@ you end up with just the necessary content to keep your markdown DRY.
 ```
 
 You have the ability to add arbitrary text directly above the pragma by using the `--toc-footer-content` option e.g. `doctoc --toc-footer-content "<!--My footer-->" .`
-
-> [!NOTE]
->
-> In v3 the default behavior of `toc-footer-remove` will be set to true by default (currently false) and as such we recommend that you adopt this option when you can.
 
 ### Min. heading level
 
