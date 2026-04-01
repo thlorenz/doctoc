@@ -192,6 +192,7 @@ test('\nSet a mdx header', function (t) {
     transformedContent.wrappedToc.split('\n')
     , [
       "{/* START doctoc generated TOC please keep comment here to allow auto update */}",
+      "{/* DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE */}",
       "My custom header content",
       "**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*",
       "",
