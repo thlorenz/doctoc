@@ -33,12 +33,12 @@ test('\nLegacy pragma, no content', function (t) {
   t.end()
 });
 
-test('\nClean pragma, no content', function (t) {
+test('\nCompact pragma, no content', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.md', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", { 
     toc: { 
       pragma: { 
-        style: 'clean' 
+        style: 'compact' 
       } 
     } 
   });
@@ -56,7 +56,7 @@ test('\nClean pragma, no content', function (t) {
       "",
       "<!-- END doctoc -->",
     ]
-    , 'Pragma style is not clean'
+    , 'Pragma style is not compact'
   )
   t.end()
 });
@@ -121,7 +121,7 @@ test('\nSet a md footer', function (t) {
   t.end()
 });
 
-test('\nRemove mdx header, no content', function (t) {
+test('\nLegacy pragma, no content', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.mdx', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "mdx", { 
     toc: { 
@@ -150,12 +150,12 @@ test('\nRemove mdx header, no content', function (t) {
   t.end()
 });
 
-test('\nRemove mdx footer, no content', function (t) {
+test('\nCompact pragma, no content', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.mdx', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "mdx", { 
     toc: { 
       pragma: { 
-        style: 'clean' 
+        style: 'compact' 
       } 
     } 
   });
@@ -173,7 +173,7 @@ test('\nRemove mdx footer, no content', function (t) {
       "",
       "{/* END doctoc */}",
     ]
-    , 'Pragma style is not clean'
+    , 'Pragma style is not compact'
   )
   t.end()
 });
