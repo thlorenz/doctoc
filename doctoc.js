@@ -172,6 +172,8 @@ var options = {
   }
 }
 
+if (options.toc.pragma.style != "legacy" && options.toc.pragma.style != "compact"){ log.error('TOC pragma style is not supported: ' + options.toc.pragma.style), printUsageAndExit(true); }
+
 if (argv._.length > 1 && stdOut) {
   console.error('--stdout cannot be used to process multiple files/directories. Use --dryrun instead.');
   process.exitCode = 2;
