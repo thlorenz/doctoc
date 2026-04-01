@@ -17,6 +17,7 @@ by github or other sites via a command line flag.
   - [Include all headings](#include-all-headings)
   - [Min. ToC items](#min-toc-items)
   - [Pad table of contents title](#pad-table-of-contents-title)
+  - [TOC Pragma style](#toc-pragma-style)
 - [Usage](#usage)
   - [Configuring logging level](#configuring-logging-level)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
@@ -49,44 +50,31 @@ Alternatively, to blank out the title, use the `--notitle` option. This will sim
 
 ### TOC Header
 
-The `--toc-pragma-style` option when set to `compact` will remove both the standard header comment as well as the comments from the header pragma.
+Free text can be added to the toc header using the `--toc-header-content` option with the text appearing below the pragma.
 
-What this means is rather than having at the start of each toc
+Result of running a command such as `doctoc --toc-header-content 'My Header' .` is
 
 ```markdown
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-```
-
-you end up with just the necessary content to keep your markdown DRY.
-
-```markdown
-<!-- START doctoc -->
-```
-
-To mantain the additional text the `toc-pragma-style` should be set `legacy`.
-
-You have the ability to add arbitrary text directly below the pragma by using the `--toc-header-content` option e.g. `doctoc --toc-header-content "<!--Use doctoc to update-->" .`
-
-### TOC Footer
-
-The `--toc-pragma-style` option when set to `compact` will remove the comments from the footer pragma.
-
-What this means is rather than having at the end of each toc
-
-```markdown
+My Header
+{{toc}}
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ```
 
-you end up with just the necessary content to keep your markdown DRY.
+### TOC Footer
+
+Free text can be added to the toc header using the `--toc-header-content` option with the text appearing below the pragma.
+
+Result of running a command such as `doctoc --toc-footer-content 'My Footer' .` is
 
 ```markdown
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+{{toc}}
+My Footer
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ```
-
-To mantain the additional text the `toc-pragma-style` should be set to `legacy`.
-
-You have the ability to add arbitrary text directly above the pragma by using the `--toc-footer-content` option e.g. `doctoc --toc-footer-content "<!--My footer-->" .`
 
 ### Min. heading level
 
@@ -134,6 +122,29 @@ By default,
 - no padding is added above the table of contents title
 
 In all cases there will be padding present after the title due to the toc items always having padding before the list of items.
+
+### TOC Pragma style
+
+The `--toc-pragma-style` option when set to `compact` will reduce the pragma header/footer to just what is necessary and remove everything else.
+
+What this means is rather than having each toc as
+
+```markdown
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+{{toc}}
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+```
+
+you end up with just the necessary content to keep your markdown DRY.
+
+```markdown
+<!-- START doctoc -->
+{{toc}}
+<!-- END doctoc -->
+```
+
+To ensure the additional text always remains the `toc-pragma-style` should be set `legacy`.
 
 ## Usage
 
