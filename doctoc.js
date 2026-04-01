@@ -73,7 +73,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 function printUsageAndExit(isErr) {
   var outputFunc = isErr ? log.error : log.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--toc-header-remove] [--toc-footer-remove] [--toc-header-content content] [--toc-footer-content content] [--all] [--loglevel level] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--toc-pragma-style style] [--toc-header-content content] [--toc-footer-content content] [--all] [--loglevel level] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc("  --%s\t%s", key, modes[key]);
@@ -95,8 +95,8 @@ var modes = {
 var mode = modes["github"];
 
 var argv = minimist(process.argv.slice(2)
-    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun', 'toc-header-remove', 'toc-footer-remove'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toc-title-padding-before', 'toc-header-content', 'toc-footer-content', 'l', 'loglevel' ]
+    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes))
+    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toc-title-padding-before', 'toc-header-content', 'toc-footer-content', 'toc-pragma-style', 'l', 'loglevel' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -155,8 +155,10 @@ if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { log.error('Max. heading
 
 var options = {
   toc: {
+    pragma: {
+      style: argv['toc-pragma-style'] || 'legacy',
+    },
     header: {
-      remove: argv['toc-header-remove'] ?? false,
       content: argv['toc-header-content'],
     },
     title: {
@@ -165,7 +167,6 @@ var options = {
       }
     },
     footer: {
-      remove: argv['toc-footer-remove'] ?? false,
       content: argv['toc-footer-content'],
     }
   }

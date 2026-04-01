@@ -49,7 +49,7 @@ Alternatively, to blank out the title, use the `--notitle` option. This will sim
 
 ### TOC Header
 
-Use the `--toc-header-remove` option to remove both the standard header comment as well as the comments from the header pragma.
+The `--toc-pragma-style` option when set to `compact` will remove both the standard header comment as well as the comments from the header pragma.
 
 What this means is rather than having at the start of each toc
 
@@ -64,11 +64,13 @@ you end up with just the necessary content to keep your markdown DRY.
 <!-- START doctoc -->
 ```
 
+To mantain the additional text the `toc-pragma-style` should be set `legacy`.
+
 You have the ability to add arbitrary text directly below the pragma by using the `--toc-header-content` option e.g. `doctoc --toc-header-content "<!--Use doctoc to update-->" .`
 
 ### TOC Footer
 
-Use the `--toc-footer-remove` option to remove the comments from the footer content.
+The `--toc-pragma-style` option when set to `compact` will remove the comments from the footer pragma.
 
 What this means is rather than having at the end of each toc
 
@@ -81,6 +83,8 @@ you end up with just the necessary content to keep your markdown DRY.
 ```markdown
 <!-- END doctoc -->
 ```
+
+To mantain the additional text the `toc-pragma-style` should be set to `legacy`.
 
 You have the ability to add arbitrary text directly above the pragma by using the `--toc-footer-content` option e.g. `doctoc --toc-footer-content "<!--My footer-->" .`
 
