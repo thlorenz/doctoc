@@ -28,7 +28,7 @@ test('\nLegacy pragma, no content', function (t) {
       "",
       "<!-- END doctoc generated TOC please keep comment here to allow auto update -->",
     ]
-    , 'Pragma style isn't legacy'
+    , 'Pragma style is not legacy'
   )
   t.end()
 });
