@@ -50,7 +50,7 @@ Alternatively, to blank out the title, use the `--notitle` option. This will sim
 
 ### TOC Header
 
-Free text can be added to the toc header using the `--toc-header-content` option with the text appearing below the pragma.
+Additional text can be added to the toc header using the `--toc-header-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
 
 Result of running a command such as `doctoc --toc-header-content 'My Header' .` is
 
