@@ -64,7 +64,7 @@ My Header
 
 ### TOC Footer
 
-Free text can be added to the toc header using the `--toc-header-content` option with the text appearing below the pragma.
+Additional text can be added to the toc header using the `--toc-footer-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
 
 Result of running a command such as `doctoc --toc-footer-content 'My Footer' .` is
 
