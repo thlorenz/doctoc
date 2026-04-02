@@ -66,7 +66,7 @@ My Header
 
 Additional text can be added to the toc header using the `--toc-footer-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
 
-Result of running a command such as `doctoc --toc-footer-content 'My Footer' .` is
+For example, running `doctoc --toc-footer-content 'My Footer' .` would produce:
 
 ```markdown
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
