@@ -19,11 +19,11 @@ function cleanPath(filePath) {
 
 function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options) {
   if (processAll) {
-    log.debug('--all flag is enabled. Including headers before the TOC location.')
+    log.debug('--all flag is enabled. Including headers before the TOC location.');
   }
 
   if (updateOnly) {
-    log.debug('--update-only flag is enabled. Only updating files that already have a TOC.')
+    log.debug('--update-only flag is enabled. Only updating files that already have a TOC.');
   }
 
   log.debug('\n==================\n');
@@ -35,9 +35,9 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
       result.path = x.path;
       return result;
     });
-  var changed = transformed.filter(function (x) { return x.transformed; })
-    , unchanged = transformed.filter(function (x) { return !x.transformed; })
-    , toc = transformed.filter(function (x) { return x.toc; })
+  var changed = transformed.filter(function (x) { return x.transformed; }),
+    unchanged = transformed.filter(function (x) { return !x.transformed; }),
+    toc = transformed.filter(function (x) { return x.toc; });
 
   if (stdOut) {
     toc.forEach(function (x) {
@@ -47,7 +47,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 
   unchanged.forEach(function (x) {
     if (stdOut) {
-      console.log('==================\n\n"%s" is up to date', x.path)
+      console.log('==================\n\n"%s" is up to date', x.path);
     }
     else {
       log.debug('"%s" is up to date', x.path);
@@ -94,10 +94,11 @@ var modes = {
 
 var mode = modes["github"];
 
-var argv = minimist(process.argv.slice(2)
-    , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toc-title-padding-before', 'toc-header-content', 'toc-footer-content', 'toc-pragma-style', 'l', 'loglevel' ]
-    , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
+var argv = minimist(process.argv.slice(2),
+    {
+      boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes)),
+      string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toc-title-padding-before', 'toc-header-content', 'toc-footer-content', 'toc-pragma-style', 'l', 'loglevel' ],
+      unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
 var logLevel = argv.l || argv.loglevel || "info";
