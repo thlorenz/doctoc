@@ -125,9 +125,9 @@ In all cases there will be padding present after the title due to the toc items 
 
 ### TOC Pragma style
 
-The `--toc-pragma-style` option when set to `compact` will reduce the pragma header/footer to just what is necessary and remove everything else.
+The pragma is the opening and closing comment blocks to mark the location of the doctoc contents, i.e. `<!-- START doctoc ... -->`
 
-What this means is rather than having each toc as
+The default option, `legacy`, produces the following:
 
 ```markdown
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -136,15 +136,13 @@ What this means is rather than having each toc as
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ```
 
-you end up with just the necessary content to keep your markdown DRY.
+You can choose `compact` to make the pragma more succinct:
 
 ```markdown
 <!-- START doctoc -->
 {{toc}}
 <!-- END doctoc -->
 ```
-
-To ensure the additional text always remains the `toc-pragma-style` should be set `legacy`.
 
 ## Usage
 
