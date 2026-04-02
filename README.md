@@ -10,11 +10,14 @@ by github or other sites via a command line flag.
 - [Installation](#installation)
 - [Configuring Table of Contents](#configuring-table-of-contents)
   - [TOC title text](#toc-title-text)
+  - [TOC Header](#toc-header)
+  - [TOC Footer](#toc-footer)
   - [Min. heading level](#min-heading-level)
   - [Max. heading level](#max-heading-level)
   - [Include all headings](#include-all-headings)
   - [Min. ToC items](#min-toc-items)
   - [Pad table of contents title](#pad-table-of-contents-title)
+  - [TOC Pragma style](#toc-pragma-style)
 - [Usage](#usage)
   - [Configuring logging level](#configuring-logging-level)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
@@ -44,6 +47,34 @@ by github or other sites via a command line flag.
 Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
 
 Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
+
+### TOC Header
+
+Additional text can be added to the toc header using the `--toc-header-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
+
+For example, running `doctoc --toc-header-content 'My Header' .` would produce:
+
+```markdown
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+My Header
+{{toc}}
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+```
+
+### TOC Footer
+
+Additional text can be added to the toc header using the `--toc-footer-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
+
+For example, running `doctoc --toc-footer-content 'My Footer' .` would produce:
+
+```markdown
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+{{toc}}
+My Footer
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+```
 
 ### Min. heading level
 
@@ -82,7 +113,7 @@ By default,
 
 ### Pad table of contents title
 
-Use the `--toctitlepaddingbefore` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toctitlepaddingbefore 1 .`
+Use the `--toc-title-padding-before` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toc-title-padding-before 1 .`
 
 NOTE: Currently it is only supported to add one line before the title.
 
@@ -91,6 +122,27 @@ By default,
 - no padding is added above the table of contents title
 
 In all cases there will be padding present after the title due to the toc items always having padding before the list of items.
+
+### TOC Pragma style
+
+The pragma is the opening and closing comment blocks to mark the location of the doctoc contents, i.e. `<!-- START doctoc ... -->`
+
+The default option, `legacy`, produces the following:
+
+```markdown
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+{{toc}}
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+```
+
+You can choose `compact` to make the pragma more succinct:
+
+```markdown
+<!-- START doctoc -->
+{{toc}}
+<!-- END doctoc -->
+```
 
 ## Usage
 

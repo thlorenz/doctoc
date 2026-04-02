@@ -3,19 +3,21 @@
 
 var test = require('tap').test
   , transform = require('../lib/transform')
+  , contentGenerator = require('../lib/content-generation')
 
-function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle) {
+function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle)
+    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options)
 
     // remove wrapper
     var data = res.data.split('\n');
 
     // rig our expected value to include the wrapper
-    var startLines = transform.start.split('\n')
+    var legacy = contentGenerator.pragmaMarkers(syntax || 'md');
+    var startLines = legacy.start.split('\n')
       , anchorLines = anchors.split('\n')
-      , endLines = transform.end.split('\n')
-      , mdLines = md.split('\n')
+      , endLines = legacy.end.split('\n')
+      , mdLines = md.split('\n');
 
     var rig = startLines
       .concat(anchorLines.slice(0, -2))
@@ -195,7 +197,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , true
+  , { toc: { title: { padding: { before: 1 } } } }
 )
 
 check(
@@ -216,7 +218,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , false
+  , { toc: { title: { padding: { before: 0 } } } }
 )
 
 check(
@@ -237,7 +239,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , true
+  , { toc: { title: { padding: { before: 1 } } } }
 )
 
 check(
@@ -258,7 +260,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , false
+  , { toc: { title: { padding: { before: 0 } } } }
 )
 
 check(
