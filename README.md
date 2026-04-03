@@ -126,11 +126,9 @@ In all cases there will be padding present after the title due to the toc items 
 
 ### Indentation Style
 
-Use the `--toc-items-indenting-width` option to customise the indentation width e.g. `doctoc --toc-items-indenting-width 4 .`.
+Use the `--toc-items-indentation-width` option to customise the indentation width e.g. `doctoc --toc-items-indentation-width 4 .` will set the width to 4.
 
-By default,
-
-- width of 4 will be used if mode is gitlab or bitbucket, otherwise 2 will be used.
+By default, a width of 4 will be used if mode is gitlab or bitbucket, otherwise 2 will be used.
 
 ### TOC Pragma style
 

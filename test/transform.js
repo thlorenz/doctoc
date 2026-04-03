@@ -282,7 +282,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , { toc: { items: { indenting: { width: 3 } } } }
+  , { toc: { items: { indentation: { width: 3 } } } }
 )
 
 check(
