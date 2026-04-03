@@ -3,23 +3,21 @@
 
 var test = require('tap').test
   , transform = require('../lib/transform')
+  , contentGenerator = require('../lib/content-generation')
 
-function inspect(obj, depth) {
-  console.log(require('util').inspect(obj, false, depth || 5, true));
-}
-
-function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle) {
+function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options) {
   test('transforming', function (t) {
-    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle)
+    var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options)
 
     // remove wrapper
     var data = res.data.split('\n');
 
     // rig our expected value to include the wrapper
-    var startLines = transform.start.split('\n')
+    var legacy = contentGenerator.pragmaMarkers(syntax || 'md');
+    var startLines = legacy.start.split('\n')
       , anchorLines = anchors.split('\n')
-      , endLines = transform.end.split('\n')
-      , mdLines = md.split('\n')
+      , endLines = legacy.end.split('\n')
+      , mdLines = md.split('\n');
 
     var rig = startLines
       .concat(anchorLines.slice(0, -2))
@@ -199,7 +197,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , true
+  , { toc: { title: { padding: { before: 1 } } } }
 )
 
 check(
@@ -220,7 +218,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , false
+  , { toc: { title: { padding: { before: 0 } } } }
 )
 
 check(
@@ -241,7 +239,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , true
+  , { toc: { title: { padding: { before: 1 } } } }
 )
 
 check(
@@ -262,7 +260,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , false
+  , { toc: { title: { padding: { before: 0 } } } }
 )
 
 check(
@@ -393,6 +391,16 @@ check(
   , 2
 )
 
+check(
+    [ '# Test 1'
+    , ''
+    , '<h1 id="test-a">Teste á</h1>'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [Test 1](#test-1)\n',
+    , '- [Teste á](#test-a)\n\n\n'
+    ].join('')
+)
 
 test('transforming when old toc exists', function (t) {
   var md = [
@@ -763,4 +771,41 @@ test('should use {/* */} comments if syntax=mdx', function (t) {
     var commentLines = getCommentLines(res);
     t.same(commentLines.every((line) => line.startsWith('{/*') && line.endsWith('*/}')), true)
     t.end()
+})
+
+test('\nduplicate titles but with different symbols', function (t) {
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-duplicate-headers.md', 'utf8');
+  var headers = transform(content);
+
+  t.same(
+      headers.toc.split('\n')
+    , [ '',
+        '- [foo _bar_](#foo-bar)',
+        '- [foo _bar_](#foo-bar-1)',
+        '- [foo **bar**](#foo-bar-2)',
+        '- [foo ~bar~](#foo-bar-3)',
+        '- [_foo bar_](#foo-bar-4)',
+        '' ]
+    , 'generates a correct toc when readme includes duplicate headings with different symbols'
+  )
+
+  t.end()
+})
+
+test('\nignores the hX which is in the content on or a different line', function (t) {
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-hX.md', 'utf8');
+  var headers = transform(content, 'github.com', 8);
+
+  t.same(
+      headers.toc.split('\n')
+    , [ '',
+        '- [Hello, world!](#hello-world)',
+        '  - [Installation](#installation)',
+        '  - [API](#api)',
+        '  - [License](#license)',
+        '' ]
+    , 'generates correct toc for non html and html headers'
+  )
+
+  t.end()
 })

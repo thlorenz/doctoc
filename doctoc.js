@@ -8,6 +8,7 @@ var path = require("path"),
   minimist = require("minimist"),
   file = require("./lib/file"),
   transform = require("./lib/transform"),
+  log = require('loglevel'),
   files;
 
 function cleanPath(filePath) {
@@ -16,21 +17,21 @@ function cleanPath(filePath) {
   return homeExpanded;
 }
 
-function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, padTitle) {
+function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options) {
   if (processAll) {
-    console.log('--all flag is enabled. Including headers before the TOC location.')
+    log.debug('--all flag is enabled. Including headers before the TOC location.')
   }
 
   if (updateOnly) {
-    console.log('--update-only flag is enabled. Only updating files that already have a TOC.')
+    log.debug('--update-only flag is enabled. Only updating files that already have a TOC.')
   }
 
-  console.log('\n==================\n');
+  log.debug('\n==================\n');
 
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, padTitle);
+        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options);
       result.path = x.path;
       return result;
     });
@@ -49,7 +50,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
       console.log('==================\n\n"%s" is up to date', x.path)
     }
     else {
-      console.log('"%s" is up to date', x.path);
+      log.debug('"%s" is up to date', x.path);
     }
   });
 
@@ -57,10 +58,10 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
     if (stdOut) {
       console.log('==================\n\n"%s" should be updated', x.path);
     } else if (dryRun) {
-      console.log('"%s" should be updated but wasn\'t due to dry run.', x.path);
+      log.warn('"%s" should be updated but wasn\'t due to dry run.', x.path);
     }
     else {
-      console.log('"%s" will be updated', x.path);
+      log.info('"%s" will be updated', x.path);
       fs.writeFileSync(x.path, x.data, "utf8");
     }
   });
@@ -70,9 +71,9 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 }
 
 function printUsageAndExit(isErr) {
-  var outputFunc = isErr ? console.error : console.info;
+  var outputFunc = isErr ? log.error : log.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--all] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--toc-pragma-style style] [--toc-header-content content] [--toc-footer-content content] [--all] [--loglevel level] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc("  --%s\t%s", key, modes[key]);
@@ -95,17 +96,30 @@ var mode = modes["github"];
 
 var argv = minimist(process.argv.slice(2)
     , { boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes))
-    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toctitlepaddingbefore' ]
+    , string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toc-title-padding-before', 'toc-header-content', 'toc-footer-content', 'toc-pragma-style', 'l', 'loglevel' ]
     , unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
+var logLevel = argv.l || argv.loglevel || "info";
+
+try {
+  log.setLevel(logLevel, false);
+}
+catch (e) {
+  console.error('Unknown log level: ' + logLevel);
+  console.error('Supported options: trace, debug, info, warn, error');
+  process.exitCode = 2;
+  return;
+}
+
 if (argv.h || argv.help) {
+  log.setLevel("info");
   printUsageAndExit();
 }
 
 if (argv['syntax'] !== undefined && !supportedSyntaxes.includes(argv['syntax'])) {
-  console.error('Unknown syntax:', argv['syntax']);
-  console.error('Supported options:', supportedSyntaxes.join(", "));
+  log.error('Unknown syntax:', argv['syntax']);
+  log.error('Supported options:', supportedSyntaxes.join(", "));
   process.exit(2);
   return;
 }
@@ -119,27 +133,46 @@ var title = argv.t || argv.title;
 var notitle = argv.T || argv.notitle;
 var entryPrefix = argv.entryprefix || '-';
 var minTocItems = argv.mintocitems || 1;
-if (minTocItems && (isNaN(minTocItems) || minTocItems <= 0)) { console.error('Min. TOC items specified is not a positive number: ' + minTocItems), printUsageAndExit(true); }
+if (minTocItems && (isNaN(minTocItems) || minTocItems <= 0)) { log.error('Min. TOC items specified is not a positive number: ' + minTocItems), printUsageAndExit(true); }
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout || false;
 var updateOnly = argv.u || argv['update-only'];
 var syntax = argv['syntax'] || 'md';
 var dryRun = argv.d || argv.dryrun || false;
-var padTitle = false;
 
-var padBeforeTitle = argv.toctitlepaddingbefore;
+var padBeforeTitle = argv['toc-title-padding-before'];
 if (padBeforeTitle && isNaN(padBeforeTitle) || padBeforeTitle < 0) { console.error('Padding before title specified is not a positive number: ' + padBeforeTitle), printUsageAndExit(true); }
 else if (padBeforeTitle && padBeforeTitle > 1) { console.error('Padding before title: ' + padBeforeTitle + ' is not currently supported as greater than 1'), printUsageAndExit(true); }
-else if (padBeforeTitle || notitle) { padTitle = true; }
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
-if (maxHeaderLevel && isNaN(maxHeaderLevel)) { console.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
+if (maxHeaderLevel && isNaN(maxHeaderLevel)) { log.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
 
 var minHeaderLevel = argv.minlevel || 1;
-if (minHeaderLevel && isNaN(minHeaderLevel) || minHeaderLevel < 0) { console.error('Min. heading level specified is not a positive number: ' + minHeaderLevel), printUsageAndExit(true); }
-else if (minHeaderLevel && minHeaderLevel > 2) { console.error('Min. heading level: ' + minHeaderLevel + ' is not currently supported as greater than 2'), printUsageAndExit(true); }
+if (minHeaderLevel && isNaN(minHeaderLevel) || minHeaderLevel < 0) { log.error('Min. heading level specified is not a positive number: ' + minHeaderLevel), printUsageAndExit(true); }
+else if (minHeaderLevel && minHeaderLevel > 2) { log.error('Min. heading level: ' + minHeaderLevel + ' is not currently supported as greater than 2'), printUsageAndExit(true); }
 
-if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { console.error('Max. heading level: ' + maxHeaderLevel + ' is less than the defined Min. heading level: ' + minHeaderLevel), printUsageAndExit(true); }
+if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { log.error('Max. heading level: ' + maxHeaderLevel + ' is less than the defined Min. heading level: ' + minHeaderLevel), printUsageAndExit(true); }
+
+var options = {
+  toc: {
+    pragma: {
+      style: argv['toc-pragma-style'] || 'legacy',
+    },
+    header: {
+      content: argv['toc-header-content'],
+    },
+    title: {
+      padding: {
+        before: padBeforeTitle ?? (notitle ? 1 : 0),
+      }
+    },
+    footer: {
+      content: argv['toc-footer-content'],
+    }
+  }
+}
+
+if (options.toc.pragma.style != "legacy" && options.toc.pragma.style != "compact"){ log.error('TOC pragma style is not supported: ' + options.toc.pragma.style), printUsageAndExit(true); }
 
 if (argv._.length > 1 && stdOut) {
   console.error('--stdout cannot be used to process multiple files/directories. Use --dryrun instead.');
@@ -158,20 +191,20 @@ for (var i = 0; i < argv._.length; i++) {
   }
 
   if (stat.isDirectory()) {
-    console.log ('\nDocToccing "%s" and its sub directories for %s.', target, mode);
+    log.debug('\nDocToccing "%s" and its sub directories for %s.', target, mode);
     files = file.findMarkdownFiles(target, syntax);
   } else {
-    console.log('\nDocToccing single file "%s" for %s.', target, mode);
+    log.debug('\nDocToccing single file "%s" for %s.', target, mode);
     files = [{ path: target }];
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, padTitle);
+  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options);
 
   if (dryRun && process.exitCode === 1) {
-    console.log('\nDocumentation tables of contents are out of date.');
+    log.warn('\nDocumentation tables of contents are out of date.');
   }
   else {
-    console.log('\nEverything is OK.');
+    log.info('\nEverything is OK.');
   }
 }
 
