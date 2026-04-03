@@ -269,8 +269,8 @@ check(
     , 'No TOC title test without padding'
     ].join('\n')
   , [ '\n'
-    , '- [Heading](#heading)\n\n\n'
-    , '   - [Sub-Heading](#sub-heading)'
+    , '- [Heading](#heading)\n'
+    , '   - [Sub-Heading](#sub-heading)\n\n\n'
     ].join('')
   , undefined
   , undefined
