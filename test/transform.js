@@ -270,7 +270,7 @@ check(
     ].join('\n')
   , [ '\n'
     , '- [Heading](#heading)\n'
-    , '   - [Sub-Heading](#sub-heading)\n\n\n'
+    , '   - [Sub Heading](#sub-heading)\n\n\n'
     ].join('')
   , undefined
   , undefined
