@@ -35,9 +35,9 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
       result.path = x.path;
       return result;
     });
-  var changed = transformed.filter(function (x) { return x.transformed; }),
-    unchanged = transformed.filter(function (x) { return !x.transformed; }),
-    toc = transformed.filter(function (x) { return x.toc; });
+  var changed = transformed.filter(function (x) { return x.transformed; })
+    , unchanged = transformed.filter(function (x) { return !x.transformed; })
+    , toc = transformed.filter(function (x) { return x.toc; });
 
   if (stdOut) {
     toc.forEach(function (x) {
