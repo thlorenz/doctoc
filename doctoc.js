@@ -156,8 +156,7 @@ if (maxHeaderLevel && maxHeaderLevel < minHeaderLevel) { log.error('Max. heading
 
 var indentWidth = argv['toc-items-indenting-width'];
 if (indentWidth !== undefined && isNaN(indentWidth)) { log.error('ToC indenting width: ' + indentWidth + ' is not a number'), printUsageAndExit(true); }
-else if (indentWidth === undefined && (mode === 'bitbucket.org' || mode === 'gitlab.com')) { indentWidth = 4; }
-else if (indentWidth === undefined) { indentWidth = 2; }
+else if (indentWidth === undefined) { indentWidth = (mode === 'bitbucket.org' || mode === 'gitlab.com') ? 4 : 2; }
 
 var options = {
   toc: {
