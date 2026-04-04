@@ -158,12 +158,12 @@ var indentWidth = argv['toc-items-indentation-width'];
 if (indentWidth !== undefined && isNaN(indentWidth)) { log.error('ToC indentation width: ' + indentWidth + ' is not a number'), printUsageAndExit(true); }
 else if (indentWidth === undefined) { indentWidth = (mode === 'bitbucket.org' || mode === 'gitlab.com') ? 4 : 2; }
 
-var minLines = argv['document-line-min'] || 0;
+var minLines = argv['document-lines-min'] || 0;
 if (isNaN(minLines)) { log.error('Document min lines: ' + minLines + ' is not a number'), printUsageAndExit(true); }
 
 var options = {
   document: {
-    line: {
+    lines: {
       min: minLines,
     }
   },
