@@ -17,6 +17,7 @@ by github or other sites via a command line flag.
   - [Include all headings](#include-all-headings)
   - [Min. ToC items](#min-toc-items)
   - [Pad table of contents title](#pad-table-of-contents-title)
+  - [Indentation Style](#indentation-style)
   - [TOC Pragma style](#toc-pragma-style)
 - [Usage](#usage)
   - [Configuring logging level](#configuring-logging-level)
@@ -122,6 +123,12 @@ By default,
 - no padding is added above the table of contents title
 
 In all cases there will be padding present after the title due to the toc items always having padding before the list of items.
+
+### Indentation Style
+
+Use the `--toc-items-indentation-width` option to customise the indentation width e.g. `doctoc --toc-items-indentation-width 4 .` will set the width to 4.
+
+By default, a width of 4 will be used if mode is gitlab or bitbucket, otherwise 2 will be used.
 
 ### TOC Pragma style
 
