@@ -264,6 +264,28 @@ check(
 )
 
 check(
+    [ '# Heading'
+    , '## Sub Heading'
+    , 'No TOC title test without padding'
+    ].join('\n')
+  , [ '\n'
+    , '- [Heading](#heading)\n'
+    , '   - [Sub Heading](#sub-heading)\n\n\n'
+    ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , true
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { toc: { items: { indentation: { width: 3 } } } }
+)
+
+check(
     [ '# H1h'
     , '## H2h'
     , '### H3h'
