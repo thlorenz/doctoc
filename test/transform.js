@@ -795,9 +795,6 @@ test('should use {/* */} comments if syntax=mdx', function (t) {
     t.end()
 })
 
-// Bug: compact pragma style with existing toc crashes because .replace() is called
-// on an AST node (object) instead of node.raw (string). This is a regression
-// introduced by the refactor — it passes on master.
 test('compact pragma style with existing toc', function (t) {
   var md = [
       '<!-- START doctoc generated TOC please keep comment here to allow auto update -->'
