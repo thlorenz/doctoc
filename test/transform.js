@@ -795,6 +795,62 @@ test('should use {/* */} comments if syntax=mdx', function (t) {
     t.end()
 })
 
+test('compact pragma style with existing toc', function (t) {
+  var md = [
+      '<!-- START doctoc generated TOC please keep comment here to allow auto update -->'
+    , '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->'
+    , '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*'
+    , ''
+    , '- [Header](#header)'
+    , ''
+    , '<!-- END doctoc generated TOC please keep comment here to allow auto update -->'
+    , ''
+    , '## Header'
+    , 'some content'
+    ].join('\n')
+
+  var res = transform(md
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , { toc: { pragma: { style: 'compact' } } }
+  )
+
+  t.same(
+      res.wrappedToc.split('\n')
+    , [ '<!-- START doctoc -->',
+        '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
+        '',
+        '- [Header](#header)',
+        '',
+        '<!-- END doctoc -->' ]
+    , 'compacts the pragma markers'
+  )
+
+  t.same(
+      res.data.split('\n')
+    , [ '<!-- START doctoc -->',
+        '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
+        '',
+        '- [Header](#header)',
+        '',
+        '<!-- END doctoc -->',
+        '',
+        '## Header',
+        'some content' ]
+    , 'replaces verbose markers with compact ones'
+  )
+  t.end()
+})
+
+
 test('\nduplicate titles but with different symbols', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-duplicate-headers.md', 'utf8');
   var headers = transform(content);
