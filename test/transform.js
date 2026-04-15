@@ -15,7 +15,7 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     var doc = res.wrappedToc + '\n\n' + md;
 
     t.ok(res.transformed, 'transforms it');
-    t.same(res.toc, anchors.trimEnd(), 'generates correct toc contents');
+    t.same(res.toc, anchors.trimEnd() + '\n\n', 'generates correct toc contents');
     t.same(res.wrappedToc, toc, 'generates correct toc');
     t.same(res.data, doc, 'generates correct doc');
     t.end()
