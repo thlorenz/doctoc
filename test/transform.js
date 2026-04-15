@@ -9,24 +9,16 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
   test('transforming', function (t) {
     var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options)
 
-    // remove wrapper
-    var data = res.data.split('\n');
-
-    // rig our expected value to include the wrapper
-    var legacy = contentGenerator.pragmaMarkers(syntax || 'md');
-    var startLines = legacy.start.split('\n')
-      , anchorLines = anchors.split('\n')
-      , endLines = legacy.end.split('\n')
-      , mdLines = md.split('\n');
-
-    var rig = startLines
-      .concat(anchorLines.slice(0, -2))
-      .concat(endLines)
-      .concat('')
-      .concat(mdLines);
+    // build the expected content
+    var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
+    var contents = anchors.split('\n').slice(0, -2);
+    var toc = pragma.start + '\n' + anchors + '\n' + pragma.end;
+    var doc = res.wrappedToc + '\n' + md;
 
     t.ok(res.transformed, 'transforms it');
-    t.same(data, rig, 'generates correct anchors')
+    t.same(contents, res.toc.split('\n'), 'generates correct toc contents');
+    t.same(toc, res.data, 'generates correct toc');
+    t.same(doc, res.data, 'generates correct doc');
     t.end()
   })
 }
