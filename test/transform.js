@@ -10,11 +10,12 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options)
 
     // build the expected content
+    eol = eol || '\n';
     var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
     var contents =  anchors.trimEnd();
-    if (contents != '') { contents += res.eol; }
-    var toc = pragma.start + res.eol + anchors.trimEnd() + (anchors ? res.eol + res.eol : '') + pragma.end;
-    var doc = res.wrappedToc + res.eol + res.eol + md;
+    if (contents != '') { contents += eol; }
+    var toc = pragma.start + eol + anchors.trimEnd() + (anchors ? eol + eol : '') + pragma.end;
+    var doc = res.wrappedToc + eol + eol + md;
 
     t.ok(res.transformed, 'transforms it');
     t.same(res.toc, contents, 'generates correct toc contents');
@@ -25,7 +26,7 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
 }
 
 function getCommentLines(transformRes){
-    var lines = transformRes.wrappedToc.split(transformRes.eol)
+    var lines = transformRes.wrappedToc.split('\n')
     return lines.slice(0,2).concat(lines[lines.length - 1])
 }
 //function check() {}
