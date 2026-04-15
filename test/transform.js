@@ -9,24 +9,17 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
   test('transforming', function (t) {
     var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options)
 
-    // remove wrapper
-    var data = res.data.split(res.eol);
-
-    // rig our expected value to include the wrapper
-    var legacy = contentGenerator.pragmaMarkers(syntax || 'md');
-    var startLines = legacy.start.split('\n')
-      , anchorLines = anchors.split('\n')
-      , endLines = legacy.end.split('\n')
-      , mdLines = md.split('\n');
-
-    var rig = startLines
-      .concat(anchorLines.slice(0, -2))
-      .concat(endLines)
-      .concat('')
-      .concat(mdLines);
+    // build the expected content
+    var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
+    var contents =  anchors.trimEnd();
+    if (contents != '') { contents += res.eol; }
+    var toc = pragma.start + res.eol + anchors.trimEnd() + (anchors ? res.eol + res.eol : '') + pragma.end;
+    var doc = res.wrappedToc + res.eol + res.eol + md;
 
     t.ok(res.transformed, 'transforms it');
-    t.same(data, rig, 'generates correct anchors')
+    t.same(res.toc, contents, 'generates correct toc contents');
+    t.same(res.wrappedToc, toc, 'generates correct toc');
+    t.same(res.data, doc, 'generates correct doc');
     t.end()
   })
 }
