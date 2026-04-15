@@ -25,13 +25,13 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
 }
 
 function getCommentLines(transformRes){
-    var lines = transformRes.wrappedToc.split('\n')
+    var lines = transformRes.wrappedToc.split(transformRes.eol)
     return lines.slice(0,2).concat(lines[lines.length - 1])
 }
 //function check() {}
 
 check(
-    [ '# My Module'
+    [ '# My Module using \\n line endings'
     , 'Some text here'
     , '## API'
     , '### Method One'
@@ -41,13 +41,33 @@ check(
     , 'some main usage here'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
-    , '- [My Module](#my-module)\n'
+    , '- [My Module using \\n line endings](#my-module-using-n-line-endings)\n'
     ,   '  - [API](#api)\n'
     ,     '    - [Method One](#method-one)\n'
     ,     '    - [Method Two](#method-two)\n'
     ,         '      - [Main Usage](#main-usage)\n\n\n'
     ].join('')
 )
+
+check(
+    [ '# My Module using \\r line endings'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\r')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\r\r'
+    , '- [My Module using \\r line endings](#my-module-using-r-line-endings)\r'
+    ,   '  - [API](#api)\r'
+    ,     '    - [Method One](#method-one)\r'
+    ,     '    - [Method Two](#method-two)\r'
+    ,         '      - [Main Usage](#main-usage)\r\r\r'
+    ].join('')
+)
+
 
 check(
     [ '# My Module using \\r\\n line endings'
@@ -59,8 +79,27 @@ check(
     , '#### Main Usage'
     , 'some main usage here'
     ].join('\r\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\r\n\r\n'
+    , '- [My Module using \\r\\n line endings](#my-module-using-rn-line-endings)\r\n'
+    ,   '  - [API](#api)\r\n'
+    ,     '    - [Method One](#method-one)\r\n'
+    ,     '    - [Method Two](#method-two)\r\n'
+    ,         '      - [Main Usage](#main-usage)\r\n\r\n\r\n'
+    ].join('')
+)
+
+check(
+    [ '# My Module using mixed line endings\r'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this\r'
+    , '### Method Two'
+    , '#### Main Usage\r'
+    , 'some main usage here'
+    ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
-    , '- [My Module using \\r\\n line endings](#my-module-using-rn-line-endings)\n'
+    , '- [My Module using mixed line endings](#my-module-using-mixed-line-endings)\n'
     ,   '  - [API](#api)\n'
     ,     '    - [Method One](#method-one)\n'
     ,     '    - [Method Two](#method-two)\n'
