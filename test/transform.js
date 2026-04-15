@@ -47,6 +47,18 @@ check(
     ,     '    - [Method Two](#method-two)\n'
     ,         '      - [Main Usage](#main-usage)\n\n\n'
     ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , '\n'
 )
 
 check(
@@ -66,6 +78,18 @@ check(
     ,     '    - [Method Two](#method-two)\r'
     ,         '      - [Main Usage](#main-usage)\r\r\r'
     ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , '\r'
 )
 
 check(
@@ -85,6 +109,18 @@ check(
     ,     '    - [Method Two](#method-two)\r\n'
     ,         '      - [Main Usage](#main-usage)\r\n\r\n\r\n'
     ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , '\r\n'
 )
 
 check(
@@ -104,6 +140,18 @@ check(
     ,     '    - [Method Two](#method-two)\n'
     ,         '      - [Main Usage](#main-usage)\n\n\n'
     ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , '\n'
 )
 
 check(
