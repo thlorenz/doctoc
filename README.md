@@ -48,6 +48,7 @@ by github or other sites via a command line flag.
 Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
 
 Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
+It is recommended to also include this argument when performing an update on an existing toc.
 
 ### TOC Header
 
@@ -62,6 +63,9 @@ My Header
 {{toc}}
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ```
+
+If you will be using the toc header option but without a toc title it is required that when updating the toc,
+you always include the --notitle argument.
 
 ### TOC Footer
 
