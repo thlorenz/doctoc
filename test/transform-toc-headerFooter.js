@@ -91,6 +91,46 @@ test('\nSet a md header', function (t) {
   t.end()
 });
 
+test('\nUpdate existing toc with header content and no title does not duplicate header', function (t) {
+  var md = [
+      '<!-- START doctoc generated TOC please keep comment here to allow auto update -->'
+    , '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->'
+    , 'My custom header content'
+    , ''
+    , '- [Installation](#installation)'
+    , '- [API](#api)'
+    , ''
+    , '<!-- END doctoc generated TOC please keep comment here to allow auto update -->'
+    , ''
+    , '## Installation'
+    , '## API'
+    ].join('\n')
+
+  var transformedContent = transform(md, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, {
+    toc: {
+      header: {
+        content: "My custom header content"
+      }
+    }
+  });
+
+  t.same(
+    transformedContent.wrappedToc.split('\n')
+    , [
+      "<!-- START doctoc generated TOC please keep comment here to allow auto update -->",
+      "<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->",
+      "My custom header content",
+      "",
+      "- [Installation](#installation)",
+      "- [API](#api)",
+      "",
+      "<!-- END doctoc generated TOC please keep comment here to allow auto update -->",
+    ]
+    , 'Header content appears exactly once'
+  )
+  t.end()
+});
+
 test('\nSet a md footer', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-syntax.md', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", { 
