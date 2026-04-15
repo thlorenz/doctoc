@@ -79,7 +79,8 @@ check(
     , 'some main usage here'
     ].join('\r\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\r\n\r\n'
-    , '- [My Module using \\r\\n line endings](#my-module-using-rn-line-endings)\r\n'    ,   '  - [API](#api)\r\n'
+    , '- [My Module using \\r\\n line endings](#my-module-using-rn-line-endings)\r\n'
+    ,   '  - [API](#api)\r\n'
     ,     '    - [Method One](#method-one)\r\n'
     ,     '    - [Method Two](#method-two)\r\n'
     ,         '      - [Main Usage](#main-usage)\r\n\r\n\r\n'
