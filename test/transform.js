@@ -17,7 +17,7 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
 
     t.ok(res.transformed, 'transforms it');
     t.same(contents, res.toc.split('\n'), 'generates correct toc contents');
-    t.same(toc, res.data, 'generates correct toc');
+    t.same(toc, res.wrappedToc, 'generates correct toc');
     t.same(doc, res.data, 'generates correct doc');
     t.end()
   })
