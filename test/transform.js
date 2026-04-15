@@ -12,9 +12,9 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     // build the expected content
     var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
     var contents =  anchors.trimEnd();
-    if (contents != '') { contents += '\n'; }
-    var toc = pragma.start + '\n' + anchors.trimEnd() + (anchors ? '\n\n': '') + pragma.end;
-    var doc = res.wrappedToc + '\n\n' + md;
+    if (contents != '') { contents += res.eol; }
+    var toc = pragma.start + res.eol + anchors.trimEnd() + (anchors ? res.eol + res.eol : '') + pragma.end;
+    var doc = res.wrappedToc + res.eol + res.eol + md;
 
     t.ok(res.transformed, 'transforms it');
     t.same(res.toc, contents, 'generates correct toc contents');
