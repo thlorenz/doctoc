@@ -78,8 +78,27 @@ check(
     , '#### Main Usage'
     , 'some main usage here'
     ].join('\r\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\r\n\r\n'
+    , '- [My Module using \\r\\n line endings](#my-module-using-rn-line-endings)\r\n'
+    ,   '  - [API](#api)\r\n'
+    ,     '    - [Method One](#method-one)\r\n'
+    ,     '    - [Method Two](#method-two)\r\n'
+    ,         '      - [Main Usage](#main-usage)\r\n\r\n\r\n'
+    ].join('')
+)
+
+check(
+    [ '# My Module using mixed line endings\r'
+    , 'Some text here'
+    , '## API'
+    , '### Method One'
+    , 'works like this\r'
+    , '### Method Two'
+    , '#### Main Usage\r'
+    , 'some main usage here'
+    ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
-    , '- [My Module using \\r\\n line endings](#my-module-using-rn-line-endings)\n'
+    , '- [My Module using mixed line endings](#my-module-using-mixed-line-endings)\n'
     ,   '  - [API](#api)\n'
     ,     '    - [Method One](#method-one)\n'
     ,     '    - [Method Two](#method-two)\n'
