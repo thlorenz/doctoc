@@ -13,11 +13,11 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     var data = res.data.split(res.eol);
 
     // rig our expected value to include the wrapper
-    var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
-    var startLines = pragma.start.split(/\r\n|\n|\r/)
-      , anchorLines = anchors.split(/\r\n|\n|\r/)
-      , endLines = pragma.end.split(/\r\n|\n|\r/)
-      , mdLines = md.split(/\r\n|\n|\r/);
+    var legacy = contentGenerator.pragmaMarkers(syntax || 'md');
+    var startLines = legacy.start.split('\n')
+      , anchorLines = anchors.split('\n')
+      , endLines = legacy.end.split('\n')
+      , mdLines = md.split('\n');
 
     var rig = startLines
       .concat(anchorLines.slice(0, -2))
