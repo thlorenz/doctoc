@@ -10,14 +10,15 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options)
 
     // remove wrapper
-    var data = res.data.split('\n');
+    var eol = res.eol;
+    var data = res.data.split(eol);
 
     // rig our expected value to include the wrapper
-    var legacy = contentGenerator.pragmaMarkers(syntax || 'md');
-    var startLines = legacy.start.split('\n')
-      , anchorLines = anchors.split('\n')
-      , endLines = legacy.end.split('\n')
-      , mdLines = md.split('\n');
+    var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
+    var startLines = pragma.start.split(eol)
+      , anchorLines = anchors.split(eol)
+      , endLines = pragma.end.split(eol)
+      , mdLines = md.split(eol);
 
     var rig = startLines
       .concat(anchorLines.slice(0, -2))
@@ -32,7 +33,7 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
 }
 
 function getCommentLines(transformRes){
-    var lines = transformRes.wrappedToc.split('\n')
+    var lines = transformRes.wrappedToc.split(transformRes.eol)
     return lines.slice(0,2).concat(lines[lines.length - 1])
 }
 //function check() {}
@@ -48,7 +49,7 @@ check(
     , 'some main usage here'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
-    , '- [My Module \\n line endings](#my-module-using-n-line-endings)\n'
+    , '- [My Module using \\n line endings](#my-module-using-n-line-endings)\n'
     ,   '  - [API](#api)\n'
     ,     '    - [Method One](#method-one)\n'
     ,     '    - [Method Two](#method-two)\n'
