@@ -10,15 +10,14 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options)
 
     // remove wrapper
-    var eol = res.eol;
-    var data = res.data.split(eol);
+    var data = res.data.split(res.eol);
 
     // rig our expected value to include the wrapper
     var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
-    var startLines = pragma.start.split(eol)
-      , anchorLines = anchors.split(eol)
-      , endLines = pragma.end.split(eol)
-      , mdLines = md.split(eol);
+    var startLines = pragma.start.split(/\r\n|\n|\r/)
+      , anchorLines = anchors.split(/\r\n|\n|\r/)
+      , endLines = pragma.end.split(/\r\n|\n|\r/)
+      , mdLines = md.split(/\r\n|\n|\r/);
 
     var rig = startLines
       .concat(anchorLines.slice(0, -2))
