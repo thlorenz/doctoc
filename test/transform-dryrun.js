@@ -68,6 +68,18 @@ test('\nshould exit with no error code with --dryrun, --github and --update-only
     })
 })
 
+test('\nshould exit with no error code with --dryrun, --github and --update-only options', function (t) {
+
+    exec('node doctoc.js test/fixtures/readme-with-notitle.md --dryrun --github --update-only', function (error, stdout, stderr) {
+      if (error) {
+        t.fail('process produced an unexpected error: ' + error);
+        t.end()
+      } else {
+        t.end('process did not have an error');
+      }
+    })
+})
+
 test('\nshould exit no error code when not using --dryrun and using --all for out of date toc', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-with-out_of_date_toc.md --stdout --all', function (error, stdout, stderr) {
