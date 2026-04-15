@@ -12,8 +12,8 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     // build the expected content
     var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
     var contents = anchors.split('\n').slice(0, -2);
-    var toc = pragma.start + '\n' + anchors + '\n' + pragma.end;
-    var doc = res.wrappedToc + '\n' + md;
+    var toc = pragma.start + '\n' + anchors.trimEnd() + '\n\n' + pragma.end;
+    var doc = res.wrappedToc + '\n\n' + md;
 
     t.ok(res.transformed, 'transforms it');
     t.same(contents, res.toc.split('\n'), 'generates correct toc contents');
