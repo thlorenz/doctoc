@@ -453,7 +453,68 @@ check(
 )
 
 check(
+    [ '---'
+    , 'title: a'
+    , '---'
+    , ''
+    , '# Test 1'
+    , ''
+    , '# Test 2'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [Test 1](#test-1)\n',
+    , '- [Test 2](#test-2)\n\n\n'
+    ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { 
+      document: {
+        lines: {
+          min: 3
+        }
+      }
+    }
+)
+
+check(
     [ '# Test 1'
+    , ''
+    , '# Test 2'
+    ].join('\n')
+  , [].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { 
+      document: {
+        lines: {
+          min: 4
+        }
+      }
+    }
+)
+
+check(
+    [ '---'
+    , 'title: a'
+    , '---'
+    , ''
+    , '# Test 1'
     , ''
     , '# Test 2'
     ].join('\n')
