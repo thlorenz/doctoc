@@ -97,7 +97,7 @@ var mode = modes["github"];
 var argv = minimist(process.argv.slice(2),
     {
       boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes)),
-      string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toc-title-padding-before', 'toc-header-content', 'toc-footer-content', 'toc-pragma-style', 'toc-items-indentation-width', 'l', 'loglevel' ],
+      string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toc-title-padding-before', 'toc-header-content', 'toc-footer-content', 'toc-pragma-style', 'toc-items-indentation-width', 'document-lines-min', 'l', 'loglevel' ],
       unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -164,7 +164,7 @@ if (isNaN(minLines)) { log.error('Document min lines: ' + minLines + ' is not a 
 var options = {
   document: {
     lines: {
-      min: minLines,
+      min: Number(minLines) || 0,
     }
   },
   toc: {
