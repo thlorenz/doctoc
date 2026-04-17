@@ -101,6 +101,17 @@ check(
 )
 
 check(
+    [ '# My Module {# link-1 #} #'
+    , 'Some text here'
+    , '## API {: link-2 :} ##'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#link-1)\n'
+    ,   '  - [API](#link-2)\n\n\n'
+    ].join('')
+)
+
+check(
     [ '## Title should be included'
     , ''
     , '```js'
