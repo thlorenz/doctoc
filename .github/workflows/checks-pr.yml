@@ -21,4 +21,4 @@ jobs:
       - uses: dev-build-deploy/commit-me@v0
         with:
           token: ${{ github.token }}
-          config: .commit-me.json
+          config: ".commit-me.json"
