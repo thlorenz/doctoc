@@ -24,7 +24,8 @@ test('\ngiven a file that includes Json frontmatter', function (t) {
         '',
         '# Heading',
         '',
-        'Your regular Markdown content follows...' ].join('\n')  
+        'Your regular Markdown content follows...',
+        '' ].join('\n')  
     , 'generates correct toc for file with Json frontmatter'
   )
 
@@ -51,7 +52,8 @@ test('\ngiven a file that includes Toml frontmatter', function (t) {
         '',
         '# Heading',
         '',
-        'Your regular Markdown content follows...' ].join('\n')  
+        'Your regular Markdown content follows...',
+        '' ].join('\n')  
     , 'generates correct toc for file with Toml frontmatter'
   )
 
@@ -78,7 +80,8 @@ test('\ngiven a file that includes yaml frontmatter', function (t) {
         '',
         '# Heading',
         '',
-        'Your regular Markdown content follows...' ].join('\n')  
+        'Your regular Markdown content follows...',
+        '' ].join('\n')  
     , 'generates correct toc for file with yaml frontmatter'
   )
 
@@ -105,7 +108,8 @@ test('\ngiven a file that includes invalid frontmatter', function (t) {
         '',
         '# Heading',
         '',
-        'Your regular Markdown content follows...' ].join('\n')  
+        'Your regular Markdown content follows...',
+        '' ].join('\n')  
     , 'generates correct toc for file with invalid frontmatter'
   )
 
