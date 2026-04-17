@@ -538,6 +538,64 @@ check(
     }
 )
 
+check(
+    [ ';;;'
+    , 'title: a'
+    , ';;;'
+    , ''
+    , '# Test 1'
+    , ''
+    , '# Test 2'
+    ].join('\n')
+  , [].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { 
+      document: {
+        lines: {
+          min: 4
+        }
+      }
+    }
+)
+
+check(
+    [ '+++'
+    , 'title: a'
+    , '+++'
+    , ''
+    , '# Test 1'
+    , ''
+    , '# Test 2'
+    ].join('\n')
+  , [].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { 
+      document: {
+        lines: {
+          min: 4
+        }
+      }
+    }
+)
+
 test('\ndmin document lines', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-notitle.md', 'utf8');
   var headers = transform(content
