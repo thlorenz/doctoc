@@ -1,0 +1,24 @@
+name: Checks / PR
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+permissions:
+  contents: read  # NOTE; you will need to change this permission to `write` in case you do not provide the `include-commits` input parameter.
+  pull-requests: write  # OPTIONAL; only required when you want CommitMe to update labels in your Pull Request, set `update-labels` to `false` if you do not require this feature.
+
+jobs:
+  commit-me:
+    name: Conventional Commits Compliance
+    runs-on: ubuntu-latest
+    env:
+      # Enable colored output in GitHub Actions
+      FORCE_COLOR: 3
+    steps:
+      - uses: dev-build-deploy/commit-me@v0
+        with:
+          token: ${{ github.token }}
+          config: .commit-me.json

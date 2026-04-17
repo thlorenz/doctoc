@@ -1,0 +1,34 @@
+# .github/release.yml
+
+changelog:
+  exclude:
+    labels:
+      - no-changelog
+  categories:
+    - title: Fixes 🛡️
+      labels:
+        - fix
+      exclude:
+        labels:
+          - dependencies
+          - breaking
+    - title: Breaking Changes ⚠️
+      labels:
+        - breaking
+        - revert
+    - title: New Features 🎉
+      labels:
+        - feature
+      exclude:
+        labels:
+          - dependencies
+          - breaking
+    - title: Dependencies ⚙️
+      labels:
+        - dependencies
+    - title: Other Changes 🛠️
+      labels:
+        - "*"
+      exclude:
+        labels:
+          - dependencies
