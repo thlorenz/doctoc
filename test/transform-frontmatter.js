@@ -70,8 +70,6 @@ test('\ngiven a file that includes yaml frontmatter', function (t) {
         'title: Yaml Front Matter',
         '---',
         '',
-        '# Title',
-        '',
         '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
         '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
         '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
@@ -80,7 +78,7 @@ test('\ngiven a file that includes yaml frontmatter', function (t) {
         '',
         '<!-- END doctoc generated TOC please keep comment here to allow auto update -->',
         '',
-        '## Heading',
+        '# Heading',
         '',
         'Your regular Markdown content follows...',
         '' ].join('\n')  
@@ -159,7 +157,7 @@ test('\ngiven a file that has only yaml frontmatter and no trailing whitespace',
 })
 
 test('\ngiven a file that includes yaml frontmatter and process all', function (t) {
-  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-frontmatter-yaml.md', 'utf8');
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-frontmatter-existing.md', 'utf8');
   var res = transform(contentmode, undefined, undefined, undefined, undefined, undefined, undefined, true);
 
   t.same(

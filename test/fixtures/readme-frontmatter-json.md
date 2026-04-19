@@ -1,6 +1,6 @@
 ;;;
 title: JSON Front Matter
-;;;
+;;; 
 
 # Heading
 
