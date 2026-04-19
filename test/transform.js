@@ -1122,3 +1122,20 @@ test('\nignores the hX which is in the content on or a different line', function
 
   t.end()
 })
+
+test('\nhandles an empty document', function (t) {
+  var res = transform('');
+
+  t.same(
+      res.data.split('\n')
+    , [ 
+        '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
+        '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->',
+        ''
+      ]
+    , 'generates correct document with toc for empty doc'
+  )
+
+  t.end()
+})
