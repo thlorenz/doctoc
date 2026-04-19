@@ -158,7 +158,7 @@ test('\ngiven a file that has only yaml frontmatter and no trailing whitespace',
 
 test('\ngiven a file that includes yaml frontmatter and process all', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-frontmatter-existing.md', 'utf8');
-  var res = transform(contentmode, undefined, undefined, undefined, undefined, undefined, undefined, true);
+  var res = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, true);
 
   t.same(
       res.data
