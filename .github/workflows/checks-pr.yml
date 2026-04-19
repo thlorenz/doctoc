@@ -1,8 +1,9 @@
 name: Checks / PR
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
+      - reopened
       - edited
       - synchronize
 
@@ -14,11 +15,13 @@ jobs:
   commit-me:
     name: Conventional Commits Compliance
     runs-on: ubuntu-latest
-    env:
-      # Enable colored output in GitHub Actions
-      FORCE_COLOR: 3
     steps:
-      - uses: dev-build-deploy/commit-me@v1.5.3
-        with:
-          token: ${{ github.token }}
-          config: ".commit-me.json"
+      - uses: amannn/action-semantic-pull-request@v6
+        name: Validate title
+        id: semantic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Add label
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label "${{ steps.semantic.outputs.type }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

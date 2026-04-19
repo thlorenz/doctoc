@@ -10,25 +10,43 @@ changelog:
         - fix
       exclude:
         labels:
-          - dependencies
           - breaking
+          - dependencies
+          - feat
+          - revert
     - title: Breaking Changes ⚠️
       labels:
         - breaking
         - revert
+      exclude:
+        - dependencies
+        - feat
+        - fix
     - title: New Features 🎉
       labels:
-        - feature
+        - feat
       exclude:
         labels:
-          - dependencies
           - breaking
+          - dependencies
+          - fix
+          - revert
     - title: Dependencies ⚙️
       labels:
         - dependencies
+      exclude:
+        labels:
+          - breaking
+          - feature
+          - fix
+          - revert
     - title: Other Changes 🛠️
       labels:
         - "*"
       exclude:
         labels:
+          - breaking
           - dependencies
+          - feat
+          - fix
+          - revert
