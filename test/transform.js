@@ -893,12 +893,12 @@ test('\nhandles an empty document', function (t) {
 
   t.same(
       res.data.split('\n')
-    , [ '',
-        '- [Hello, world!](#hello-world)',
-        '  - [Installation](#installation)',
-        '  - [API](#api)',
-        '  - [License](#license)',
-        '' ]
+    , [ 
+        '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
+        '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->',
+        ''
+      ]
     , 'generates correct toc for empty doc'
   )
 
