@@ -887,3 +887,20 @@ test('\nignores the hX which is in the content on or a different line', function
 
   t.end()
 })
+
+test('\nhandles an empty document', function (t) {
+  var res = transform('');
+
+  t.same(
+      res.data.split('\n')
+    , [ '',
+        '- [Hello, world!](#hello-world)',
+        '  - [Installation](#installation)',
+        '  - [API](#api)',
+        '  - [License](#license)',
+        '' ]
+    , 'generates correct toc for empty doc'
+  )
+
+  t.end()
+})
