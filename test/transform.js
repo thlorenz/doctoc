@@ -5,16 +5,17 @@ var test = require('tap').test
   , transform = require('../lib/transform')
   , contentGenerator = require('../lib/content-generation')
 
-function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options) {
+function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options, eol) {
   test('transforming', function (t) {
     var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options)
 
     // build the expected content
+    eol = eol || '\n';
     var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
     var contents =  anchors.trimEnd();
-    if (contents != '') { contents += res.eol; }
-    var toc = pragma.start + res.eol + anchors.trimEnd() + (anchors ? res.eol + res.eol : '') + pragma.end;
-    var doc = res.wrappedToc + res.eol + res.eol + md;
+    if (contents != '') { contents += eol; }
+    var toc = pragma.start + eol + anchors.trimEnd() + (anchors ? eol + eol : '') + pragma.end;
+    var doc = res.wrappedToc + eol + eol + md;
 
     t.ok(res.transformed, 'transforms it');
     t.same(res.toc, contents, 'generates correct toc contents');
@@ -962,6 +963,23 @@ test('\nignores the hX which is in the content on or a different line', function
         '  - [License](#license)',
         '' ]
     , 'generates correct toc for non html and html headers'
+  )
+
+  t.end()
+})
+
+test('\nhandles an empty document', function (t) {
+  var res = transform('');
+
+  t.same(
+      res.data.split('\n')
+    , [ 
+        '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
+        '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->',
+        ''
+      ]
+    , 'generates correct document with toc for empty doc'
   )
 
   t.end()
