@@ -5,28 +5,22 @@ var test = require('tap').test
   , transform = require('../lib/transform')
   , contentGenerator = require('../lib/content-generation')
 
-function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options) {
+function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options, eol) {
   test('transforming', function (t) {
     var res = transform(md, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options)
 
-    // remove wrapper
-    var data = res.data.split('\n');
-
-    // rig our expected value to include the wrapper
-    var legacy = contentGenerator.pragmaMarkers(syntax || 'md');
-    var startLines = legacy.start.split('\n')
-      , anchorLines = anchors.split('\n')
-      , endLines = legacy.end.split('\n')
-      , mdLines = md.split('\n');
-
-    var rig = startLines
-      .concat(anchorLines.slice(0, -2))
-      .concat(endLines)
-      .concat('')
-      .concat(mdLines);
+    // build the expected content
+    eol = eol || '\n';
+    var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
+    var contents =  anchors.trimEnd();
+    if (contents != '') { contents += eol; }
+    var toc = pragma.start + eol + anchors.trimEnd() + (anchors ? eol + eol : '') + pragma.end;
+    var doc = res.wrappedToc + eol + eol + md;
 
     t.ok(res.transformed, 'transforms it');
-    t.same(data, rig, 'generates correct anchors')
+    t.same(res.toc, contents, 'generates correct toc contents');
+    t.same(res.wrappedToc, toc, 'generates correct toc');
+    t.same(res.data, doc, 'generates correct doc');
     t.end()
   })
 }
@@ -38,7 +32,7 @@ function getCommentLines(transformRes){
 //function check() {}
 
 check(
-    [ '# My Module'
+    [ '# My Module using \\n line endings'
     , 'Some text here'
     , '## API'
     , '### Method One'
@@ -48,7 +42,7 @@ check(
     , 'some main usage here'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
-    , '- [My Module](#my-module)\n'
+    , '- [My Module using \\n line endings](#my-module-using-n-line-endings)\n'
     ,   '  - [API](#api)\n'
     ,     '    - [Method One](#method-one)\n'
     ,     '    - [Method Two](#method-two)\n'
