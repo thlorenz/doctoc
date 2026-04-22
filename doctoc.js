@@ -171,6 +171,7 @@ var options = {
         width: indentWidth,
       }
     },
+    location: argv['toc-location'] || 'top',
     title: {
       padding: {
         before: padBeforeTitle ?? (notitle ? 1 : 0),
