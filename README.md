@@ -116,6 +116,24 @@ By default,
 
 - The min items is set to 1
 
+### Min. Document Lines
+
+Use the `--document-lines-min` option to specify the minimum lines required to be in a document for the document to have a table of contents; e.g., `doctoc --mintocitems 3 .`.
+
+By default,
+
+- The min Lines is set to 0
+
+> [!NOTE]
+> It is assumed that if you are using this option, you are using another tool such as
+> MarkdownLint or Prettier to limit the length of lines to what is usually visible in a renderer.
+
+> [!TIP]
+> 
+> If your document contains images, those images will not be counted any different to how plain text is,
+> as doctoc is processing your document as a text processor.
+> This also means repeated new lines will also be considered should your document contain them.
+
 ### Pad table of contents title
 
 Use the `--toc-title-padding-before` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toc-title-padding-before 1 .`
