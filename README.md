@@ -16,6 +16,7 @@ by github or other sites via a command line flag.
   - [Max. heading level](#max-heading-level)
   - [Include all headings](#include-all-headings)
   - [Min. ToC items](#min-toc-items)
+  - [Min. Document Lines](#min-document-lines)
   - [Pad table of contents title](#pad-table-of-contents-title)
   - [Indentation Style](#indentation-style)
   - [TOC Pragma style](#toc-pragma-style)
