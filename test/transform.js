@@ -26,7 +26,7 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
 }
 
 function getCommentLines(transformRes){
-    var lines = transformRes.wrappedToc.split(transformRes.eol)
+    var lines = transformRes.wrappedToc.split('\n')
     return lines.slice(0,2).concat(lines[lines.length - 1])
 }
 //function check() {}
