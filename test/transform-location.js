@@ -3,7 +3,7 @@
 
 var test = require('tap').test,
     fs = require('fs'),
-    exec = require("child_process").exec;
+    transform = require('../lib/transform');
 
 test('\n', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-location.md', 'utf8');
@@ -14,8 +14,8 @@ test('\n', function (t) {
   });
 
   t.same(
-    transformedContent.data
-    , [
+    transformedContent.data,
+    [
       "<!-- START doctoc generated TOC please keep comment here to allow auto update -->",
       "<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->",
       "**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*",
@@ -26,8 +26,23 @@ test('\n', function (t) {
       "  - [License](#license)",
       "",
       "<!-- END doctoc generated TOC please keep comment here to allow auto update -->",
-    ].join('\n')
-    , 'Pragma style is not legacy'
+      "",
+      "preface",
+      "",
+      "# Hello, world!",
+      "",
+      "a",
+      "",
+      "## Installation",
+      "",
+      "b",
+      "",
+      "## API",
+      "",
+      "c"
+      ""
+    ].join('\n'),
+    'TOC is not inserted at correct location'
   )
   t.end()
 });
