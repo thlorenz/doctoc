@@ -23,7 +23,6 @@ test('\nTOC at Top', function (t) {
       "- [Hello, world!](#hello-world)",
       "  - [Installation](#installation)",
       "  - [API](#api)",
-      "  - [License](#license)",
       "",
       "<!-- END doctoc generated TOC please keep comment here to allow auto update -->",
       "",
