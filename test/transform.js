@@ -418,6 +418,241 @@ check(
     ].join('')
 )
 
+check(
+    [ '# Test 1'
+    , ''
+    , '# Test 2'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [Test 1](#test-1)\n',
+    , '- [Test 2](#test-2)\n\n\n'
+    ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { 
+      document: {
+        lines: {
+          min: 3
+        }
+      }
+    }
+)
+
+check(
+    [ '---'
+    , 'title: a'
+    , '---'
+    , ''
+    , '# Test 1'
+    , ''
+    , '# Test 2'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [Test 1](#test-1)\n',
+    , '- [Test 2](#test-2)\n\n\n'
+    ].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { 
+      document: {
+        lines: {
+          min: 3
+        }
+      }
+    }
+)
+
+check(
+    [ '# Test 1'
+    , ''
+    , '# Test 2'
+    ].join('\n')
+  , [].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { 
+      document: {
+        lines: {
+          min: 4
+        }
+      }
+    }
+)
+
+check(
+    [ '---'
+    , 'title: a'
+    , '---'
+    , ''
+    , '# Test 1'
+    , ''
+    , '# Test 2'
+    ].join('\n')
+  , [].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { 
+      document: {
+        lines: {
+          min: 4
+        }
+      }
+    }
+)
+
+check(
+    [ ';;;'
+    , 'title: a'
+    , ';;;'
+    , ''
+    , '# Test 1'
+    , ''
+    , '# Test 2'
+    ].join('\n')
+  , [].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { 
+      document: {
+        lines: {
+          min: 4
+        }
+      }
+    }
+)
+
+check(
+    [ '+++'
+    , 'title: a'
+    , '+++'
+    , ''
+    , '# Test 1'
+    , ''
+    , '# Test 2'
+    ].join('\n')
+  , [].join('')
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , { 
+      document: {
+        lines: {
+          min: 4
+        }
+      }
+    }
+)
+
+test('\ndmin document lines', function (t) {
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-notitle.md', 'utf8');
+  var headers = transform(content
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , { 
+          document: {
+            lines: {
+              min: 9
+            }
+          }
+        });
+
+  t.same(
+      headers.toc
+    , ''
+    , 'generates a correct toc when readme includes duplicate headings with different symbols'
+  )
+  t.end()
+});
+
+test('\ndmin document lines', function (t) {
+  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-with-notitle.md', 'utf8');
+  var headers = transform(content
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , undefined
+      , { 
+          document: {
+            lines: {
+              min: 8
+            }
+          }
+        });
+
+  t.same(
+      headers.toc
+    , [ '',
+      "- [Installation](#installation)",
+      "- [API](#api)",                  
+      "- [License](#license)",
+      ""
+      ].join('\n')
+    , 'generates a correct toc when readme includes duplicate headings with different symbols'
+  )
+  t.end()
+});
+
 test('transforming when old toc exists', function (t) {
   var md = [
       '# Header above'
