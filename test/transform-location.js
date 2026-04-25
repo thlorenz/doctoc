@@ -88,7 +88,14 @@ test('\nTOC before h1 ', function (t) {
 });
 
 test('\nTOC before h1 in empty', function (t) {
-  var content = require('fs').readFileSync(__dirname + '/fixtures/readme-location.md', 'utf8');
+  var content = [
+      "preface",
+      "",
+      "Hello, world!",
+      "",
+      "a",
+      ""
+    ].join('\n')
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { 
     toc: { 
       location: 'before'
@@ -107,14 +114,6 @@ test('\nTOC before h1 in empty', function (t) {
       "Hello, world!",
       "",
       "a",
-      "",
-      "Installation",
-      "",
-      "b",
-      "",
-      "API",
-      "",
-      "c",
       ""
     ].join('\n'),
     'TOC is not inserted at correct location'
