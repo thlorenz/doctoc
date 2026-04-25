@@ -12,10 +12,22 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     // build the expected content
     eol = eol || '\n';
     var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
+    var body = '';
+    var doc = '';
+    var tag = md.substring(0, 3);
+    const tags = ['---', ';;;', '+++'];
+    if (tags.includes(tag)) {
+      var pos = md.indexOf(tag,3) + 3 + 2 * eol.length; // find the closing tag and skip it and the following blank line
+      body = md.substring(pos);
+      doc = md.substring(0, pos);
+    }
+    else {
+      body = md;
+    }
     var contents =  anchors.trimEnd();
     if (contents != '') { contents += eol; }
     var toc = pragma.start + eol + anchors.trimEnd() + (anchors ? eol + eol : '') + pragma.end;
-    var doc = res.wrappedToc + eol + eol + md;
+    doc = doc + res.wrappedToc + eol + eol + body;
 
     t.ok(res.transformed, 'transforms it');
     t.same(res.toc, contents, 'generates correct toc contents');
