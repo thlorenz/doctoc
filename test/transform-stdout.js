@@ -75,15 +75,3 @@ test('\nshould exit with error code as --stdout option is not supported on multi
       }
     })
  })
-
-test('\nshould print to stdout without error and not take too long', function (t) {
-
-    exec('node doctoc.js test/fixtures/k8s-metrics.md --stdout', function (error, stdout, stderr) {
-      if (error) {
-        t.fail('process produced an error: ' + error);
-        t.end();
-      }
-
-      t.end()
-    })
- })

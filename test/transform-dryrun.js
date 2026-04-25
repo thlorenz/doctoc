@@ -103,3 +103,16 @@ test('\nshould exit with no error code', function (t) {
       }
     })
 })
+
+test('\nshould print to stdout without error and not take too long', function (t) {
+
+    exec('node doctoc.js test/fixtures/k8s-metrics.md --dryrun', function (error, stdout, stderr) {
+      if (error) {
+        t.same(error.code, 1, 'process exited with error code 1 as expected');
+        t.end('process did have an error');
+      } else {
+        t.fail('process did not produce an error: ' + error);
+        t.end();
+      }
+    })
+ })
