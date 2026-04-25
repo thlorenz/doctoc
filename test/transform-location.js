@@ -5,9 +5,9 @@ var test = require('tap').test,
     fs = require('fs'),
     transform = require('../lib/transform');
 
-test('\n', function (t) {
+test('\nTOC at Top', function (t) {
   var content = require('fs').readFileSync(__dirname + '/fixtures/readme-location.md', 'utf8');
-  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, "md", { 
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { 
     toc: { 
       location: 'top'
     } 
