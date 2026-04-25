@@ -16,6 +16,7 @@ by github or other sites via a command line flag.
   - [Max. heading level](#max-heading-level)
   - [Include all headings](#include-all-headings)
   - [Min. ToC items](#min-toc-items)
+  - [Min. Document Lines](#min-document-lines)
   - [Pad table of contents title](#pad-table-of-contents-title)
   - [Indentation Style](#indentation-style)
   - [TOC Location](#toc-location)
@@ -116,6 +117,24 @@ Use the `--mintocitems` option to specify the minimum items required to be in a 
 By default,
 
 - The min items is set to 1
+
+### Min. Document Lines
+
+Use the `--document-lines-min` option to specify the minimum lines required to be in a document for the document to have a table of contents; e.g., `doctoc --mintocitems 3 .`.
+
+By default,
+
+- The min Lines is set to 0
+
+> [!NOTE]
+> It is assumed that if you are using this option, you are using another tool such as
+> MarkdownLint or Prettier to limit the length of lines to what is usually visible in a renderer.
+
+> [!TIP]
+> 
+> If your document contains images, those images will not be counted any different to how plain text is,
+> as doctoc is processing your document as a text processor.
+> This also means repeated new lines will also be considered should your document contain them.
 
 ### Pad table of contents title
 
