@@ -1005,7 +1005,16 @@ check(
   , undefined
   , undefined
   , undefined
-  , 'number' // pass a collection as the prefix for toc entries
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , undefined
+  , toc: {
+    items: {
+      style: 'number'
+    }
+  }
 )
 
 check(
