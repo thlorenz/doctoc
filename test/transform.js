@@ -12,10 +12,23 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     // build the expected content
     eol = eol || '\n';
     var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
+    var body = '';
+    var doc = '';
+    var tag = md.substring(0, 3);
+    const tags = ['---', ';;;', '+++'];
+    if (tags.includes(tag) && md.indexOf(tag, 3) > 0) {
+      var pos = md.indexOf(tag, 3) + 3 + eol.length; // find the closing tag and skip that line
+      body = md.substring(pos);
+      if (body.startsWith(eol)) { body = body.substring(eol.length); }
+      doc = md.substring(0, pos) + eol;
+    }
+    else {
+      body = md;
+    }
     var contents =  anchors.trimEnd();
     if (contents != '') { contents += eol; }
     var toc = pragma.start + eol + anchors.trimEnd() + (anchors ? eol + eol : '') + pragma.end;
-    var doc = res.wrappedToc + eol + eol + md;
+    doc = doc + res.wrappedToc + eol + eol + body;
 
     t.ok(res.transformed, 'transforms it');
     t.same(res.toc, contents, 'generates correct toc contents');
@@ -1063,6 +1076,29 @@ check(
     , undefined
     , undefined
     , 'mdx'
+)
+
+check(
+  [ '---'
+  , ''
+  , '# Real Heading'
+  , 'body'
+  ].join('\n')
+, [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+  , '- [Real Heading](#real-heading)\n\n\n'
+  ].join('')
+)
+
+check(
+  [ '---'
+  , 'title: Yaml'
+  , '---'
+  , '# H'
+  , 'body'
+  ].join('\n')
+, [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+  , '- [H](#h)\n\n\n'
+  ].join('')
 )
 
 test('should use <!-- --> comments if syntax=md', function (t) {
