@@ -19,7 +19,7 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     if (tags.includes(tag) && md.indexOf(tag,3) > 0) {
       var pos = md.indexOf(tag,3) + 3 + 1 * eol.length; // find the closing tag and skip it and the following blank line
       body = md.substring(pos);
-      doc = md.substring(0, pos);
+      doc = md.substring(0, pos) + eol;
     }
     else {
       body = md;
@@ -27,7 +27,7 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     var contents =  anchors.trimEnd();
     if (contents != '') { contents += eol; }
     var toc = pragma.start + eol + anchors.trimEnd() + (anchors ? eol + eol : '') + pragma.end;
-    doc = doc + eol + res.wrappedToc + eol + body;
+    doc = doc + res.wrappedToc + eol + eol + body;
 
     t.ok(res.transformed, 'transforms it');
     t.same(res.toc, contents, 'generates correct toc contents');
