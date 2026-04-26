@@ -16,9 +16,10 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
     var doc = '';
     var tag = md.substring(0, 3);
     const tags = ['---', ';;;', '+++'];
-    if (tags.includes(tag) && md.indexOf(tag,3) > 0) {
-      var pos = md.indexOf(tag,3) + 3 + 1 * eol.length; // find the closing tag and skip it and the following blank line
+    if (tags.includes(tag) && md.indexOf(tag, 3) > 0) {
+      var pos = md.indexOf(tag, 3) + 3 + eol.length; // find the closing tag and skip that line
       body = md.substring(pos);
+      if (body.startsWith(eol)) { body = body.substring(eol.length); }
       doc = md.substring(0, pos) + eol;
     }
     else {
