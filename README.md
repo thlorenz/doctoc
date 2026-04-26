@@ -42,82 +42,44 @@ by github or other sites via a command line flag.
 
     npm install -g doctoc
 
-## Configuring Table of Contents
+## Configuration
 
-### TOC title text
+### CLI Options
 
-Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
+#### Logging level
 
-Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
-It is recommended to also include this argument when performing an update on an existing toc.
-
-### TOC Header
-
-Additional text can be added to the toc header using the `--toc-header-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
-
-For example, running `doctoc --toc-header-content 'My Header' .` would produce:
-
-```markdown
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-My Header
-{{toc}}
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-```
-
-If you will be using the toc header option but without a toc title it is required that when updating the toc,
-you always include the --notitle argument.
-
-### TOC Footer
-
-Additional text can be added to the toc header using the `--toc-footer-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
-
-For example, running `doctoc --toc-footer-content 'My Footer' .` would produce:
-
-```markdown
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-{{toc}}
-My Footer
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-```
-
-### Min. heading level
-
-Use the `--minlevel` option to limit TOC entries to headings only at or above the specified level; e.g., `doctoc --minlevel 2 .`
+Use the `--loglevel` option to configure the log level used; e.g., `doctoc --loglevel warn .`
 
 By default,
 
-- the min level used is 1 if it is not set
+- LogLevel is set to info.
 
-Note: Currently supported values are only 1 and 2.
+Supported values are in order from lowest to highest,
 
-### Max. heading level
+- trace
+- debug
+- info
+- warn
+- error
 
-Use the `--maxlevel` option to limit TOC entries to headings only up to the specified level; e.g., `doctoc --maxlevel 3 .`
+#### Dry run
 
-By default,
+Use the `--dryrun` option to not write changes to files but instead return an exit code of 1 to indicates files are out of date and should be updated.
+This is useful CI environments where you want to check if your docs are up to date as part of your build process.
 
-- no limit is placed on Markdown-formatted headings,
-- whereas headings from embedded HTML are limited to 4 levels.
+#### Stdout
 
-### Include all headings
+You can print to stdout by using the `-s` or `--stdout` option.
 
-Use the `--all` option to include all headings in the TOC regardless of their location
+This option is only applicable when specifying a single filename which doctoc is to run on. If you are specifying a folder or multiple files, the dry run option should be used instead.
 
-By default,
+#### Update only
 
-- Only headings below the TOC will be included
+Use `--update-only` or `-u` to only update the existing ToC. That is, the Markdown files without ToC will be left untouched. It is good if you want to use `doctoc` with `lint-staged`.
 
-### Min. ToC items
+### Document Options
 
-Use the `--mintocitems` option to specify the minimum items required to be in a table of contents for it to be included in the page; e.g., `doctoc --mintocitems 3 .`.
-
-By default,
-
-- The min items is set to 1
-
-### Min. Document Lines
+#### Min. Document Lines
 
 Use the `--document-lines-min` option to specify the minimum lines required to be in a document for the document to have a table of contents; e.g., `doctoc --mintocitems 3 .`.
 
@@ -133,27 +95,62 @@ By default,
 > 
 > If your document contains images, those images will not be counted any different to how plain text is,
 > as doctoc is processing your document as a text processor.
-> This also means repeated new lines will also be considered should your document contain them.
+> This also means repeated new lines will also be considered should your document contain them
 
-### Pad table of contents title
+#### Renderers
 
-Use the `--toc-title-padding-before` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toc-title-padding-before 1 .`
+In order to add a table of contents whose links are compatible other sites add the appropriate mode flag:
 
-NOTE: Currently it is only supported to add one line before the title.
+Available modes are:
+
+```
+--bitbucket bitbucket.org
+--nodejs    nodejs.org
+--github    github.com
+--gitlab    gitlab.com
+--ghost     ghost.org
+```
+
+An Example is:
+
+    doctoc README.md --bitbucket
+
+### Source Options
+
+#### Heading 
+
+##### Min. level
+
+Use the `--minlevel` option to limit TOC entries to headings only at or above the specified level; e.g., `doctoc --minlevel 2 .`
 
 By default,
 
-- no padding is added above the table of contents title
+- the min level used is 1 if it is not set
 
-In all cases there will be padding present after the title due to the toc items always having padding before the list of items.
+Note: Currently supported values are only 1 and 2.
 
-### Indentation Style
+##### Max. level
 
-Use the `--toc-items-indentation-width` option to customise the indentation width e.g. `doctoc --toc-items-indentation-width 4 .` will set the width to 4.
+Use the `--maxlevel` option to limit TOC entries to headings only up to the specified level; e.g., `doctoc --maxlevel 3 .`
 
-By default, a width of 4 will be used if mode is gitlab or bitbucket, otherwise 2 will be used.
+By default,
 
-### TOC Pragma style
+- no limit is placed on Markdown-formatted headings,
+- whereas headings from embedded HTML are limited to 4 levels.
+
+##### Scope
+
+Use the `--all` option to include all headings in the TOC regardless of their location
+
+By default,
+
+- Only headings below the TOC will be included
+
+### Table of Contents Options
+
+#### General
+
+##### TOC Pragma style
 
 The pragma is the opening and closing comment blocks to mark the location of the doctoc contents, i.e. `<!-- START doctoc ... -->`
 
@@ -174,28 +171,88 @@ You can choose `compact` to make the pragma more succinct:
 <!-- END doctoc -->
 ```
 
+#### Header
+
+##### TOC Header Content
+
+Additional text can be added to the toc header using the `--toc-header-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
+
+For example, running `doctoc --toc-header-content 'My Header' .` would produce:
+
+```markdown
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+My Header
+{{toc}}
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+```
+
+If you will be using the toc header option but without a toc title it is required that when updating the toc,
+you always include the --notitle argument.
+
+#### Title
+
+##### TOC title content
+
+Use the `--title` option to specify a (Markdown-formatted) custom TOC title; e.g., `doctoc --title '**Contents**' .` From then on, you can simply run `doctoc <file>` and doctoc will keep the title you specified.
+
+##### TOC title hidden
+
+Alternatively, to blank out the title, use the `--notitle` option. This will simply remove the title from the TOC.
+It is recommended to also include this argument when performing an update on an existing toc.
+
+##### TOC title padding
+
+Use the `--toc-title-padding-before` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toc-title-padding-before 1 .`
+
+NOTE: Currently it is only supported to add one line before the title.
+
+By default,
+
+- no padding is added above the table of contents title
+
+In all cases there will be padding present after the title due to the toc items always having padding before the list of items.
+
+#### List Options
+
+##### Min. Length
+
+Use the `--mintocitems` option to specify the minimum items required to be in a table of contents for it to be included in the page; e.g., `doctoc --mintocitems 3 .`.
+
+By default,
+
+- The min items is set to 1
+
+#### TOC Items
+
+##### Indentation Width
+
+Use the `--toc-items-indentation-width` option to customise the indentation width e.g. `doctoc --toc-items-indentation-width 4 .` will set the width to 4.
+
+By default, a width of 4 will be used if mode is gitlab or bitbucket, otherwise 2 will be used.
+
+#### Footer
+
+##### TOC Footer Content
+
+Additional text can be added to the toc header using the `--toc-footer-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
+
+For example, running `doctoc --toc-footer-content 'My Footer' .` would produce:
+
+```markdown
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+{{toc}}
+My Footer
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+```
+
 ## Usage
 
 In its simplest usage, you can pass one or more files or folders to the
 `doctoc` command. This will update the TOCs of each file specified as well as of
 each markdown file found by recursively searching each folder. Below are some
 examples.
-
-### Configuring logging level
-
-Use the `--loglevel` option to configure the log level used; e.g., `doctoc --loglevel warn .`
-
-By default,
-
-- LogLevel is set to info.
-
-Supported values are in order from lowest to highest,
-
-- trace
-- debug
-- info
-- warn
-- error
 
 ### Adding toc to all files in a directory and sub directories
 
@@ -228,24 +285,6 @@ If you want to convert only specific files, do:
     doctoc README.md
 
     doctoc CONTRIBUTING.md LICENSE.md
-
-### Using doctoc to generate links compatible with other sites
-
-In order to add a table of contents whose links are compatible other sites add the appropriate mode flag:
-
-Available modes are:
-
-```
---bitbucket bitbucket.org
---nodejs    nodejs.org
---github    github.com
---gitlab    gitlab.com
---ghost     ghost.org
-```
-
-#### Example
-
-    doctoc README.md --bitbucket
 
 ### Specifying location of toc
 
@@ -291,21 +330,6 @@ But first: a TOC for easy reference.
 
 Here we'll discuss...
 ```
-
-### Performing a dry run
-
-Use the `--dryrun` option to not write changes to files but instead return an exit code of 1 to indicates files are out of date and should be updated.
-This is useful CI environments where you want to check if your docs are up to date as part of your build process.
-
-### Printing to stdout
-
-You can print to stdout by using the `-s` or `--stdout` option.
-
-This option is only applicable when specifying a single filename which doctoc is to run on. If you are specifying a folder or multiple files, the dry run option should be used instead.
-
-### Only update existing ToC
-
-Use `--update-only` or `-u` to only update the existing ToC. That is, the Markdown files without ToC will be left untouched. It is good if you want to use `doctoc` with `lint-staged`.
 
 ### Usage as a `git` hook
 
