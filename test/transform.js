@@ -1009,7 +1009,6 @@ check(
   , undefined
   , undefined
   , undefined
-  , undefined
   , { toc: { list: { style: 'number' } } }
 )
 
