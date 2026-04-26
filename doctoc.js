@@ -161,6 +161,8 @@ else if (indentWidth === undefined) { indentWidth = (mode === 'bitbucket.org' ||
 var minLines = argv['document-lines-min'] || 0;
 if (isNaN(minLines)) { log.error('Document min lines: ' + minLines + ' is not a number'), printUsageAndExit(true); }
 
+var ordered = entryPrefix === 'number' || entryPrefix === 'uppercase' || entryPrefix === 'lowercase' || entryPrefix === 'roman';
+
 var options = {
   document: {
     lines: {
@@ -175,9 +177,12 @@ var options = {
       content: argv['toc-header-content'],
     },
     items: {
-      indentation:{
+      indentation: {
         width: indentWidth,
-      }
+      },
+      format: ordered ? 'ordered' : 'unordered',
+      style: ordered ? entryPrefix : undefined,
+      symbol: ordered ? undefined : entryPrefix.split(',)
     },
     title: {
       padding: {
