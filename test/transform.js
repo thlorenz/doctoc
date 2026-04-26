@@ -1010,11 +1010,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , toc: {
-    items: {
-      style: 'number'
-    }
-  }
+  , { toc: { list: { style: 'number' } } }
 )
 
 check(
