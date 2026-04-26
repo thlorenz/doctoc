@@ -19,6 +19,7 @@ by github or other sites via a command line flag.
   - [Min. Document Lines](#min-document-lines)
   - [Pad table of contents title](#pad-table-of-contents-title)
   - [Indentation Style](#indentation-style)
+  - [Item Symbol](#item-symbol)
   - [TOC Pragma style](#toc-pragma-style)
 - [Usage](#usage)
   - [Configuring logging level](#configuring-logging-level)
@@ -152,6 +153,12 @@ In all cases there will be padding present after the title due to the toc items 
 Use the `--toc-items-indentation-width` option to customise the indentation width e.g. `doctoc --toc-items-indentation-width 4 .` will set the width to 4.
 
 By default, a width of 4 will be used if mode is gitlab or bitbucket, otherwise 2 will be used.
+
+### Item Symbol
+
+Use the `--entry-prefix` option to configure the symbol used in unordered toc e.g, `doctoc --entry-prefix * .` to use the `*` rather than the default which is `-`.
+
+This option supports also customising each level of the list which can be done by using a comma seperated list of symbols ie `doctoc --entry-prefix -,*+ .`.
 
 ### TOC Pragma style
 
