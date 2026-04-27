@@ -132,7 +132,9 @@ for (var key in modes) {
 
 var title = argv.t || argv.title;
 var notitle = argv.T || argv.notitle;
-var entryPrefix = argv.entryprefix || '-';
+var entryPrefix = argv.entryprefix?.trim().replace(' ', '');
+if (entryPrefix?.endsWith(',') || entryPrefix?.includes(',,')) { log.error('Invalid entry prefix: ' + entryPrefix), printUsageAndExit(true); }
+else if(!entryPrefix) { entryPrefix = '-'; }
 var minTocItems = argv.mintocitems || 1;
 if (minTocItems && (isNaN(minTocItems) || minTocItems <= 0)) { log.error('Min. TOC items specified is not a positive number: ' + minTocItems), printUsageAndExit(true); }
 var processAll = argv.all;
