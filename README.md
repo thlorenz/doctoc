@@ -156,9 +156,9 @@ By default, a width of 4 will be used if mode is gitlab or bitbucket, otherwise 
 
 ### Item Symbol
 
-Use the `--entry-prefix` option to configure the symbol used in unordered toc e.g, `doctoc --entry-prefix * .` to use the `*` rather than the default which is `-`.
+Use the `--entry-prefix` option to configure the symbol used in unordered toc, e.g., `doctoc --entry-prefix * .` to use the `*` rather than the default, which is `-`.
 
-This option supports also customising each level of the list which can be done by using a comma seperated list of symbols ie `doctoc --entry-prefix -,*+ .`.
+This option also supports customising each level of the list, which can be done by using a comma separated list of symbols, i.e. `doctoc --entry-prefix -,*,+ .`.
 
 ### TOC Pragma style
 

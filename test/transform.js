@@ -992,32 +992,6 @@ check(
     , 'some main usage here'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
-    , '- [My Module](#my-module)\n'
-    , '  * [API](#api)\n'
-    , '    + [Method One](#method-one)\n'
-    , '    + [Method Two](#method-two)\n'
-    , '      - [Main Usage](#main-usage)\n\n\n'
-    ].join('')
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , '-,*,+' // pass a collection as the prefix for toc entries
-)
-
-check(
-    [ '# My Module'
-    , 'Some text here'
-    , '## API'
-    , '### Method One'
-    , 'works like this'
-    , '### Method Two'
-    , '#### Main Usage'
-    , 'some main usage here'
-    ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
     , '1. [My Module](#my-module)\n'
     ,   '  1. [API](#api)\n'
     ,     '    1. [Method One](#method-one)\n'
