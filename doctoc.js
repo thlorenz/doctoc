@@ -161,6 +161,9 @@ else if (indentWidth === undefined) { indentWidth = (mode === 'bitbucket.org' ||
 var minLines = argv['document-lines-min'] || 0;
 if (isNaN(minLines)) { log.error('Document min lines: ' + minLines + ' is not a number'), printUsageAndExit(true); }
 
+var location = argv['toc-location'] || 'top';
+if (location != 'top' && location != 'before') { log.error('Location specified is not valid: ' + location), printUsageAndExit(true); }
+
 var options = {
   document: {
     lines: {
@@ -179,7 +182,7 @@ var options = {
         width: indentWidth,
       }
     },
-    location: argv['toc-location'] || 'top',
+    location: location,
     title: {
       padding: {
         before: padBeforeTitle ?? (notitle ? 1 : 0),

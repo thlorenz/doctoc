@@ -156,7 +156,16 @@ By default, a width of 4 will be used if mode is gitlab or bitbucket, otherwise 
 
 ### TOC Location
 
-Use the `--toc-location` option to configure the location of automatically inserted toc e.g. `doctoc --toc-location before .` which will add the toc before the first header level 1 used in the toc.
+Use the `--toc-location` option to configure the location of automatically inserted toc e.g. `doctoc --toc-location before .` which will add the toc before the first heading used in the toc.
+
+> [!TIP]
+>
+> If you want to move an already inserted toc, this can be done by moving the toc block including pragma to the desired location.
+
+The supported options are:
+
+- **top**: inserts the toc at the top of the document before any markdown content but after any frontmatter if defined.
+- **before**: inserts the toc just before the first heading which appears in the toc.
 
 By default, the toc will be inserted using the top option and in v3 it will change to before.
 
