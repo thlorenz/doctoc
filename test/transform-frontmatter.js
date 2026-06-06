@@ -186,3 +186,32 @@ test('\ngiven a file that includes yaml frontmatter and process all', function (
 
   t.end()
 })
+
+test('\ngiven a file with CRLF line endings and yaml frontmatter', function (t) {
+  var eol = '\r\n';
+  var content = ['---', 'title: Yaml Front Matter', '---', '', '# Heading', '', 'Your regular Markdown content follows...', ''].join(eol);
+  var res = transform(content);
+
+  t.same(
+      res.data
+    , [ '---',
+        'title: Yaml Front Matter',
+        '---',
+        '',
+        '<!-- START doctoc generated TOC please keep comment here to allow auto update -->',
+        '<!-- DON\'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->',
+        '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
+        '',
+        '- [Heading](#heading)',
+        '',
+        '<!-- END doctoc generated TOC please keep comment here to allow auto update -->',
+        '',
+        '# Heading',
+        '',
+        'Your regular Markdown content follows...',
+        '' ].join(eol)
+    , 'generates correct toc preserving CRLF line endings with frontmatter'
+  )
+
+  t.end()
+})
