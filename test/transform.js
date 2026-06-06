@@ -11,7 +11,7 @@ function check(md, anchors, mode, maxHeaderLevel, minHeaderLevel, minTocItems, t
 
     // build the expected content
     eol = eol || '\n';
-    var pragma = contentGenerator.pragmaMarkers(syntax || 'md');
+    var pragma = contentGenerator.pragmaMarkers(syntax || 'md', 'legacy', eol);
     var body = '';
     var doc = '';
     var tag = md.substring(0, 3);
