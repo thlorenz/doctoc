@@ -28,4 +28,4 @@ jobs:
 
       - run: npm test
 
-      - run: npm doctoc:dry-run
+      - run: npm run doctoc:dry-run
