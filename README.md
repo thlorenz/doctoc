@@ -64,8 +64,8 @@ Supported values are in order from lowest to highest,
 
 #### Dry run
 
-Use the `--dryrun` option to not write changes to files but instead return an exit code of 1 to indicates files are out of date and should be updated.
-This is useful CI environments where you want to check if your docs are up to date as part of your build process.
+Use the `--dryrun` option to not write changes to files but instead return an exit code of 1 to indicate files are out of date and should be updated.
+This is useful in CI environments where you want to check if your docs are up to date as part of your build process.
 
 #### Stdout
 
@@ -81,7 +81,7 @@ Use `--update-only` or `-u` to only update the existing ToC. That is, the Markdo
 
 #### Min. Document Lines
 
-Use the `--document-lines-min` option to specify the minimum lines required to be in a document for the document to have a table of contents; e.g., `doctoc --mintocitems 3 .`.
+Use the `--document-lines-min` option to specify the minimum lines required to be in a document for the document to have a table of contents; e.g., `doctoc --document-lines-min 200 .`.
 
 By default,
 
@@ -95,11 +95,10 @@ By default,
 > 
 > If your document contains images, those images will not be counted any different to how plain text is,
 > as doctoc is processing your document as a text processor.
-> This also means repeated new lines will also be considered should your document contain them
-
+> This also means repeated newlines will also be considered should your document contain them.
 #### Renderers
 
-In order to add a table of contents whose links are compatible other sites add the appropriate mode flag:
+In order to add a table of contents whose links are compatible with other sites add the appropriate mode flag:
 
 Available modes are:
 
@@ -111,7 +110,7 @@ Available modes are:
 --ghost     ghost.org
 ```
 
-An Example is:
+An example is:
 
     doctoc README.md --bitbucket
 
@@ -262,7 +261,7 @@ By default, a width of 4 will be used if mode is gitlab or bitbucket, otherwise 
 
 ##### TOC Footer Content
 
-Additional text can be added to the toc header using the `--toc-footer-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
+Additional text can be added to the toc footer using the `--toc-footer-content` option. The text will appear below the pragma (`<!-- doctoc ... -->`).
 
 For example, running `doctoc --toc-footer-content 'My Footer' .` would produce:
 
