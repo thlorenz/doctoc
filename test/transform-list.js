@@ -8,7 +8,7 @@ var test = require('tap').test,
 test('\nNumerical ToC ', function (t) {
   var content = fs.readFileSync(__dirname + '/fixtures/readme-formatting.md', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { 
-    { toc: { list: { style: 'number', format: 'ordered' } } }
+    toc: { list: { style: 'number', format: 'ordered' } }
   });
 
   t.same(
@@ -32,7 +32,7 @@ test('\nNumerical ToC ', function (t) {
 test('\nUppercase ToC ', function (t) {
   var content = fs.readFileSync(__dirname + '/fixtures/readme-formatting.md', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { 
-    { toc: { list: { style: 'lowercase', format: 'ordered' } } }
+    toc: { list: { style: 'lowercase', format: 'ordered' } }
   });
 
   t.same(
@@ -56,7 +56,7 @@ test('\nUppercase ToC ', function (t) {
 test('\nLowercase ToC ', function (t) {
   var content = fs.readFileSync(__dirname + '/fixtures/readme-formatting.md', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { 
-    { toc: { list: { style: 'uppercase', format: 'ordered' } } }
+    toc: { list: { style: 'uppercase', format: 'ordered' } }
   });
 
   t.same(
@@ -80,7 +80,7 @@ test('\nLowercase ToC ', function (t) {
 test('\nRoman ToC ', function (t) {
   var content = fs.readFileSync(__dirname + '/fixtures/readme-formatting.md', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { 
-    { toc: { list: { style: 'roman', format: 'ordered' } } }
+    toc: { list: { style: 'roman', format: 'ordered' } }
   });
 
   t.same(
@@ -104,7 +104,7 @@ test('\nRoman ToC ', function (t) {
 test('\nUnordered ToC ', function (t) {
   var content = fs.readFileSync(__dirname + '/fixtures/readme-formatting.md', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { 
-    { toc: { list: { style: 'number', format: 'unordered' } } }
+    toc: { list: { style: 'number', format: 'unordered' } }
   });
 
   t.same(
