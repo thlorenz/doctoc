@@ -290,7 +290,7 @@ This will update all markdown files in the current directory and all its
 subdirectories with a table of content that will point at the anchors generated
 by the markdown parser. Doctoc defaults to using the GitHub parser, but other
 [modes can be
-specified](#using-doctoc-to-generate-links-compatible-with-other-sites).
+specified](#renderers).
 
 ### Ignoring individual files
 
