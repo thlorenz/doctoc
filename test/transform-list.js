@@ -21,7 +21,7 @@ test('\nNumerical ToC ', function (t) {
         '    1.1.1. [Method One](#method-one)',
         '    1.1.2. [Method Two](#method-two)',
         '      1.1.2.1. [Main Usage](#main-usage)',
-        '  1.2. [Some More](#some-more)'
+        '  1.2. [Some More](#some-more)',
         ''
     ].join('\n'),
     'TOC is not correctly formatted'
@@ -45,7 +45,7 @@ test('\nUppercase ToC ', function (t) {
         '    a.a.a. [Method One](#method-one)',
         '    a.a.b. [Method Two](#method-two)',
         '      a.a.b.a. [Main Usage](#main-usage)',
-        '  a.b. [Some More](#some-more)'
+        '  a.b. [Some More](#some-more)',
         ''
     ].join('\n'),
     'TOC is not correctly formatted'
@@ -69,7 +69,7 @@ test('\nLowercase ToC ', function (t) {
         '    A.A.A. [Method One](#method-one)',
         '    A.A.B. [Method Two](#method-two)',
         '      A.A.B.A. [Main Usage](#main-usage)',
-        '  A.B. [Some More](#some-more)'
+        '  A.B. [Some More](#some-more)',
         ''
     ].join('\n'),
     'TOC is not correctly formatted'
@@ -93,7 +93,7 @@ test('\nRoman ToC ', function (t) {
         '    I.I.I. [Method One](#method-one)',
         '    I.I.II. [Method Two](#method-two)',
         '      I.I.II.I. [Main Usage](#main-usage)',
-        '  I.II. [Some More](#some-more)'
+        '  I.II. [Some More](#some-more)',
         ''
     ].join('\n'),
     'TOC is not correctly formatted'
@@ -117,7 +117,7 @@ test('\nUnordered ToC ', function (t) {
         '    - [Method One](#method-one)',
         '    - [Method Two](#method-two)',
         '      - [Main Usage](#main-usage)',
-        '  - [Some More](#some-more)'
+        '  - [Some More](#some-more)',
         ''
     ].join('\n'),
     'TOC is not correctly formatted'

@@ -187,7 +187,7 @@ var options = {
       content: argv['toc-header-content'],
     },
     list: {
-      format: format
+      format: format,
       style: ordered ? style || 'number' : undefined
     },
     items: {
