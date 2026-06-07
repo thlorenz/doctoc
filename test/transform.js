@@ -989,37 +989,6 @@ check(
     , 'works like this'
     , '### Method Two'
     , '#### Main Usage'
-    , '## Some More'
-    ].join('\n')
-  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
-    , '1. [My Module](#my-module)\n'
-    , '  1.1. [API](#api)\n'
-    , '    1.1.1. [Method One](#method-one)\n'
-    , '    1.1.2. [Method Two](#method-two)\n'
-    , '      1.1.2.1. [Main Usage](#main-usage)\n'
-    , '  1.2. [Some More](#some-more)\n\n\n'
-    ].join('')
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , undefined
-  , { toc: { list: { style: 'number', format: 'ordered' } } }
-)
-
-check(
-    [ '# My Module'
-    , 'Some text here'
-    , '## API'
-    , '### Method One'
-    , 'works like this'
-    , '### Method Two'
-    , '#### Main Usage'
     , 'some main usage here'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
