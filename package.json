@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "tap",
-    "doctoc": "node doctoc.js README.md --update-only"
+    "doctoc": "node doctoc.js README.md --update-only --maxlevel 4",
+    "doctoc:dry-run": "node doctoc.js README.md --update-only --maxlevel 4 --dryrun"
   },
   "files": [
     "lib"
