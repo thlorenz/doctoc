@@ -19,6 +19,8 @@ by github or other sites via a command line flag.
   - [Min. Document Lines](#min-document-lines)
   - [Pad table of contents title](#pad-table-of-contents-title)
   - [Indentation Style](#indentation-style)
+  - [Item Symbol](#item-symbol)
+  - [TOC Location](#toc-location)
   - [TOC Pragma style](#toc-pragma-style)
 - [Usage](#usage)
   - [Configuring logging level](#configuring-logging-level)
@@ -171,6 +173,27 @@ You can choose `compact` to make the pragma more succinct:
 <!-- END doctoc -->
 ```
 
+##### TOC Location
+
+Use the `--toc-location` option to configure the location of automatically inserted toc e.g. `doctoc --toc-location before .` which will add the toc before the first heading used in the toc.
+
+> [!TIP]
+>
+> If you want to move an already inserted toc, this can be done by moving the toc block including pragma to the desired location.
+
+The supported options are:
+
+- **top**: inserts the toc at the top of the document before any markdown content but after any frontmatter if defined.
+- **before**: inserts the toc just before the first heading which appears in the toc.
+
+By default, the toc will be inserted using the top option and in v3 it will change to before.
+
+> [!NOTE]
+>
+> This option works in conjunction with the minlevel option.
+> For instance to insert the toc before the first level 2 heading use,
+> `doctoc --toc-location before  --minlevel 2 .`
+
 #### Header
 
 ##### TOC Header Content
@@ -224,6 +247,12 @@ By default,
 - The min items is set to 1
 
 #### TOC Items
+
+##### Item Symbol
+
+Use the `--entry-prefix` option to configure the symbol used in unordered toc, e.g., `doctoc --entry-prefix * .` to use the `*` rather than the default, which is `-`.
+
+This option also supports customising each level of the list, which can be done by using a comma separated list of symbols, i.e. `doctoc --entry-prefix -,*,+ .`.
 
 ##### Indentation Width
 
