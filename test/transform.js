@@ -1009,7 +1009,7 @@ check(
   , undefined
   , undefined
   , undefined
-  , { toc: { list: { style: 'number', ordered: true } } }
+  , { toc: { list: { style: 'number', format: 'ordered' } } }
 )
 
 check(
