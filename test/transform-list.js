@@ -48,7 +48,7 @@ test('\nUppercase ToC ', function (t) {
         '  a.b. [Some More](#some-more)',
         ''
     ].join('\n'),
-    'TOC is not correctly formatted'
+    'TOC is correctly formatted'
   )
   t.end()
 });
@@ -72,7 +72,7 @@ test('\nLowercase ToC ', function (t) {
         '  A.B. [Some More](#some-more)',
         ''
     ].join('\n'),
-    'TOC is not correctly formatted'
+    'TOC is correctly formatted'
   )
   t.end()
 });
@@ -96,7 +96,7 @@ test('\nRoman ToC ', function (t) {
         '  I.II. [Some More](#some-more)',
         ''
     ].join('\n'),
-    'TOC is not correctly formatted'
+    'TOC is correctly formatted'
   )
   t.end()
 });
@@ -120,7 +120,7 @@ test('\nUnordered ToC ', function (t) {
         '  - [Some More](#some-more)',
         ''
     ].join('\n'),
-    'TOC is not correctly formatted'
+    'TOC is correctly formatted'
   )
   t.end()
 });
