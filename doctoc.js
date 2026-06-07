@@ -163,7 +163,7 @@ else if (indentWidth === undefined) { indentWidth = (mode === 'bitbucket.org' ||
 var minLines = argv['document-lines-min'] || 0;
 if (isNaN(minLines)) { log.error('Document min lines: ' + minLines + ' is not a number'), printUsageAndExit(true); }
 
-var format = argv['toc-list-format'];
+var format = argv['toc-list-format'] || 'unordered';
 if (format && format != 'ordered' && format != 'unordered') { log.error('TOC List format: ' + format + ' is not valid'), printUsageAndExit(true); }
 var ordered = format === 'ordered';
 var style = argv['toc-list-style'];
