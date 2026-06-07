@@ -24,7 +24,7 @@ by github or other sites via a command line flag.
     - [Header](#header)
     - [Title](#title)
     - [List Options](#list-options)
-    - [ToC items](#toc-items)
+    - [TOC Items](#toc-items)
     - [Footer](#footer)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
