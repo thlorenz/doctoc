@@ -29,3 +29,4 @@ jobs:
       - run: npm test
 
       - run: npm run doctoc:dry-run
+        if: "${{ matrix.node-version == '22.x' }}"
