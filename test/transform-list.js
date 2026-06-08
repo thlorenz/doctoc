@@ -24,7 +24,7 @@ test('\nNumerical ToC ', function (t) {
         '  1.2. [Some More](#some-more)',
         ''
     ].join('\n'),
-    'TOC is not correctly formatted'
+    'TOC is correctly formatted'
   )
   t.end()
 });
