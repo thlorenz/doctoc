@@ -26,6 +26,7 @@ by github or other sites via a command line flag.
   - [Configuring logging level](#configuring-logging-level)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
+  - [Exclude Heading](#exclude-heading)
   - [Update existing doctoc TOCs effortlessly](#update-existing-doctoc-tocs-effortlessly)
   - [Adding toc to individual files](#adding-toc-to-individual-files)
     - [Examples](#examples)
@@ -241,6 +242,10 @@ specified](#using-doctoc-to-generate-links-compatible-with-other-sites).
 ### Ignoring individual files
 
 In order to ignore a specific file when running `doctoc` on an entire directory, just add `<!-- DOCTOC SKIP -->` to the top of the file you wish to ignore.
+
+### Exclude Heading
+
+In order to exclude a specific heading when running doctoc, just add <!-- DOCTOC EXCLUDE --> on a dedicated line directly before the heading you wish to ignore.
 
 ### Update existing doctoc TOCs effortlessly
 
