@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "tap",
-    "doctoc": "node doctoc.js README.md --update-only"
+    "doctoc": "node doctoc.js README.md --update-only --maxlevel 4 --loglevel trace",
+    "doctoc:dry-run": "node doctoc.js README.md --update-only --maxlevel 4 --loglevel trace --dryrun"
   },
   "files": [
     "lib"
@@ -17,7 +18,7 @@
   "main": "doctoc.js",
   "bin": "doctoc.js",
   "dependencies": {
-    "@textlint/markdown-to-ast": "^15.5.2",
+    "@textlint/markdown-to-ast": "^15.6.0",
     "anchor-markdown-header": "^0.8.4",
     "htmlparser2": "^7.2.0",
     "loglevel": "^1.9.2",
