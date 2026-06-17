@@ -1286,6 +1286,7 @@ check(
     , '<!-- DOCTOC EXCLUDE -->'
     , ''
     , '<h3>Method One</h3>'
+    , ''
     , 'works like this'
     , '<h3>Method Two</h3>'
     , '<h4>Main Usage</h4>'
