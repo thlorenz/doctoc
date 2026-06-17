@@ -299,7 +299,8 @@ In order to ignore a specific file when running `doctoc` on an entire directory,
 
 ### Exclude Heading
 
-In order to exclude a specific heading when running doctoc, just add `<!-- DOCTOC EXCLUDE -->` on a dedicated line directly before the heading which you wish to exclude. The exclude tag can not be nested within another html block and you should ensure that there is a blank line after the heading to avoid the parser considering the subsequent content as a part of the heading node.
+In order to exclude a specific heading when running doctoc, just add `<!-- DOCTOC EXCLUDE -->` on a dedicated line directly before the heading which you wish to exclude. 
+The exclude tag can not be nested within another html block and you should ensure that there is a blank line after your heading to ensure the heading will be excluded.
 
 ### Update existing doctoc TOCs effortlessly
 
