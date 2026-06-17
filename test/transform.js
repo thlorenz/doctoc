@@ -1278,6 +1278,27 @@ check(
     ].join('')
 )
 
+check(
+    [ '<h1>My Module</h1>'
+    , 'Some text here'
+    , '<h2>API</h2>'
+    , ''
+    , '<!-- DOCTOC EXCLUDE -->'
+    , ''
+    , '<h3>Method One</h3>'
+    , 'works like this'
+    , '<h3>Method Two</h3>'
+    , '<h4>Main Usage</h4>'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#my-module)\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+)
+
 test('compact pragma style with existing toc', function (t) {
   var md = [
       '<!-- START doctoc generated TOC please keep comment here to allow auto update -->'
