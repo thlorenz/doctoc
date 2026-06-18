@@ -1,0 +1,5 @@
+{
+    "[test/transform-indentation.js]": {
+        "editor.insertSpaces": false,
+    }
+}
