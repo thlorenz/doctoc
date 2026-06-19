@@ -24,7 +24,7 @@ function cleanPath(filePath) {
 }
 
 function detectSyntax(fileName){
-  var ext = path.extName(fileName);
+  var ext = path.extname(fileName);
   return extensions[ext];
 }
 
