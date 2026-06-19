@@ -8,6 +8,7 @@ by github or other sites via a command line flag.
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Installation](#installation)
+- [Supported Files](#supported-files)
 - [Configuration](#configuration)
   - [CLI Options](#cli-options)
     - [Logging level](#logging-level)
@@ -42,6 +43,19 @@ by github or other sites via a command line flag.
 ## Installation
 
     npm install -g doctoc
+
+## Supported Files
+
+Doctoc supports inserting toc's into any file supplied via the cli regardless of file extension.
+Alternatively directory/s can be supplied which results in toc's being inserted into files which have the following extensions:
+
+- markdown
+- md
+- mdx
+
+> [!NOTE]
+> 
+> When using the directory option, both the '.git' and 'node_modules' directory will be ignored.
 
 ## Configuration
 
