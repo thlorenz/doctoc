@@ -26,6 +26,7 @@ by github or other sites via a command line flag.
     - [List Options](#list-options)
     - [TOC Items](#toc-items)
     - [Footer](#footer)
+- [Exit Codes](#exit-codes)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
@@ -272,6 +273,17 @@ For example, running `doctoc --toc-footer-content 'My Footer' .` would produce:
 My Footer
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ```
+
+## Exit Codes
+
+The cli tool utilises exit codes to inform the caller of the result of the execution.
+The current emitted exit codes and their description is:
+
+| Exit Code | Summary | Details |
+| --- | --- | --- |
+| 0 | Ok | The execution completed without any errors |
+| 1 | Document out of date | One or more files are out of date and need to be updated but wasn't due to performing a dry-run. |
+| 2 | Invalid config options | The supplied config is invalid. Consult logs for more details. |
 
 ## Usage
 
