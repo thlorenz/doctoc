@@ -11,10 +11,21 @@ var path = require("path"),
   log = require('loglevel'),
   files;
 
+var extensions = {
+  mdx: 'jsx',
+  md: 'html', 
+  markdown: 'html',
+};
+
 function cleanPath(filePath) {
   var homeExpanded = (filePath.indexOf('~') === 0) ? path.join(os.homedir(), filePath.substr(1)) : filePath;
 
   return homeExpanded;
+}
+
+function detectSyntax(fileName){
+  var ext = path.extName(fileName);
+  return extensions[ext];
 }
 
 function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options) {
@@ -31,7 +42,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options);
+        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax || detectSyntax(x.name), options);
       result.path = x.path;
       return result;
     });
@@ -83,7 +94,7 @@ function printUsageAndExit(isErr) {
   process.exit(isErr ? 2 : 0);
 }
 
-var supportedSyntaxes = ['md', 'mdx'];
+var supportedSyntaxes = ['html', 'jsx', 'md', 'mdx'];
 var modes = {
   bitbucket: "bitbucket.org",
   nodejs: "nodejs.org",
@@ -140,7 +151,7 @@ if (minTocItems && (isNaN(minTocItems) || minTocItems <= 0)) { log.error('Min. T
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout || false;
 var updateOnly = argv.u || argv['update-only'];
-var syntax = argv['syntax'] || 'md';
+var syntax = argv['syntax'];
 var dryRun = argv.d || argv.dryrun || false;
 
 var padBeforeTitle = argv['toc-title-padding-before'];
@@ -219,7 +230,7 @@ for (var i = 0; i < argv._.length; i++) {
     files = file.findMarkdownFiles(target, syntax);
   } else {
     log.debug('\nDocToccing single file "%s" for %s.', target, mode);
-    files = [{ path: target }];
+    files = [{ path: target, name: path.basename(target) }];
   }
 
   transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options);

@@ -15,6 +15,7 @@ by github or other sites via a command line flag.
     - [Stdout](#stdout)
     - [Update only](#update-only)
   - [Document Options](#document-options)
+    - [Comments](#comments)
     - [Min. Document Lines](#min-document-lines)
     - [Renderers](#renderers)
   - [Source Options](#source-options)
@@ -78,6 +79,19 @@ This option is only applicable when specifying a single filename which doctoc is
 Use `--update-only` or `-u` to only update the existing ToC. That is, the Markdown files without ToC will be left untouched. It is good if you want to use `doctoc` with `lint-staged`.
 
 ### Document Options
+
+#### Comments
+
+##### Syntax
+
+Use the `--syntax` option to specify the syntax used for comments in the documents. If not specified, syntax will be detected based on the file extension.
+
+Supported options are:
+
+- **jsx**: comments start with `{\*` and end with `*\}`.
+- **html**: comments start with `<!--` and end with `-->`.
+- **md**: an alias for html. Will be removed in v3.
+- **mdx**: an alias for jsx. Will be removed in v3.
 
 #### Min. Document Lines
 
