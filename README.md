@@ -46,8 +46,8 @@ by github or other sites via a command line flag.
 
 ## Supported Files
 
-Doctoc supports inserting toc's into any file supplied via the cli regardless of file extension.
-Alternatively directory/s can be supplied which results in toc's being inserted into files which have the following extensions:
+Doctoc supports inserting toc's into any file detected via the cli with the tool accepting both file and directory paths.
+When a directory path is supplied, a recursive search is performed with only files having an extension listed below being processed.
 
 - markdown
 - md
@@ -55,7 +55,7 @@ Alternatively directory/s can be supplied which results in toc's being inserted 
 
 > [!NOTE]
 > 
-> When using the directory option, both the '.git' and 'node_modules' directory will be ignored.
+> By default, the recursive search will ignore both, the '.git' and 'node_modules' directory if they exist.
 
 ## Configuration
 
