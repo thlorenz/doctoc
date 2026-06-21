@@ -5,7 +5,7 @@
   "version": "0.0.0-development",
   "repository": {
     "type": "git",
-    "url": "git://github.com/thlorenz/doctoc.git"
+    "url": "git+https://github.com/thlorenz/doctoc.git"
   },
   "scripts": {
     "test": "tap",
