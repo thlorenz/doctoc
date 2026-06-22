@@ -18,3 +18,4 @@ tmp_samples
 !test/fixtures/*.log
 .idea
 .tap
+.nyc_output/
