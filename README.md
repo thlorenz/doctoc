@@ -301,17 +301,18 @@ In order to ignore a specific file when running `doctoc` on an entire directory,
 
 In order to exclude a specific heading when running doctoc, just add `<!-- DOCTOC EXCLUDE -->` on a dedicated line directly before the heading which you wish to exclude. 
 
-An example of a compliant document with html headers is shown below with the toc only containg heading 2:
+Here's an example that would exclude the first HTML header from the TOC:
 
 ```markdown
 <!-- DOCTOC EXCLUDE -->
-<h2>Heading 1</h2>
+<h2>This heading will not show up in the TOC</h2>
 
 <h2>Heading 2</h2>
 ```
 
-The key requirements being:
-- exclude tag can not be nested within another html block and is on its own dedicated line
+To exclude a heading:
+- the exclude tag cannot be nested within another html block
+- the exclude tag must be on its own dedicated line
 - there is a blank line after your heading
 
 ### Update existing doctoc TOCs effortlessly
