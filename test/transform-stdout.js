@@ -50,14 +50,25 @@ test('\nshould print to stdout with --stdout option and default logging aka info
     })
 })
 
-test('\nshould exit with error code as --stdout option is not supported on a directory', function (t) {
+test('\nshould exit with no error code as --stdout option is supported on a directory with 1 file', function (t) {
+
+    exec('node doctoc.js test/fixtures/valid_stdout --stdout', function (error, stdout, stderr) {
+      if (error) {
+        console.error('exec error: ', error);
+        return;
+      }
+      t.end();
+    })
+})
+
+test('\nshould exit with error code as --stdout option is not supported on a directory with multiple files', function (t) {
 
     exec('node doctoc.js test/fixtures/invalid_stdout --stdout', function (error, stdout, stderr) {
       if (error) {
         t.same(error.code, 2, 'process exited with error code 2 as expected');
         t.end();
       } else {
-        t.fail('process did not produce an error: ' + error);
+        t.fail('process did not produce an error.');
         t.end();
       }
     })
@@ -70,7 +81,7 @@ test('\nshould exit with error code as --stdout option is not supported on multi
         t.same(error.code, 2, 'process exited with error code 2 as expected');
         t.end();
       } else {
-        t.fail('process did not produce an error: ' + error);
+        t.fail('process did not produce an error.');
         t.end();
       }
     })

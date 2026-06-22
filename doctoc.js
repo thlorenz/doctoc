@@ -2,31 +2,11 @@
 
 "use strict";
 
-var path = require("path"),
-  fs = require("fs"),
-  os = require("os"),
+var fs = require("fs"),
   minimist = require("minimist"),
   file = require("./lib/file"),
   transform = require("./lib/transform"),
-  log = require('loglevel'),
-  files;
-
-var extensions = {
-  mdx: 'jsx',
-  md: 'html', 
-  markdown: 'html',
-};
-
-function cleanPath(filePath) {
-  var homeExpanded = (filePath.indexOf('~') === 0) ? path.join(os.homedir(), filePath.substr(1)) : filePath;
-
-  return homeExpanded;
-}
-
-function detectSyntax(fileName){
-  var ext = path.extname(fileName);
-  return extensions[ext];
-}
+  log = require('loglevel');
 
 function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options) {
   if (processAll) {
@@ -42,7 +22,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax || detectSyntax(x.name), options);
+        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, x.syntax, options);
       result.path = x.path;
       return result;
     });
@@ -216,21 +196,12 @@ if (argv._.length > 1 && stdOut) {
 }
 
 for (var i = 0; i < argv._.length; i++) {
-  var target = cleanPath(argv._[i]),
-    stat = fs.statSync(target);
+  var files = file.findMarkdownFiles(argv._[i], syntax);
 
-  if (stat.isDirectory() && stdOut) {
-    console.error('--stdout cannot be used to process a directory. Use --dryrun instead.');
+  if (files.length > 1 && stdOut) {
+    console.error('--stdout cannot be used to process a directory containing more than 1 file. Use --dryrun instead.');
     process.exitCode = 2;
     return;
-  }
-
-  if (stat.isDirectory()) {
-    log.debug('\nDocToccing "%s" and its sub directories for %s.', target, mode);
-    files = file.findMarkdownFiles(target, syntax);
-  } else {
-    log.debug('\nDocToccing single file "%s" for %s.', target, mode);
-    files = [{ path: target, name: path.basename(target) }];
   }
 
   transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options);
