@@ -72,7 +72,7 @@ This is useful in CI environments where you want to check if your docs are up to
 
 You can print to stdout by using the `-s` or `--stdout` option.
 
-This option is only applicable when specifying a single filename which doctoc is to run on. If you are specifying a folder or multiple files, the dry run option should be used instead.
+This option is only applicable when specifying a single filename or a directory containing only 1 file which doctoc is to run on. If you are specifying a folder with multiple files or providing multiple inputs, the dry run option should be used instead.
 
 #### Update only
 
@@ -88,7 +88,7 @@ Use the `--syntax` option to specify the syntax used for comments in the documen
 
 Supported options are:
 
-- **jsx**: comments start with `{\*` and end with `*\}`.
+- **jsx**: comments start with `{/*` and end with `*/}`.
 - **html**: comments start with `<!--` and end with `-->`.
 - **md**: an alias for html. Will be removed in v3.
 - **mdx**: an alias for jsx. Will be removed in v3.

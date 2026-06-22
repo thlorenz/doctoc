@@ -54,7 +54,8 @@ test('\nshould exit with no error code as --stdout option is supported on a dire
 
     exec('node doctoc.js test/fixtures/valid_stdout --stdout', function (error, stdout, stderr) {
       if (error) {
-        console.error('exec error: ', error);
+        t.fail('process produced an unexpected error: ' + error);
+        t.end();
         return;
       }
       t.end();

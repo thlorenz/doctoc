@@ -68,7 +68,7 @@ test('\nshould exit with no error code with --dryrun, --github and --update-only
     })
 })
 
-test('\nshould exit with no error code with --dryrun, --github and --update-only options', function (t) {
+test('\nshould exit with no error code with --dryrun, --github and --update-only options (mdx)', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-with-custom-title.mdx --dryrun --github --update-only', function (error, stdout, stderr) {
       if (error) {
@@ -116,7 +116,7 @@ test('\nshould exit with no error code', function (t) {
     })
 })
 
-test('\nshould exit with no error code', function (t) {
+test('\nshould exit with no error code (mdx fixture)', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-with-custom-title.mdx', function (error, stdout, stderr) {
       if (error) {
