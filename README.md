@@ -93,6 +93,10 @@ Supported options are:
 - **md**: an alias for html. Will be removed in v3.
 - **mdx**: an alias for jsx. Will be removed in v3.
 
+> [!NOTE]
+>
+> By supplying a syntax, the files to be processed will be filtered ie html syntax is used in md & markdown files.
+
 #### Min. Document Lines
 
 Use the `--document-lines-min` option to specify the minimum lines required to be in a document for the document to have a table of contents; e.g., `doctoc --document-lines-min 200 .`.
