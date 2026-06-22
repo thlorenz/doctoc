@@ -29,6 +29,7 @@ by github or other sites via a command line flag.
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
+  - [Exclude Heading](#exclude-heading)
   - [Update existing doctoc TOCs effortlessly](#update-existing-doctoc-tocs-effortlessly)
   - [Adding toc to individual files](#adding-toc-to-individual-files)
     - [Examples](#examples)
@@ -295,6 +296,24 @@ specified](#renderers).
 ### Ignoring individual files
 
 In order to ignore a specific file when running `doctoc` on an entire directory, just add `<!-- DOCTOC SKIP -->` to the top of the file you wish to ignore.
+
+### Exclude Heading
+
+In order to exclude a specific heading when running doctoc, just add `<!-- DOCTOC EXCLUDE -->` on a dedicated line directly before the heading which you wish to exclude. 
+
+Here's an example that would exclude the first HTML header from the TOC:
+
+```markdown
+<!-- DOCTOC EXCLUDE -->
+<h2>This heading will not show up in the TOC</h2>
+
+<h2>Heading 2</h2>
+```
+
+To exclude a heading:
+- the exclude tag cannot be nested within another html block
+- the exclude tag must be on its own dedicated line
+- there is a blank line after your heading
 
 ### Update existing doctoc TOCs effortlessly
 
