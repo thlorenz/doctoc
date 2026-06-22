@@ -47,11 +47,11 @@ by github or other sites via a command line flag.
 ## Supported Files
 
 Doctoc supports inserting TOCs into Markdown files detected via the CLI, with the tool accepting both file and directory paths.
-When a directory path is supplied, a recursive search is performed with only files having an extension listed below being processed.
+When a directory path is supplied, a recursive search is performed and only files with the following extensions are processed:
 
-- markdown
-- md
-- mdx
+ - `.md`
+ - `.markdown`
+ - `.mdx`
 
 > [!NOTE]
 > 
