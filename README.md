@@ -46,7 +46,7 @@ by github or other sites via a command line flag.
 
 ## Supported Files
 
-Doctoc supports inserting toc's into any file detected via the cli with the tool accepting both file and directory paths.
+Doctoc supports inserting TOCs into Markdown files detected via the CLI, with the tool accepting both file and directory paths.
 When a directory path is supplied, a recursive search is performed with only files having an extension listed below being processed.
 
 - markdown
@@ -55,7 +55,7 @@ When a directory path is supplied, a recursive search is performed with only fil
 
 > [!NOTE]
 > 
-> By default, the recursive search will ignore both, the '.git' and 'node_modules' directory if they exist.
+> By default, the recursive search ignores the `.git` and `node_modules` directories (if they exist).
 
 ## Configuration
 
@@ -290,13 +290,13 @@ My Footer
 
 ## Exit Codes
 
-The cli tool utilises exit codes to inform the caller of the result of the execution.
-The current emitted exit codes and their description is:
+The CLI tool uses exit codes to inform the caller of the execution result.
+The currently emitted exit codes and their descriptions are:
 
 | Exit Code | Summary | Details |
 | --- | --- | --- |
-| 0 | Ok | The execution completed without any errors |
-| 1 | Document out of date | One or more files are out of date and need to be updated but wasn't due to performing a dry-run. |
+| 0 | OK | The execution completed without any errors |
+| 1 | Document out of date | One or more files are out of date and need to be updated, but weren’t updated because doctoc was run with `--dryrun`. |
 | 2 | Invalid config options | The supplied config is invalid. Consult logs for more details. |
 
 ## Usage
