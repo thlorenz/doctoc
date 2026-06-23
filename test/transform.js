@@ -1157,6 +1157,149 @@ test('should use {/* */} comments if syntax=mdx', function (t) {
     t.end()
 })
 
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , '<!-- DOCTOC EXCLUDE -->'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#my-module)\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , 'md'
+)
+
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , '{/* DOCTOC EXCLUDE */}'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#my-module)\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , undefined
+    , 'mdx'
+)
+
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , '<!-- DOCTOC EXCLUDE -->'
+    , ''
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#my-module)\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+)
+
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , ''
+    , '<!-- DOCTOC EXCLUDE -->'
+    , ''
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#my-module)\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+)
+
+check(
+    [ '# My Module'
+    , 'Some text here'
+    , '## API'
+    , ''
+    , '<!-- DOCTOC EXCLUDE -->'
+    , 'text'
+    , '### Method One'
+    , 'works like this'
+    , '### Method Two'
+    , '#### Main Usage'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#my-module)\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method One](#method-one)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+)
+
+check(
+    [ '<h1>My Module</h1>'
+    , 'Some text here'
+    , '<h2>API</h2>'
+    , ''
+    , '<!-- DOCTOC EXCLUDE -->'
+    , ''
+    , '<h3>Method One</h3>'
+    , ''
+    , 'works like this'
+    , '<h3>Method Two</h3>'
+    , '<h4>Main Usage</h4>'
+    , 'some main usage here'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [My Module](#my-module)\n'
+    ,   '  - [API](#api)\n'
+    ,     '    - [Method Two](#method-two)\n'
+    ,         '      - [Main Usage](#main-usage)\n\n\n'
+    ].join('')
+)
+
 test('compact pragma style with existing toc', function (t) {
   var md = [
       '<!-- START doctoc generated TOC please keep comment here to allow auto update -->'

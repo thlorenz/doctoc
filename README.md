@@ -8,6 +8,7 @@ by github or other sites via a command line flag.
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Installation](#installation)
+- [Supported Files](#supported-files)
 - [Configuration](#configuration)
   - [CLI Options](#cli-options)
     - [Logging level](#logging-level)
@@ -27,9 +28,11 @@ by github or other sites via a command line flag.
     - [List Options](#list-options)
     - [TOC Items](#toc-items)
     - [Footer](#footer)
+- [Exit Codes](#exit-codes)
 - [Usage](#usage)
   - [Adding toc to all files in a directory and sub directories](#adding-toc-to-all-files-in-a-directory-and-sub-directories)
   - [Ignoring individual files](#ignoring-individual-files)
+  - [Exclude Heading](#exclude-heading)
   - [Update existing doctoc TOCs effortlessly](#update-existing-doctoc-tocs-effortlessly)
   - [Adding toc to individual files](#adding-toc-to-individual-files)
     - [Examples](#examples)
@@ -42,6 +45,19 @@ by github or other sites via a command line flag.
 ## Installation
 
     npm install -g doctoc
+
+## Supported Files
+
+Doctoc supports inserting TOCs into Markdown files detected via the CLI, with the tool accepting both file and directory paths.
+When a directory path is supplied, a recursive search is performed and only files with the following extensions are processed:
+
+ - `.md`
+ - `.markdown`
+ - `.mdx`
+
+> [!NOTE]
+> 
+> By default, the recursive search ignores the `.git` and `node_modules` directories (if they exist).
 
 ## Configuration
 
@@ -269,6 +285,17 @@ Use the `--entryprefix` option to configure the symbol used in unordered toc, e.
 
 This option also supports customising each level of the list, which can be done by using a comma separated list of symbols, i.e. `doctoc --entryprefix="-,*,+" .`.
 
+##### Indentation Style
+
+Use the `--toc-items-indentation-style` option to control how TOC items are indented, e.g. `doctoc --toc-items-indentation-style space .`.
+
+The supported options are:
+
+- `space`:  The toc item is indented using spaces. This is the default value.
+- `tab`: The toc item is indented using tabs.
+
+The quantity of indenting is controlled by `--toc-items-indentation-width`.
+
 ##### Indentation Width
 
 Use the `--toc-items-indentation-width` option to customise the indentation width e.g. `doctoc --toc-items-indentation-width 4 .` will set the width to 4.
@@ -290,6 +317,17 @@ For example, running `doctoc --toc-footer-content 'My Footer' .` would produce:
 My Footer
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 ```
+
+## Exit Codes
+
+The CLI tool uses exit codes to inform the caller of the execution result.
+The currently emitted exit codes and their descriptions are:
+
+| Exit Code | Summary | Details |
+| --- | --- | --- |
+| 0 | OK | The execution completed without any errors |
+| 1 | Document out of date | One or more files are out of date and need to be updated, but weren’t updated because doctoc was run with `--dryrun`. |
+| 2 | Invalid config options | The supplied config is invalid. Consult logs for more details. |
 
 ## Usage
 
@@ -313,6 +351,24 @@ specified](#renderers).
 ### Ignoring individual files
 
 In order to ignore a specific file when running `doctoc` on an entire directory, just add `<!-- DOCTOC SKIP -->` to the top of the file you wish to ignore.
+
+### Exclude Heading
+
+In order to exclude a specific heading when running doctoc, just add `<!-- DOCTOC EXCLUDE -->` on a dedicated line directly before the heading which you wish to exclude. 
+
+Here's an example that would exclude the first HTML header from the TOC:
+
+```markdown
+<!-- DOCTOC EXCLUDE -->
+<h2>This heading will not show up in the TOC</h2>
+
+<h2>Heading 2</h2>
+```
+
+To exclude a heading:
+- the exclude tag cannot be nested within another html block
+- the exclude tag must be on its own dedicated line
+- there is a blank line after your heading
 
 ### Update existing doctoc TOCs effortlessly
 
