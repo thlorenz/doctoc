@@ -52,9 +52,9 @@ test('\ngiven tabs should be used for indentation', function (t) {
         "**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*",
         "",
         "- [Hello, world!](#hello-world)",
-        "	- [Installation](#installation)",
-        "	- [API](#api)",
-        "	- [License](#license)",
+        "\t- [Installation](#installation)",
+        "\t- [API](#api)",
+        "\t- [License](#license)",
         "",
     ].join('\n'),
     'generates correct toc for tab indented items'

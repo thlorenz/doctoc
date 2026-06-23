@@ -253,14 +253,14 @@ This option also supports customising each level of the list, which can be done 
 
 ##### Indentation Style
 
-Use the `--toc-items-indentation-style` option to control how TOC items are indented, i.e. `doctoc --toc-items-indentation-style space .`.
+Use the `--toc-items-indentation-style` option to control how TOC items are indented, e.g. `doctoc --toc-items-indentation-style space .`.
 
 The supported options are:
 
 - `space`:  The toc item is indented using spaces. This is the default value.
 - `tab`: The toc item is indented using tabs.
 
-The qty of indenting used is calculated by multiplying the `--toc-items-indentation-width` with the toc level.
+The quantity of indenting is controlled by `--toc-items-indentation-width`.
 
 ##### Indentation Width
 
