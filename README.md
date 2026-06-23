@@ -252,6 +252,17 @@ Use the `--entryprefix` option to configure the symbol used in unordered toc, e.
 
 This option also supports customising each level of the list, which can be done by using a comma separated list of symbols, i.e. `doctoc --entryprefix="-,*,+" .`.
 
+##### Indentation Style
+
+Use the `--toc-items-indentation-style` option to control how TOC items are indented, e.g. `doctoc --toc-items-indentation-style space .`.
+
+The supported options are:
+
+- `space`:  The toc item is indented using spaces. This is the default value.
+- `tab`: The toc item is indented using tabs.
+
+The quantity of indenting is controlled by `--toc-items-indentation-width`.
+
 ##### Indentation Width
 
 Use the `--toc-items-indentation-width` option to customise the indentation width e.g. `doctoc --toc-items-indentation-width 4 .` will set the width to 4.
