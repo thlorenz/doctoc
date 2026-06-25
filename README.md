@@ -266,7 +266,7 @@ Use the `--toc-list-format` option to control the format of the toc list, i.e. `
 The supported options are:
 
  - `ordered`: the list items are numbered rather than using a symbol with the style controlled via the `--toc-list-style` option.
- - `unordered`: the list items use a symnol. This is the default behaviour.
+ - `unordered`: the list items use a symbol. This is the default behaviour.
 
 ##### Style
 
@@ -277,7 +277,7 @@ The supported options are:
  - `lowercase`: the list items are identified using lowercase letters ie `a.c.a`.
  - `number`: the list items are identified using numbers letters ie `1.3.1`. This is the default behaviour.
  - `roman`: the list items are identified using roman numerals ie `I.III.I`.
- - `uppercase`: the list items are identified using lowercase letters ie `A.C.A`.
+ - `uppercase`: the list items are identified using uppercase letters ie `A.C.A`.
 
 #### TOC Items
 

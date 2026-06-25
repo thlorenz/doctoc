@@ -132,9 +132,6 @@ for (var key in modes) {
 
 var title = argv.t || argv.title;
 var notitle = argv.T || argv.notitle;
-var entryPrefix = argv.entryprefix?.trim().replaceAll(' ', '');
-if (entryPrefix?.endsWith(',') || entryPrefix?.startsWith(',') || entryPrefix?.includes(',,')) { log.error('Invalid entry prefix: ' + entryPrefix), printUsageAndExit(true); }
-else if(!entryPrefix) { entryPrefix = '-'; }
 var minTocItems = argv.mintocitems || 1;
 if (minTocItems && (isNaN(minTocItems) || minTocItems <= 0)) { log.error('Min. TOC items specified is not a positive number: ' + minTocItems), printUsageAndExit(true); }
 var processAll = argv.all;
@@ -173,8 +170,14 @@ var format = argv['toc-list-format'] || 'unordered';
 if (format && format != 'ordered' && format != 'unordered') { log.error('TOC List format: ' + format + ' is not valid'), printUsageAndExit(true); }
 var ordered = format === 'ordered';
 var style = argv['toc-list-style'];
-var symbol = entryPrefix.split(',') || ['-'];
-if (ordered && style && style != 'number' && style != 'uppercase' && style != 'lowercase' && style != 'roman') { log.error('TOC List style: ' + style + ' is not valid'), printUsageAndExit(true); }
+if (ordered && style && style != 'number' && style != 'uppercase' && style != 'lowercase' && style != 'roman') { log.error('TOC List style: ' + style + ' is not valid.'), printUsageAndExit(true); }
+else if (!ordered && style) { log.error('TOC List style: ' + style + ' should not be specified for unordered list.'), printUsageAndExit(true); }
+else if (ordered && style) { log.error('TOC List style: ' + style + ' should not be specified for unordered list.'), printUsageAndExit(true); }
+
+var entryPrefix = argv.entryprefix?.trim().replaceAll(' ', '');
+if (entryPrefix?.endsWith(',') || entryPrefix?.startsWith(',') || entryPrefix?.includes(',,')) { log.error('Invalid entry prefix: ' + entryPrefix), printUsageAndExit(true); }
+else if (ordered && entryPrefix) { log.error('TOC List item prefix: ' + entryPrefix + ' should not be specified for ordered list.'), printUsageAndExit(true); }
+else if(!entryPrefix) { entryPrefix = '-'; }
 
 var options = {
   document: {
@@ -197,8 +200,7 @@ var options = {
       indentation: {
         width: indentWidth,
         style: indentStyle,
-      },
-      symbol: !ordered ? symbol : undefined
+      }
     },
     location: location,
     title: {

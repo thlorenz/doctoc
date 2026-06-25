@@ -29,7 +29,7 @@ test('\nNumerical ToC ', function (t) {
   t.end()
 });
 
-test('\nUppercase ToC ', function (t) {
+test('\nLowercase ToC ', function (t) {
   var content = fs.readFileSync(__dirname + '/fixtures/readme-formatting.md', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { 
     toc: { list: { style: 'lowercase', format: 'ordered' } }
@@ -53,7 +53,7 @@ test('\nUppercase ToC ', function (t) {
   t.end()
 });
 
-test('\nLowercase ToC ', function (t) {
+test('\nUppercase ToC ', function (t) {
   var content = fs.readFileSync(__dirname + '/fixtures/readme-formatting.md', 'utf8');
   var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { 
     toc: { list: { style: 'uppercase', format: 'ordered' } }
@@ -123,4 +123,37 @@ test('\nUnordered ToC ', function (t) {
     'TOC is correctly formatted'
   )
   t.end()
+});
+
+test('transforming list with skipping level', function (t) {
+  var content = [ 
+      '# My Module',
+      'Some text here',
+      '## API',
+      '### Method One',
+      '#### Main Usage',
+      'some main usage here',
+      '## Example',
+      '#### Example 1',
+      '#### Example 2',
+    ].join('\n');
+  var contents = [
+      '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*',
+      '',
+      '1. [My Module](#my-module)',
+      '  1.1. [API](#api)',
+      '    1.1.1. [Method One](#method-one)',
+      '      1.1.1.1. [Main Usage](#main-usage)',
+      '  1.2. [Example](#example)',
+      '      1.2.1.1. [Example 1](#example-1)',
+      '      1.2.1.2. [Example 2](#example-2)',
+      ''
+    ].join('\n');
+
+  var transformedContent = transform(content, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { 
+    toc: { list: { style: 'number', format: 'ordered' } }
+  });
+
+  t.same(transformedContent.toc, contents, 'generates correct toc contents');
+  t.end();
 });
