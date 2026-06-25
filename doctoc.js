@@ -8,7 +8,7 @@ var fs = require("fs"),
   transform = require("./lib/transform"),
   log = require('loglevel');
 
-function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options) {
+function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, dryRun, options) {
   if (processAll) {
     log.debug('--all flag is enabled. Including headers before the TOC location.');
   }
@@ -131,7 +131,6 @@ if (minTocItems && (isNaN(minTocItems) || minTocItems <= 0)) { log.error('Min. T
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout || false;
 var updateOnly = argv.u || argv['update-only'];
-var syntax = argv['syntax'];
 var dryRun = argv.d || argv.dryrun || false;
 
 var padBeforeTitle = argv['toc-title-padding-before'];
@@ -200,7 +199,7 @@ if (argv._.length > 1 && stdOut) {
 }
 
 for (var i = 0; i < argv._.length; i++) {
-  var files = file.findMarkdownFiles(argv._[i], syntax);
+  var files = file.findMarkdownFiles(argv._[i], argv['syntax']);
 
   if (files.length > 1 && stdOut) {
     console.error('--stdout cannot be used to process a directory containing more than 1 file. Use --dryrun instead.');
@@ -208,7 +207,7 @@ for (var i = 0; i < argv._.length; i++) {
     return;
   }
 
-  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options);
+  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, dryRun, options);
 
   if (dryRun && process.exitCode === 1) {
     log.warn('\nDocumentation tables of contents are out of date.');
