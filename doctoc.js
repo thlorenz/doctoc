@@ -73,7 +73,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
 function printUsageAndExit(isErr) {
   var outputFunc = isErr ? log.error : log.info;
 
-  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--toc-location location] [--toc-pragma-style style] [--toc-header-content content] [--toc-footer-content content] [--toc-items-indentation-width width] [--toc-items-indentation-style style] [--all] [--loglevel level] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
+  outputFunc('Usage: doctoc [mode] [--entryprefix prefix] [--notitle | --title title] [--maxlevel level] [--minlevel level] [--mintocitems qty] [--toc-location location] [--toc-pragma-style style] [--toc-header-content content] [--toc-footer-content content] [--toc-list-format format] [--toc-list-style style] [--toc-items-indentation-width width] [--toc-items-indentation-style style] [--all] [--loglevel level] [--update-only] [--syntax (' + supportedSyntaxes.join("|") + ')] <path> (where path is some path to a directory (e.g., .) or a file (e.g., README.md))');
   outputFunc('\nAvailable modes are:');
   for (var key in modes) {
     outputFunc("  --%s\t%s", key, modes[key]);
@@ -97,7 +97,7 @@ var mode = modes["github"];
 var argv = minimist(process.argv.slice(2),
     {
       boolean: [ 'h', 'help', 'T', 'notitle', 's', 'stdout', 'all' , 'u', 'update-only', 'd', 'dryrun'].concat(Object.keys(modes)),
-      string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toc-location', 'toc-title-padding-before', 'toc-header-content', 'toc-footer-content', 'toc-pragma-style', 'toc-items-indentation-width', 'toc-items-indentation-style', 'document-lines-min', 'l', 'loglevel' ],
+      string: [ 'title', 't', 'maxlevel', 'm', 'minlevel', 'entryprefix', 'syntax', 'mintocitems', 'toc-location', 'toc-title-padding-before', 'toc-header-content', 'toc-footer-content', 'toc-pragma-style', 'toc-list-format', 'toc-list-style', 'toc-items-indentation-width', 'toc-items-indentation-style', 'document-lines-min', 'l', 'loglevel' ],
       unknown: function(a) { return (a[0] == '-' ? (console.error('Unknown option(s): ' + a), printUsageAndExit(true)) : true); }
     });
 
@@ -132,9 +132,6 @@ for (var key in modes) {
 
 var title = argv.t || argv.title;
 var notitle = argv.T || argv.notitle;
-var entryPrefix = argv.entryprefix?.trim().replaceAll(' ', '');
-if (entryPrefix?.endsWith(',') || entryPrefix?.startsWith(',') || entryPrefix?.includes(',,')) { log.error('Invalid entry prefix: ' + entryPrefix), printUsageAndExit(true); }
-else if(!entryPrefix) { entryPrefix = '-'; }
 var minTocItems = argv.mintocitems || 1;
 if (minTocItems && (isNaN(minTocItems) || minTocItems <= 0)) { log.error('Min. TOC items specified is not a positive number: ' + minTocItems), printUsageAndExit(true); }
 var processAll = argv.all;
@@ -169,6 +166,18 @@ if (isNaN(minLines)) { log.error('Document min lines: ' + minLines + ' is not a 
 var location = argv['toc-location'] || 'top';
 if (location != 'top' && location != 'before') { log.error('Location specified is not valid: ' + location), printUsageAndExit(true); }
 
+var format = argv['toc-list-format'] || 'unordered';
+if (format && format != 'ordered' && format != 'unordered') { log.error('TOC List format: ' + format + ' is not valid'), printUsageAndExit(true); }
+var ordered = format === 'ordered';
+var style = argv['toc-list-style'];
+if (ordered && style && style != 'number' && style != 'uppercase' && style != 'lowercase' && style != 'roman') { log.error('TOC List style: ' + style + ' is not valid.'), printUsageAndExit(true); }
+else if (!ordered && style) { log.error('TOC List style: ' + style + ' should not be specified for unordered list.'), printUsageAndExit(true); }
+
+var entryPrefix = argv.entryprefix?.trim().replaceAll(' ', '');
+if (entryPrefix?.endsWith(',') || entryPrefix?.startsWith(',') || entryPrefix?.includes(',,')) { log.error('Invalid entry prefix: ' + entryPrefix), printUsageAndExit(true); }
+else if (ordered && entryPrefix) { log.error('TOC List item prefix: ' + entryPrefix + ' should not be specified for ordered list.'), printUsageAndExit(true); }
+else if(!entryPrefix) { entryPrefix = '-'; }
+
 var options = {
   document: {
     lines: {
@@ -182,8 +191,12 @@ var options = {
     header: {
       content: argv['toc-header-content'],
     },
+    list: {
+      format: format,
+      style: ordered ? style || 'number' : undefined
+    },
     items: {
-      indentation:{
+      indentation: {
         width: indentWidth,
         style: indentStyle,
       }
