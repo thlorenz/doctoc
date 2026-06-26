@@ -275,7 +275,7 @@ Use the `--toc-list-style` option to control the style of the ordered toc list, 
 The supported options are:
 
  - `lowercase`: the list items are identified using lowercase letters ie `a.c.a`.
- - `number`: the list items are identified using numbers letters ie `1.3.1`. This is the default behaviour.
+ - `number`: the list items are identified using numbers ie `1.3.1`. This is the default behaviour.
  - `roman`: the list items are identified using roman numerals ie `I.III.I`.
  - `uppercase`: the list items are identified using uppercase letters ie `A.C.A`.
 
