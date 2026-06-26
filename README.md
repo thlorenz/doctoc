@@ -24,7 +24,7 @@ by github or other sites via a command line flag.
     - [General](#general)
     - [Header](#header)
     - [Title](#title)
-    - [List Options](#list-options)
+    - [List](#list)
     - [TOC Items](#toc-items)
     - [Footer](#footer)
 - [Exit Codes](#exit-codes)
@@ -252,7 +252,7 @@ By default,
 
 In all cases there will be padding present after the title due to the toc items always having padding before the list of items.
 
-#### List Options
+#### List
 
 ##### Min. Length
 
@@ -261,6 +261,26 @@ Use the `--mintocitems` option to specify the minimum items required to be in a 
 By default,
 
 - The min items is set to 1
+
+##### Format
+
+Use the `--toc-list-format` option to control the format of the toc list, i.e. `doctoc --toc-list-format unordered`. 
+
+The supported options are:
+
+ - `ordered`: the list items are numbered rather than using a symbol with the style controlled via the `--toc-list-style` option.
+ - `unordered`: the list items use a symbol. This is the default behaviour.
+
+##### Style
+
+Use the `--toc-list-style` option to control the style of the ordered toc list, i.e. `doctoc --toc-list-style roman`. 
+
+The supported options are:
+
+ - `lowercase`: the list items are identified using lowercase letters ie `a.c.a`.
+ - `number`: the list items are identified using numbers ie `1.3.1`. This is the default behaviour.
+ - `roman`: the list items are identified using roman numerals ie `I.III.I`.
+ - `uppercase`: the list items are identified using uppercase letters ie `A.C.A`.
 
 #### TOC Items
 
