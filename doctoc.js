@@ -172,7 +172,6 @@ var ordered = format === 'ordered';
 var style = argv['toc-list-style'];
 if (ordered && style && style != 'number' && style != 'uppercase' && style != 'lowercase' && style != 'roman') { log.error('TOC List style: ' + style + ' is not valid.'), printUsageAndExit(true); }
 else if (!ordered && style) { log.error('TOC List style: ' + style + ' should not be specified for unordered list.'), printUsageAndExit(true); }
-else if (ordered && style) { log.error('TOC List style: ' + style + ' should not be specified for unordered list.'), printUsageAndExit(true); }
 
 var entryPrefix = argv.entryprefix?.trim().replaceAll(' ', '');
 if (entryPrefix?.endsWith(',') || entryPrefix?.startsWith(',') || entryPrefix?.includes(',,')) { log.error('Invalid entry prefix: ' + entryPrefix), printUsageAndExit(true); }
