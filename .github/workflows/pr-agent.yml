@@ -1,0 +1,93 @@
+name: PR Agent
+
+on:
+  pull_request:
+    branches: ["master"]
+    types: [opened, reopened, ready_for_review, review_requested, synchronize]
+  issue_comment:
+    types: [created]
+
+concurrency:
+  # PR events group by PR so newer pushes replace stale auto runs.
+  # issue_comment events use run_id here; manual commands are grouped below.
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+  config.model: "gpt-5.4-mini"
+  config.reasoning_effort: "xhigh"
+  config.ai_timeout: "600"
+  pr_reviewer.final_update_message: "false"
+  pr_code_suggestions.commitable_code_suggestions: "true"
+  github_action_config.pr_actions: '["opened", "reopened", "ready_for_review", "review_requested", "synchronize"]'
+
+jobs:
+  auto:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.sender.type != 'Bot' &&
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions: &pr-agent-permissions
+      contents: read
+      issues: write
+      pull-requests: write
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - tool: describe
+            auto_describe: "true"
+            auto_review: "false"
+            auto_improve: "false"
+          - tool: review
+            auto_describe: "false"
+            auto_review: "true"
+            auto_improve: "false"
+          - tool: improve
+            auto_describe: "false"
+            auto_review: "false"
+            auto_improve: "true"
+
+    steps:
+      - name: Run PR Agent ${{ matrix.tool }}
+        uses: &pr-agent-image docker://pragent/pr-agent:0.38.0-github_action@sha256:ea2ea90f072fd97708755e59827a317272f66097a1ef349eca23d39160bb0baf
+        env:
+          github_action_config.auto_review: ${{ matrix.auto_review }}
+          github_action_config.auto_describe: ${{ matrix.auto_describe }}
+          github_action_config.auto_improve: ${{ matrix.auto_improve }}
+
+  manual:
+    if: >-
+      github.event_name == 'issue_comment' &&
+      github.event.sender.type != 'Bot' &&
+      github.event.issue.pull_request != null &&
+      github.event.issue.state == 'open' &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR", "CONTRIBUTOR"]'), github.event.comment.author_association) &&
+      (
+        contains(fromJSON('["/review", "/describe", "/improve", "/ask"]'), github.event.comment.body) ||
+        startsWith(github.event.comment.body, '/review ') ||
+        startsWith(github.event.comment.body, fromJSON('"/review\n"')) ||
+        startsWith(github.event.comment.body, '/describe ') ||
+        startsWith(github.event.comment.body, fromJSON('"/describe\n"')) ||
+        startsWith(github.event.comment.body, '/improve ') ||
+        startsWith(github.event.comment.body, fromJSON('"/improve\n"')) ||
+        startsWith(github.event.comment.body, '/ask ') ||
+        startsWith(github.event.comment.body, fromJSON('"/ask\n"'))
+      )
+    runs-on: ubuntu-latest
+    permissions: *pr-agent-permissions
+    timeout-minutes: 60
+    concurrency:
+      # The job if gate validates exact command forms; keep these prefixes aligned.
+      # Regenerating command reruns supersede older same-command runs; /ask is per-comment.
+      group: ${{ github.workflow }}-manual-${{ github.event.issue.number }}-${{ startsWith(github.event.comment.body, '/ask') && github.event.comment.id || startsWith(github.event.comment.body, '/review') && 'review' || startsWith(github.event.comment.body, '/describe') && 'describe' || startsWith(github.event.comment.body, '/improve') && 'improve' || github.event.comment.id }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Run PR Agent command
+        uses: *pr-agent-image
