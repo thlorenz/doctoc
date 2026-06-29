@@ -111,7 +111,8 @@ Supported options are:
 
 > [!NOTE]
 >
-> By supplying a syntax, the files to be processed will be filtered ie html syntax is used in md & markdown files.
+> By specifying a syntax, the file scanner will filter the files to be processed based on the syntax & extension.
+> For instance, html syntax would result in only md & markdown files being processed.
 
 #### Min. Document Lines
 
@@ -130,6 +131,7 @@ By default,
 > If your document contains images, those images will not be counted any different to how plain text is,
 > as doctoc is processing your document as a text processor.
 > This also means repeated newlines will also be considered should your document contain them.
+
 #### Renderers
 
 In order to add a table of contents whose links are compatible with other sites add the appropriate mode flag:

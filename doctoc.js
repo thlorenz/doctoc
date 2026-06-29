@@ -202,7 +202,7 @@ for (var i = 0; i < argv._.length; i++) {
   var files = file.findMarkdownFiles(argv._[i], argv['syntax']);
 
   if (files.length > 1 && stdOut) {
-    console.error('--stdout cannot be used to process a directory containing more than 1 file. Use --dryrun instead.');
+    console.error('--stdout cannot be used when more than 1 markdown file is found. Use --dryrun instead.');
     process.exitCode = 2;
     return;
   }
