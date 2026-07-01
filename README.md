@@ -241,8 +241,6 @@ It is recommended to also include this argument when performing an update on an 
 
 Use the `--toc-title-padding-before` option to add padding line/s above the TOC which ensures formatters such as prettier will pass; e.g., `doctoc --toc-title-padding-before 1 .`
 
-NOTE: Currently it is only supported to add one line before the title.
-
 By default,
 
 - no padding is added above the table of contents title
