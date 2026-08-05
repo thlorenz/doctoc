@@ -68,6 +68,18 @@ test('\nshould exit with no error code with --dryrun, --github and --update-only
     })
 })
 
+test('\nshould exit with no error code with --dryrun, --github and --update-only options (mdx)', function (t) {
+
+    exec('node doctoc.js test/fixtures/readme-with-custom-title.mdx --dryrun --github --update-only', function (error, stdout, stderr) {
+      if (error) {
+        t.fail('process produced an unexpected error: ' + error);
+        t.end()
+      } else {
+        t.end('process did not have an error');
+      }
+    })
+})
+
 test('\nshould exit with no error code with --dryrun, --github and --update-only options', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-with-notitle.md --dryrun --github --update-only', function (error, stdout, stderr) {
@@ -95,6 +107,18 @@ test('\nshould exit no error code when not using --dryrun and using --all for ou
 test('\nshould exit with no error code', function (t) {
 
     exec('node doctoc.js test/fixtures/readme-with-custom-title.md', function (error, stdout, stderr) {
+      if (error) {
+        t.fail('process produced an unexpected error: ' + error);
+        t.end()
+      } else {
+        t.end('process did not have an error');
+      }
+    })
+})
+
+test('\nshould exit with no error code (mdx fixture)', function (t) {
+
+    exec('node doctoc.js test/fixtures/readme-with-custom-title.mdx', function (error, stdout, stderr) {
       if (error) {
         t.fail('process produced an unexpected error: ' + error);
         t.end()

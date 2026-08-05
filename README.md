@@ -16,6 +16,7 @@ by github or other sites via a command line flag.
     - [Stdout](#stdout)
     - [Update only](#update-only)
   - [Document Options](#document-options)
+    - [Comments](#comments)
     - [Min. Document Lines](#min-document-lines)
     - [Renderers](#renderers)
   - [Source Options](#source-options)
@@ -87,13 +88,31 @@ This is useful in CI environments where you want to check if your docs are up to
 
 You can print to stdout by using the `-s` or `--stdout` option.
 
-This option is only applicable when specifying a single filename which doctoc is to run on. If you are specifying a folder or multiple files, the dry run option should be used instead.
+This option is only applicable when specifying a single filename or a directory containing only 1 file which doctoc is to run on. If you are specifying a folder with multiple files or providing multiple inputs, the dry run option should be used instead.
 
 #### Update only
 
 Use `--update-only` or `-u` to only update the existing ToC. That is, the Markdown files without ToC will be left untouched. It is good if you want to use `doctoc` with `lint-staged`.
 
 ### Document Options
+
+#### Comments
+
+##### Syntax
+
+Use the `--syntax` option to specify the syntax used for comments in the documents. If not specified, syntax will be detected based on the file extension.
+
+Supported options are:
+
+- **jsx**: comments start with `{/*` and end with `*/}`.
+- **html**: comments start with `<!--` and end with `-->`.
+- **md**: an alias for html. Will be removed in v3.
+- **mdx**: an alias for jsx. Will be removed in v3.
+
+> [!NOTE]
+>
+> By specifying a syntax, the file scanner will filter the files to be processed based on the syntax & extension.
+> For instance, html syntax would result in only md & markdown files being processed.
 
 #### Min. Document Lines
 
@@ -112,6 +131,7 @@ By default,
 > If your document contains images, those images will not be counted any different to how plain text is,
 > as doctoc is processing your document as a text processor.
 > This also means repeated newlines will also be considered should your document contain them.
+
 #### Renderers
 
 In order to add a table of contents whose links are compatible with other sites add the appropriate mode flag:
