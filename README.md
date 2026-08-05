@@ -137,12 +137,15 @@ An example is:
 ##### Min. level
 
 Use the `--minlevel` option to limit TOC entries to headings only at or above the specified level; e.g., `doctoc --minlevel 2 .`
+The headers in the document will be grouped into sections, with a new section formed when a header is processed which is lower than the defined min.
 
 By default,
 
 - the min level used is 1 if it is not set
 
-Note: Currently supported values are only 1 and 2.
+> [!NOTE]
+>
+> Currently if the document has more than 1 section, the toc generation will fail with a warning level.
 
 ##### Max. level
 
