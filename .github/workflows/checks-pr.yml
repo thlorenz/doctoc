@@ -1,0 +1,27 @@
+name: Checks / PR
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+
+permissions:
+  contents: read  # NOTE; you will need to change this permission to `write` in case you do not provide the `include-commits` input parameter.
+  pull-requests: write  # OPTIONAL; only required when you want CommitMe to update labels in your Pull Request, set `update-labels` to `false` if you do not require this feature.
+
+jobs:
+  commit-me:
+    name: Conventional Commits Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v6
+        name: Validate title
+        id: semantic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Add label
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label "${{ steps.semantic.outputs.type }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
