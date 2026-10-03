@@ -142,7 +142,6 @@ var dryRun = argv.d || argv.dryrun || false;
 
 var padBeforeTitle = argv['toc-title-padding-before'];
 if (padBeforeTitle && isNaN(padBeforeTitle) || padBeforeTitle < 0) { console.error('Padding before title specified is not a positive number: ' + padBeforeTitle), printUsageAndExit(true); }
-else if (padBeforeTitle && padBeforeTitle > 1) { console.error('Padding before title: ' + padBeforeTitle + ' is not currently supported as greater than 1'), printUsageAndExit(true); }
 
 var maxHeaderLevel = argv.m || argv.maxlevel;
 if (maxHeaderLevel && isNaN(maxHeaderLevel)) { log.error('Max. heading level specified is not a number: ' + maxHeaderLevel), printUsageAndExit(true); }
