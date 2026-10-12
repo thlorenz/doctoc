@@ -425,6 +425,21 @@ check(
     , '## H2h'
     , '### H3h'
     , ''
+    , 'Min. level test'
+    ].join('\n')
+  , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'
+    , '- [H3h](#h3h)\n\n\n'
+    ].join('')
+  , undefined
+  , undefined
+  , 3
+)
+
+check(
+    [ '# H1h'
+    , '## H2h'
+    , '### H3h'
+    , ''
     , 'Same Max. & Min. level (not 1) test - hashed'
     ].join('\n')
   , [ '**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*\n\n'

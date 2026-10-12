@@ -75,3 +75,12 @@ test('\nshould exit with error code as --stdout option is not supported on multi
       }
     })
  })
+
+test('\nshould print file not processed due to multiple sections', function (t) {
+
+  exec('node doctoc.js test/fixtures/readme-with-sections.md --minlevel 2', function (error, stdout, stderr) {
+    t.same(stderr, 'Document contains 2 sections. It can only contain 1.\n', 'spits out the correct error message')
+
+    t.end()
+  })
+})
