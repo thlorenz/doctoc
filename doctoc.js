@@ -2,22 +2,13 @@
 
 "use strict";
 
-var path = require("path"),
-  fs = require("fs"),
-  os = require("os"),
+var fs = require("fs"),
   minimist = require("minimist"),
   file = require("./lib/file"),
   transform = require("./lib/transform"),
-  log = require('loglevel'),
-  files;
+  log = require('loglevel');
 
-function cleanPath(filePath) {
-  var homeExpanded = (filePath.indexOf('~') === 0) ? path.join(os.homedir(), filePath.substr(1)) : filePath;
-
-  return homeExpanded;
-}
-
-function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options) {
+function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, dryRun, options) {
   if (processAll) {
     log.debug('--all flag is enabled. Including headers before the TOC location.');
   }
@@ -31,7 +22,7 @@ function transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocIte
   var transformed = files
     .map(function (x) {
       var content = fs.readFileSync(x.path, 'utf8')
-        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, syntax, options);
+        , result = transform(content, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, updateOnly, x.syntax, options);
       result.path = x.path;
       return result;
     });
@@ -83,7 +74,7 @@ function printUsageAndExit(isErr) {
   process.exit(isErr ? 2 : 0);
 }
 
-var supportedSyntaxes = ['md', 'mdx'];
+var supportedSyntaxes = ['html', 'jsx', 'md', 'mdx'];
 var modes = {
   bitbucket: "bitbucket.org",
   nodejs: "nodejs.org",
@@ -137,7 +128,6 @@ if (minTocItems && (isNaN(minTocItems) || minTocItems <= 0)) { log.error('Min. T
 var processAll = argv.all;
 var stdOut = argv.s || argv.stdout || false;
 var updateOnly = argv.u || argv['update-only'];
-var syntax = argv['syntax'] || 'md';
 var dryRun = argv.d || argv.dryrun || false;
 
 var padBeforeTitle = argv['toc-title-padding-before'];
@@ -222,24 +212,15 @@ if (argv._.length > 1 && stdOut) {
 }
 
 for (var i = 0; i < argv._.length; i++) {
-  var target = cleanPath(argv._[i]),
-    stat = fs.statSync(target);
+  var files = file.findMarkdownFiles(argv._[i], argv['syntax']);
 
-  if (stat.isDirectory() && stdOut) {
-    console.error('--stdout cannot be used to process a directory. Use --dryrun instead.');
+  if (files.length > 1 && stdOut) {
+    console.error('--stdout cannot be used when more than 1 markdown file is found. Use --dryrun instead.');
     process.exitCode = 2;
     return;
   }
 
-  if (stat.isDirectory()) {
-    log.debug('\nDocToccing "%s" and its sub directories for %s.', target, mode);
-    files = file.findMarkdownFiles(target, syntax);
-  } else {
-    log.debug('\nDocToccing single file "%s" for %s.', target, mode);
-    files = [{ path: target }];
-  }
-
-  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, syntax, dryRun, options);
+  transformAndSave(files, mode, maxHeaderLevel, minHeaderLevel, minTocItems, title, notitle, entryPrefix, processAll, stdOut, updateOnly, dryRun, options);
 
   if (dryRun && process.exitCode === 1) {
     log.warn('\nDocumentation tables of contents are out of date.');
