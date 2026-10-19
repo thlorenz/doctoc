@@ -169,7 +169,9 @@ By default,
 
 The pragma is the opening and closing comment blocks to mark the location of the doctoc contents, i.e. `<!-- START doctoc ... -->`
 
-The default option, `legacy`, produces the following:
+Use the `--toc-pragma-style` option to specify the style of the pragma comments.
+
+The default value, `legacy`, produces the following:
 
 ```markdown
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
